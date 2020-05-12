@@ -56,6 +56,8 @@ public class SdxRuntimeUpgradeServiceTest {
 
     private static final String V_7_0_2 = "7.0.2";
 
+    private static final boolean REPAIR_AFTER_UPGRADE = true;
+
     @Mock
     private StackV4Endpoint stackV4Endpoint;
 
@@ -195,11 +197,12 @@ public class SdxRuntimeUpgradeServiceTest {
 
         sdxUpgradeRequest.setLockComponents(false);
         sdxUpgradeRequest.setImageId(null);
+        sdxUpgradeRequest.setRepairAfterUpgrade(REPAIR_AFTER_UPGRADE);
 
         underTest.triggerRuntimeUpgradeByCrn(USER_CRN, STACK_CRN, sdxUpgradeRequest);
 
-        verify(sdxReactorFlowManager, times(1)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID_LAST);
-        verify(sdxReactorFlowManager, times(0)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID);
+        verify(sdxReactorFlowManager, times(1)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID_LAST, REPAIR_AFTER_UPGRADE);
+        verify(sdxReactorFlowManager, times(0)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID, REPAIR_AFTER_UPGRADE);
     }
 
     @Test
@@ -222,8 +225,8 @@ public class SdxRuntimeUpgradeServiceTest {
 
         underTest.triggerRuntimeUpgradeByCrn(USER_CRN, STACK_CRN, null);
 
-        verify(sdxReactorFlowManager, times(1)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID_LAST);
-        verify(sdxReactorFlowManager, times(0)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID);
+        verify(sdxReactorFlowManager, times(1)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID_LAST, false);
+        verify(sdxReactorFlowManager, times(0)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID, false);
     }
 
     @Test
@@ -249,8 +252,8 @@ public class SdxRuntimeUpgradeServiceTest {
 
         underTest.triggerRuntimeUpgradeByCrn(USER_CRN, STACK_CRN, null);
 
-        verify(sdxReactorFlowManager, times(1)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID_LAST);
-        verify(sdxReactorFlowManager, times(0)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID);
+        verify(sdxReactorFlowManager, times(1)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID_LAST, false);
+        verify(sdxReactorFlowManager, times(0)).triggerDatalakeRuntimeUpgradeFlow(sdxCluster, IMAGE_ID, false);
     }
 
     @Test

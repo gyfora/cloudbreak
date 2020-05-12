@@ -4,15 +4,22 @@ import com.sequenceiq.datalake.flow.SdxEvent;
 
 public class DatalakeUpgradeStartEvent extends SdxEvent {
 
-    private String imageId;
+    private final String imageId;
 
-    public DatalakeUpgradeStartEvent(String selector, Long sdxId, String userId, String imageId) {
+    private final boolean repairAfterUpgrade;
+
+    public DatalakeUpgradeStartEvent(String selector, Long sdxId, String userId, String imageId, boolean repairAfterUpgrade) {
         super(selector, sdxId, userId);
         this.imageId = imageId;
+        this.repairAfterUpgrade = repairAfterUpgrade;
     }
 
     public String getImageId() {
         return imageId;
+    }
+
+    public boolean isRepairAfterUpgrade() {
+        return repairAfterUpgrade;
     }
 
     @Override

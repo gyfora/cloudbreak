@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -74,7 +75,7 @@ public class SdxRuntimeUpgradeService {
     public SdxUpgradeResponse triggerRuntimeUpgradeByName(String userCrn, String clusterName, SdxUpgradeRequest upgradeRequest) {
         SdxCluster cluster = sdxService.getSdxByNameInAccount(userCrn, clusterName);
         String imageId = determineImageId(userCrn, cluster.getClusterName(), upgradeRequest);
-        FlowIdentifier flowIdentifier = triggerDatalakeUpgradeFlow(imageId, cluster);
+        FlowIdentifier flowIdentifier = triggerDatalakeUpgradeFlow(imageId, cluster, shouldRepairAfterUpgrade(upgradeRequest));
         String message = getMessage(imageId);
         return new SdxUpgradeResponse(message, flowIdentifier);
     }
@@ -82,9 +83,13 @@ public class SdxRuntimeUpgradeService {
     public SdxUpgradeResponse triggerRuntimeUpgradeByCrn(String userCrn, String clusterCrn, SdxUpgradeRequest upgradeRequest) {
         SdxCluster cluster = sdxService.getByCrn(userCrn, clusterCrn);
         String imageId = determineImageId(userCrn, cluster.getClusterName(), upgradeRequest);
-        FlowIdentifier flowIdentifier = triggerDatalakeUpgradeFlow(imageId, cluster);
+        FlowIdentifier flowIdentifier = triggerDatalakeUpgradeFlow(imageId, cluster, shouldRepairAfterUpgrade(upgradeRequest));
         String message = getMessage(imageId);
         return new SdxUpgradeResponse(message, flowIdentifier);
+    }
+
+    private boolean shouldRepairAfterUpgrade(SdxUpgradeRequest upgradeRequest) {
+        return Optional.ofNullable(upgradeRequest).map(SdxUpgradeRequest::getRepairAfterUpgrade).orElse(false);
     }
 
     public boolean isRuntimeUpgradeEnabled(String userCrn) {
@@ -98,9 +103,9 @@ public class SdxRuntimeUpgradeService {
         }
     }
 
-    private FlowIdentifier triggerDatalakeUpgradeFlow(String imageId, SdxCluster cluster) {
+    private FlowIdentifier triggerDatalakeUpgradeFlow(String imageId, SdxCluster cluster, boolean repairAfterUpgrade) {
         MDCBuilder.buildMdcContext(cluster);
-        return sdxReactorFlowManager.triggerDatalakeRuntimeUpgradeFlow(cluster, imageId);
+        return sdxReactorFlowManager.triggerDatalakeRuntimeUpgradeFlow(cluster, imageId, repairAfterUpgrade);
     }
 
     private String getMessage(String imageId) {

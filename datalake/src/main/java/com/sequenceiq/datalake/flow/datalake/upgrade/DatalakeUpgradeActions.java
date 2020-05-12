@@ -43,6 +43,8 @@ public class DatalakeUpgradeActions {
 
     private static final String TARGET_IMAGE = "TARGET_IMAGE";
 
+    private static final String REPAIR_AFTER_UPGRADE = "REPAIR_AFTER_UPGRADE";
+
     @Inject
     private SdxUpgradeService sdxUpgradeService;
 
@@ -62,6 +64,7 @@ public class DatalakeUpgradeActions {
             protected void prepareExecution(DatalakeUpgradeStartEvent payload, Map<Object, Object> variables) {
                 super.prepareExecution(payload, variables);
                 variables.put(TARGET_IMAGE, payload.getImageId());
+                variables.put(REPAIR_AFTER_UPGRADE, payload.isRepairAfterUpgrade());
             }
 
             @Override
@@ -119,6 +122,10 @@ public class DatalakeUpgradeActions {
                 );
                 sdxUpgradeService.changeImage(payload.getResourceId(), upgrade);
                 sendEvent(context, DatalakeChangeImageWaitRequest.from(context, upgrade));
+                if ((boolean) variables.get(REPAIR_AFTER_UPGRADE)) {
+                    sdxUpgradeService.upgradeOs(payload.getResourceId());
+                }
+                sdxUpgradeService.upgradeOs(payload.getResourceId());
             }
 
             @Override

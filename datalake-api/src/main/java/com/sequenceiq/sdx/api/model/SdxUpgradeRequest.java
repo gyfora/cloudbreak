@@ -17,6 +17,8 @@ public class SdxUpgradeRequest {
 
     private Boolean dryRun;
 
+    private Boolean repairAfterUpgrade = false;
+
     public String getImageId() {
         return imageId;
     }
@@ -49,11 +51,20 @@ public class SdxUpgradeRequest {
         this.dryRun = dryRun;
     }
 
+    public Boolean getRepairAfterUpgrade() {
+        return repairAfterUpgrade;
+    }
+
+    public void setRepairAfterUpgrade(Boolean repairAfterUpgrade) {
+        this.repairAfterUpgrade = repairAfterUpgrade;
+    }
+
     public boolean isEmpty() {
         return Objects.isNull(imageId) &&
                 Objects.isNull(runtime) &&
                 !Boolean.TRUE.equals(lockComponents) &&
-                !Boolean.TRUE.equals(dryRun);
+                !Boolean.TRUE.equals(dryRun) &&
+                !Boolean.TRUE.equals(repairAfterUpgrade);
     }
 
     @Override
@@ -63,6 +74,7 @@ public class SdxUpgradeRequest {
                 ", runtime='" + runtime + '\'' +
                 ", lockComponents=" + lockComponents +
                 ", dryRun=" + dryRun +
+                ", repairAfterUpgrade=" + repairAfterUpgrade +
                 '}';
     }
 }
