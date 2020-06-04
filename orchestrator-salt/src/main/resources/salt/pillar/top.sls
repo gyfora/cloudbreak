@@ -9,6 +9,7 @@ base:
     - metadata.init
     - tags
     - proxy.proxy
+    - telemetry.init
     - databus
     - cloudera-manager.csd
     - fluent
