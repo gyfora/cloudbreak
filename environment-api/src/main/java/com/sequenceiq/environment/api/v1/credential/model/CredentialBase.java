@@ -38,6 +38,9 @@ public abstract class CredentialBase implements Serializable {
     @ApiModelProperty(value = CredentialModelDescription.CLOUD_PLATFORM, required = true)
     private String cloudPlatform;
 
+    @ApiModelProperty(value = CredentialModelDescription.CREDENTIAL_TYPE, required = true)
+    private CredentialType type;
+
     @Valid
     @ApiModelProperty(CredentialModelDescription.AWS_PARAMETERS)
     private AwsCredentialParameters aws;
@@ -138,6 +141,14 @@ public abstract class CredentialBase implements Serializable {
 
     public void setVerificationStatusText(String verificationStatusText) {
         this.verificationStatusText = verificationStatusText;
+    }
+
+    public CredentialType getType() {
+        return type;
+    }
+
+    public void setType(CredentialType type) {
+        this.type = type;
     }
 
     public boolean isVerifyPermissions() {

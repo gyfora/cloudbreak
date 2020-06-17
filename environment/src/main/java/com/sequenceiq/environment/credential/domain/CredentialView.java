@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.sequenceiq.cloudbreak.auth.security.AuthResource;
 import com.sequenceiq.cloudbreak.service.secret.domain.AccountIdAwareResource;
+import com.sequenceiq.environment.api.v1.credential.model.CredentialType;
 
 @Entity
 @Table(name = "Credential")
@@ -43,6 +44,9 @@ public class CredentialView implements Serializable, AuthResource, AccountIdAwar
 
     @Column
     private String verificationStatusText;
+
+    @Column
+    private CredentialType type;
 
     public String getName() {
         return name;
@@ -118,5 +122,13 @@ public class CredentialView implements Serializable, AuthResource, AccountIdAwar
 
     public void setVerificationStatusText(String verificationStatusText) {
         this.verificationStatusText = verificationStatusText;
+    }
+
+    public CredentialType getType() {
+        return type;
+    }
+
+    public void setType(CredentialType type) {
+        this.type = type;
     }
 }

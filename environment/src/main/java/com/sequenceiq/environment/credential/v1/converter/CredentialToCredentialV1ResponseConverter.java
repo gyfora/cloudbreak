@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import com.sequenceiq.cloudbreak.cloud.model.ExtendedCloudCredential;
 import com.sequenceiq.cloudbreak.common.json.Json;
 import com.sequenceiq.cloudbreak.service.secret.model.StringToSecretResponseConverter;
+import com.sequenceiq.environment.api.v1.credential.model.CredentialType;
 import com.sequenceiq.environment.api.v1.credential.model.request.CredentialRequest;
 import com.sequenceiq.environment.api.v1.credential.model.response.CredentialResponse;
 import com.sequenceiq.environment.credential.attributes.CredentialAttributes;
@@ -75,6 +76,7 @@ public class CredentialToCredentialV1ResponseConverter {
         response.setCreator(source.getCreator());
         response.setCreated(source.getCreated());
         response.setDescription(source.getDescription() == null ? "" : source.getDescription());
+        response.setType(source.getType());
         return response;
     }
 
@@ -105,6 +107,7 @@ public class CredentialToCredentialV1ResponseConverter {
         credential.setCloudPlatform(source.getCloudPlatform());
         credential.setVerificationStatusText(source.getVerificationStatusText());
         credential.setVerifyPermissions(source.isVerifyPermissions());
+        credential.setType(source.getType() == null ? CredentialType.ENVIRONMENT : credential.getType());
         convertAttributes(source, credential);
         if (source.getAws() != null) {
             credential.setGovCloud(source.getAws().getGovCloud());
