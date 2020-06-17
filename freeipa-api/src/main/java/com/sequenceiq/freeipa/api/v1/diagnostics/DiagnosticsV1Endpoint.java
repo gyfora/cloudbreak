@@ -2,6 +2,7 @@ package com.sequenceiq.freeipa.api.v1.diagnostics;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -11,6 +12,7 @@ import com.sequenceiq.cloudbreak.jerseyclient.RetryAndMetrics;
 import com.sequenceiq.freeipa.api.v1.diagnostics.docs.DiagnosticsOperationDescriptions;
 import com.sequenceiq.freeipa.api.v1.diagnostics.model.DiagnosticsCollectionRequest;
 import com.sequenceiq.freeipa.api.v1.diagnostics.model.DiagnosticsCollectionResponse;
+import com.sequenceiq.freeipa.api.v1.diagnostics.model.VmLogPathsResponse;
 import com.sequenceiq.freeipa.api.v1.freeipa.stack.doc.FreeIpaNotes;
 import com.sequenceiq.freeipa.api.v1.operation.model.OperationStatus;
 
@@ -29,4 +31,11 @@ public interface DiagnosticsV1Endpoint {
     @ApiOperation(value = DiagnosticsOperationDescriptions.COLLECT_FREEIPA_DIAGNOSTICS, produces = MediaType.APPLICATION_JSON,
             notes = FreeIpaNotes.FREEIPA_NOTES, nickname = "collectFreeIpaDiagnosticsV1")
     OperationStatus collectDiagnostics(@Valid DiagnosticsCollectionRequest request);
+
+    @GET
+    @Path("logs")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = DiagnosticsOperationDescriptions.GET_VM_LOG_PATHS, produces = MediaType.APPLICATION_JSON,
+            notes = FreeIpaNotes.FREEIPA_NOTES, nickname = "getFreeIpaVmLogPathsV1")
+    VmLogPathsResponse getVmLogPaths();
 }
