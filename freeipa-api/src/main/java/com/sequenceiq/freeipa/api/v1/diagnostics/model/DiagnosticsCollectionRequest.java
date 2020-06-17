@@ -9,7 +9,7 @@ public class DiagnosticsCollectionRequest {
 
     private String environmentCrn;
 
-    private String environmentName;
+    private String supportTicket;
 
     private List<String> hosts;
 
@@ -27,12 +27,12 @@ public class DiagnosticsCollectionRequest {
         this.environmentCrn = environmentCrn;
     }
 
-    public String getEnvironmentName() {
-        return environmentName;
+    public String getSupportTicket() {
+        return supportTicket;
     }
 
-    public void setEnvironmentName(String environmentName) {
-        this.environmentName = environmentName;
+    public void setSupportTicket(String supportTicket) {
+        this.supportTicket = supportTicket;
     }
 
     public List<String> getHosts() {
