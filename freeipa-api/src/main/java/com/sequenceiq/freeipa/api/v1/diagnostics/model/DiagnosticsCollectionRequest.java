@@ -3,7 +3,7 @@ package com.sequenceiq.freeipa.api.v1.diagnostics.model;
 import java.util.List;
 
 import com.sequenceiq.common.api.telemetry.model.VmLog;
-import com.sequenceiq.common.api.telemetry.model.VmLogsDestination;
+import com.sequenceiq.common.api.telemetry.model.DiagnosticsDestination;
 
 public class DiagnosticsCollectionRequest {
 
@@ -15,7 +15,7 @@ public class DiagnosticsCollectionRequest {
 
     private List<String> labels;
 
-    private VmLogsDestination destination;
+    private DiagnosticsDestination destination;
 
     private List<VmLog> additionalLogs = List.of();
 
@@ -51,11 +51,11 @@ public class DiagnosticsCollectionRequest {
         this.labels = labels;
     }
 
-    public VmLogsDestination getDestination() {
+    public DiagnosticsDestination getDestination() {
         return destination;
     }
 
-    public void setDestination(VmLogsDestination destination) {
+    public void setDestination(DiagnosticsDestination destination) {
         this.destination = destination;
     }
 
