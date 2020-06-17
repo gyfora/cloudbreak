@@ -1,19 +1,32 @@
-package com.sequenceiq.freeipa.api.v1.diagnostics.model;
+package com.sequenceiq.common.api.telemetry.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VmLogPath {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class VmLog implements Serializable {
 
     private String name;
 
+    @NotNull
+    @NotBlank
     private String path;
 
+    @NotNull
+    @NotBlank
     private String label;
 
     private String type;
 
-    private List<String> excludes = List.of();
+    private List<String> excludes = new ArrayList<>();
 
     public String getPath() {
         return path;

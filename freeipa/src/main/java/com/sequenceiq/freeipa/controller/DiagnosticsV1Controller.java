@@ -5,19 +5,18 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 
+import com.sequenceiq.common.api.telemetry.response.VmLogsResponse;
 import com.sequenceiq.freeipa.api.v1.diagnostics.DiagnosticsV1Endpoint;
 import com.sequenceiq.freeipa.api.v1.diagnostics.model.DiagnosticsCollectionRequest;
-import com.sequenceiq.freeipa.api.v1.diagnostics.model.DiagnosticsCollectionResponse;
-import com.sequenceiq.freeipa.api.v1.diagnostics.model.VmLogPathsResponse;
 import com.sequenceiq.freeipa.api.v1.operation.model.OperationStatus;
-import com.sequenceiq.freeipa.client.FreeIpaClientException;
-import com.sequenceiq.freeipa.client.FreeIpaClientExceptionWrapper;
-import com.sequenceiq.freeipa.converter.diagnostics.VmLogsToVmLogPathsConverter;
+import com.sequenceiq.freeipa.converter.diagnostics.VmLogsToVmLogsResponseConverter;
 import com.sequenceiq.freeipa.service.diagnostics.DiagnosticsService;
 import com.sequenceiq.freeipa.service.telemetry.VmLogsService;
 import com.sequenceiq.freeipa.util.CrnService;
 
+@Controller
 public class DiagnosticsV1Controller implements DiagnosticsV1Endpoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DiagnosticsV1Controller.class);
@@ -32,7 +31,7 @@ public class DiagnosticsV1Controller implements DiagnosticsV1Endpoint {
     private VmLogsService vmLogsService;
 
     @Inject
-    private VmLogsToVmLogPathsConverter vmlogsConverter;
+    private VmLogsToVmLogsResponseConverter vmlogsConverter;
 
     @Override
     public OperationStatus collectDiagnostics(@Valid DiagnosticsCollectionRequest request) {
@@ -41,7 +40,7 @@ public class DiagnosticsV1Controller implements DiagnosticsV1Endpoint {
     }
 
     @Override
-    public VmLogPathsResponse getVmLogPaths() {
+    public VmLogsResponse getVmLogs() {
         return vmlogsConverter.convert(vmLogsService.getVmLogs());
     }
 }

@@ -9,10 +9,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.sequenceiq.cloudbreak.jerseyclient.RetryAndMetrics;
+import com.sequenceiq.common.api.telemetry.response.VmLogsResponse;
 import com.sequenceiq.freeipa.api.v1.diagnostics.docs.DiagnosticsOperationDescriptions;
 import com.sequenceiq.freeipa.api.v1.diagnostics.model.DiagnosticsCollectionRequest;
-import com.sequenceiq.freeipa.api.v1.diagnostics.model.DiagnosticsCollectionResponse;
-import com.sequenceiq.freeipa.api.v1.diagnostics.model.VmLogPathsResponse;
 import com.sequenceiq.freeipa.api.v1.freeipa.stack.doc.FreeIpaNotes;
 import com.sequenceiq.freeipa.api.v1.operation.model.OperationStatus;
 
@@ -36,6 +35,6 @@ public interface DiagnosticsV1Endpoint {
     @Path("logs")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = DiagnosticsOperationDescriptions.GET_VM_LOG_PATHS, produces = MediaType.APPLICATION_JSON,
-            notes = FreeIpaNotes.FREEIPA_NOTES, nickname = "getFreeIpaVmLogPathsV1")
-    VmLogPathsResponse getVmLogPaths();
+            notes = FreeIpaNotes.FREEIPA_NOTES, nickname = "getFreeIpaVmLogsV1")
+    VmLogsResponse getVmLogs();
 }

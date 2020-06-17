@@ -8,7 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 import com.sequenceiq.cloudbreak.telemetry.TelemetryClusterDetails;
 import com.sequenceiq.cloudbreak.telemetry.TelemetryConfigView;
-import com.sequenceiq.cloudbreak.telemetry.model.VmLogs;
+import com.sequenceiq.common.api.telemetry.model.VmLog;
 import com.sequenceiq.common.api.telemetry.model.AnonymizationRule;
 
 public class TelemetryCommonConfigView implements TelemetryConfigView {
@@ -17,7 +17,7 @@ public class TelemetryCommonConfigView implements TelemetryConfigView {
 
     private final List<AnonymizationRule> rules;
 
-    private final List<VmLogs> vmLogs;
+    private final List<VmLog> vmLogs;
 
     private TelemetryCommonConfigView(Builder builder) {
         clusterDetails = builder.clusterDetails;
@@ -46,7 +46,7 @@ public class TelemetryCommonConfigView implements TelemetryConfigView {
 
         private List<AnonymizationRule> rules;
 
-        private List<VmLogs> vmLogs;
+        private List<VmLog> vmLogs;
 
         public TelemetryCommonConfigView build() {
             return new TelemetryCommonConfigView(this);
@@ -62,7 +62,7 @@ public class TelemetryCommonConfigView implements TelemetryConfigView {
             return this;
         }
 
-        public Builder withVmLogs(List<VmLogs> vmLogs) {
+        public Builder withVmLogs(List<VmLog> vmLogs) {
             this.vmLogs = vmLogs;
             return this;
         }

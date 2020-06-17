@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.sequenceiq.cloudbreak.telemetry.VmLogsLoaderService;
-import com.sequenceiq.cloudbreak.telemetry.model.VmLogs;
+import com.sequenceiq.common.api.telemetry.model.VmLog;
 
 @Service
 public class VmLogsService {
@@ -21,7 +21,7 @@ public class VmLogsService {
 
     private final VmLogsLoaderService vmLogsLoaderService;
 
-    private List<VmLogs> vmLogs;
+    private List<VmLog> vmLogs;
 
     public VmLogsService(VmLogsLoaderService vmLogsLoaderService) {
         this.vmLogsLoaderService = vmLogsLoaderService;
@@ -36,7 +36,7 @@ public class VmLogsService {
         }
     }
 
-    public List<VmLogs> getVmLogs() {
+    public List<VmLog> getVmLogs() {
         if (this.vmLogs == null) {
             init();
         }
