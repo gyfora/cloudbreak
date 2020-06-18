@@ -43,12 +43,12 @@ public class FreeIpaDiagnosticsCollectionActions {
 
             @Override
             protected void doExecute(FreeIpaContext context, StartCollectionResponse payload, Map<Object, Object> variables) {
-                DiagnosticsCollectionEvent cleanupEvent = new DiagnosticsCollectionEvent(FreeIpaDiagnosticsCollectionEvent.COLLECTION_FINISHED_EVENT.event(), payload.getResourceId(),
-                        payload.getAccountId(), payload.getEnvironmentCrn(), payload.getOperationId());
+                DiagnosticsCollectionEvent collectionEvent = new DiagnosticsCollectionEvent(FreeIpaDiagnosticsCollectionEvent.COLLECTION_FINISHED_EVENT.event(), payload.getResourceId(),
+                        payload.getAccountId(), payload.getEnvironmentCrn(), payload.getOperationId(), payload.getParameters());
                 SuccessDetails successDetails = new SuccessDetails(payload.getEnvironmentCrn());
                 operationService.completeOperation(payload.getAccountId(), payload.getOperationId(), List.of(successDetails), List.of());
-                LOGGER.info("Cleanup successfully finished with: " + successDetails);
-                sendEvent(context, cleanupEvent);
+                LOGGER.info("Diagnostics collection successfully finished with: " + successDetails);
+                sendEvent(context, collectionEvent);
             }
         };
     }

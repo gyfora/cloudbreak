@@ -1,5 +1,7 @@
 package com.sequenceiq.freeipa.service.diagnostics;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -43,9 +45,16 @@ public class DiagnosticsService {
         Stack stack = stackService.getByEnvironmentCrnAndAccountIdWithLists(environmentCrn, accountId);
         MDCBuilder.buildMdcContext(stack);
         Operation operation = operationService.startOperation(accountId, OperationType.DIAGNOSTICS_COLLECTION, Set.of(environmentCrn), Set.of());
+        Map<String, Object> parameters = createDiagnosticCollectionParams(request);
         DiagnosticsCollectionEvent collectionEvent = new DiagnosticsCollectionEvent(FreeIpaDiagnosticsCollectionEvent.COLLECTION_EVENT.event(), stack.getId(),
-                accountId, environmentCrn, operation.getOperationId());
+                accountId, environmentCrn, operation.getOperationId(), parameters);
         flowManager.notify(FreeIpaDiagnosticsCollectionEvent.COLLECTION_EVENT.event(), collectionEvent);
         return operationToOperationStatusConverter.convert(operation);
+    }
+
+    private Map<String, Object> createDiagnosticCollectionParams(DiagnosticsCollectionRequest request) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("destination", request.getDestination().toString());
+        return parameters;
     }
 }

@@ -2,6 +2,8 @@ package com.sequenceiq.freeipa.api.v1.diagnostics.model;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import com.sequenceiq.common.api.telemetry.model.VmLog;
 import com.sequenceiq.common.api.telemetry.model.DiagnosticsDestination;
 
@@ -15,6 +17,7 @@ public class DiagnosticsCollectionRequest {
 
     private List<String> labels;
 
+    @NotNull
     private DiagnosticsDestination destination;
 
     private List<VmLog> additionalLogs = List.of();

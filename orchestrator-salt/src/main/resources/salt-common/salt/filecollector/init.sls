@@ -56,6 +56,8 @@ install_pid:
     - group: "root"
     - mode: '0640'
 
+{% if filecollector.destination == "CLOUD_STORAGE" %}
 filecollector_cloud_storage_start:
   cmd.run:
     - name: "python3 /opt/filecollector/filecollector.py --config /opt/filecollector/filecollector-cloud-storage.yaml"
+{% endif %}

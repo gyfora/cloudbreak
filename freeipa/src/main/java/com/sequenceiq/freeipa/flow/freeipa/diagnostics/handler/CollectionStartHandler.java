@@ -2,9 +2,7 @@ package com.sequenceiq.freeipa.flow.freeipa.diagnostics.handler;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Component;
 import com.sequenceiq.cloudbreak.orchestrator.exception.CloudbreakOrchestratorFailedException;
 import com.sequenceiq.cloudbreak.orchestrator.host.HostOrchestrator;
 import com.sequenceiq.cloudbreak.orchestrator.model.GatewayConfig;
-import com.sequenceiq.cloudbreak.orchestrator.model.Node;
 import com.sequenceiq.flow.event.EventSelectorUtil;
 import com.sequenceiq.flow.reactor.api.handler.EventHandler;
 import com.sequenceiq.freeipa.entity.InstanceMetaData;
@@ -57,7 +54,7 @@ public class CollectionStartHandler implements EventHandler<CollectionStartReque
             Stack stack = stackService.getByIdWithListsInTransaction(request.getResourceId());
             Set<InstanceMetaData> instanceMetaDatas = new HashSet<>(stack.getNotDeletedInstanceMetaDataList());
             List<GatewayConfig> gatewayConfigs = gatewayConfigService.getGatewayConfigs(stack, instanceMetaDatas);
-            hostOrchestrator.collectDiagnostics(gatewayConfigs, new StackBasedExitCriteriaModel(stack.getId()));
+            hostOrchestrator.collectDiagnostics(gatewayConfigs, request.getParameters(), new StackBasedExitCriteriaModel(stack.getId()));
             StartCollectionResponse response = new StartCollectionResponse(request);
             eventBus.notify(EventSelectorUtil.selector(StartCollectionResponse.class), new Event<>(event.getHeaders(), response));
         } catch (CloudbreakOrchestratorFailedException e) {
