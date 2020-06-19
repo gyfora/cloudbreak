@@ -72,8 +72,11 @@ def main(args):
                 if filteredLabels and fileObject["label"] not in filteredLabels:
                     continue
                 sortFilesByDate=not "sortFilesByDate" in config["collector"] or bool(config["collector"]["sortFilesByDate"])
-                files=sorted(glob.glob(fileObject["path"]), key=os.path.getmtime) if sortFilesByDate else glob.glob(fileObject["path"])
-                for file in files:
+                allfiles=sorted(glob.glob(fileObject["path"]), key=os.path.getmtime) if sortFilesByDate else glob.glob(fileObject["path"])
+                exclude_files=__get_excludes(fileObject["excludes"] if "excludes" in fileObject else [], logger)
+                for file in allfiles:
+                    if file in exclude_files:
+                        continue
                     dest_folder=None
                     if "folderPrefix" in fileObject:
                         dest_folder=os.path.join(tmp_folder, fileObject["folderPrefix"], fileObject["label"].lower())
@@ -178,6 +181,15 @@ def __setup_logger(config):
     logger.addHandler(consoleHandler)
     return logger
 
+def __get_excludes(paths, logger):
+    exclude_files=[]
+    for filepath in paths:
+        files=glob.glob(filepath)
+        for file in files:
+            exclude_files.append(file)
+            logger.debug("file %s will be excluded from processing." % file)
+    return exclude_files
+
 def __disk_check(files, filteredLabels, outputLocation, config, logger):
     checkDiskSpace=__get_bool_key("checkDiskSpace", config, True)
     requiredDiskSpaceRatio=__get_float_key("requiredDiskSpaceRatio", config, 1.0)
@@ -224,6 +236,9 @@ class EventProcessor:
 
     def process(self, name, path, real_path):
         with open(real_path, 'r', buffering=100000) as infile:
+            if "*" in name:
+                replaced_path=path.replace(os.sep, ".")
+                name=name.replace("*", replaced_path)
             for line in infile:
                 if self.include_time:
                     self.fluentSender.emit_with_time(name, time.time(), {self.message_field: line})
