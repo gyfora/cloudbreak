@@ -1,4 +1,5 @@
 {%- from 'telemetry/settings.sls' import telemetry with context %}
+{%- from 'filecollector/settings.sls' import filecollector with context %}
 
 install_fluent_logger:
   cmd.run:
