@@ -11,7 +11,9 @@ public class DiagnosticsCollectionRequest {
 
     private String environmentCrn;
 
-    private String supportTicket;
+    private String issue;
+
+    private String description;
 
     private List<String> hosts;
 
@@ -28,14 +30,6 @@ public class DiagnosticsCollectionRequest {
 
     public void setEnvironmentCrn(String environmentCrn) {
         this.environmentCrn = environmentCrn;
-    }
-
-    public String getSupportTicket() {
-        return supportTicket;
-    }
-
-    public void setSupportTicket(String supportTicket) {
-        this.supportTicket = supportTicket;
     }
 
     public List<String> getHosts() {
@@ -68,5 +62,21 @@ public class DiagnosticsCollectionRequest {
 
     public void setAdditionalLogs(List<VmLog> additionalLogs) {
         this.additionalLogs = additionalLogs;
+    }
+
+    public String getIssue() {
+        return issue;
+    }
+
+    public void setIssue(String issue) {
+        this.issue = issue;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
