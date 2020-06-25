@@ -47,6 +47,12 @@ public class FreeIpaFlowManager {
         reactor.notify(selectable.selector(), event);
     }
 
+    public void notify(Selectable selectable, Event.Headers headers) {
+        Event<Selectable> event = eventFactory.createEventWithErrHandler(new HashMap<>(headers.asMap()), selectable);
+        LOGGER.debug("Notify reactor with event [{}]", event);
+        reactor.notify(selectable.selector(), event);
+    }
+
     private void notify(String selector, Event<Acceptable> event) {
         LOGGER.debug("Notify reactor for selector [{}] with event [{}]", selector, event);
         reactor.notify(selector, event);
