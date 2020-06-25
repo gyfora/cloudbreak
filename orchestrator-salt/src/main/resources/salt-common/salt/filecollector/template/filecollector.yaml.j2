@@ -11,6 +11,7 @@ collector:
       useFullPath: false
     - path: /var/lib/cdp/cdp_info.json
       label: cdp_info
+      skipLabelFromPath: true
       useFullPath: false
     rules:{% for rule in telemetry.anonymizationRules %}{% set regex_value = rule["value"] %}{% set replacement = rule["replacement"] if rule["replacement"] else "[REDACTED]" %}
     - pattern: {{ regex_value }}
