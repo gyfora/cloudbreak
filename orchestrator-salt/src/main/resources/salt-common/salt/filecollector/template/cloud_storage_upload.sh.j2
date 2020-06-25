@@ -1,8 +1,28 @@
 #!/bin/sh
 {%- from 'filecollector/settings.sls' import filecollector with context %}
-filename="$1"
-s3_filename="$(basename -- $filename)"
-s3_file_path="s3://{{ filecollector.s3LogBucket}}/{{ filecollector.logFolder}}/bundles/${s3_filename}"
 
-# --sse AES256
-/usr/bin/aws s3 cp --no-progress "${filename}" "${s3_file_path}"
+function log() {
+  echo "$1"
+}
+
+function upload_file() {
+   upload_to_s3 "$1"
+}
+
+function upload_to_s3() {
+  local filename=$1
+  s3_filename="$(basename -- $filename)"
+  s3_file_path="s3://{{ filecollector.s3LogBucket}}/{{ filecollector.logFolder}}/bundles/${s3_filename}"
+  # --sse AES256
+  log "Uploading file: $filename to $s3_file_path"
+  /usr/bin/aws s3 cp --no-progress "${filename}" "${s3_file_path}"
+}
+
+function main() {
+  for file in /var/lib/filecollector/*.gz
+  do
+    upload_file "$file"
+  done
+}
+
+main "$@"

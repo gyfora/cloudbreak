@@ -9,13 +9,15 @@ collector:
       label: fluentd
       folderPrefix: logs
       useFullPath: false
+    - path: /var/lib/cdp/cdp_info.json
+      label: cdp_info
+      useFullPath: false
     rules:{% for rule in telemetry.anonymizationRules %}{% set regex_value = rule["value"] %}{% set replacement = rule["replacement"] if rule["replacement"] else "[REDACTED]" %}
     - pattern: {{ regex_value }}
       replacement: "{{ replacement }}"{% endfor %}
     compress: true
     compressFormat: gztar
     useFullPath: true
-    deleteCompressedFile: true
+    deleteCompressedFile: false
     requiredDiskSpaceRatio: 1.7
-    outputScript: /opt/filecollector/cloud_storage_upload.sh
     outputLocation: "/var/lib/filecollector"

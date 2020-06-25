@@ -41,14 +41,6 @@ install_pid:
     - group: "root"
     - mode: '0750'
 
-/opt/filecollector/cloud_storage_upload.sh:
-   file.managed:
-    - source: salt://filecollector/template/cloud_storage_upload.sh.j2
-    - template: jinja
-    - user: "root"
-    - group: "root"
-    - mode: '0750'
-
 /opt/filecollector/filecollector-cloud-storage.yaml:
    file.managed:
     - source: salt://filecollector/template/filecollector.yaml.j2
