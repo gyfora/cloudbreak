@@ -14,7 +14,6 @@ function upload_to_s3() {
   s3_filename="$(basename -- $filename)"
   s3_file_path="s3://{{ filecollector.s3LogBucket}}/{{ filecollector.logFolder}}/bundles/${s3_filename}"
   # --sse AES256
-  log "Uploading file: $filename to $s3_file_path"
   /usr/bin/aws s3 cp --no-progress "${filename}" "${s3_file_path}"
 }
 

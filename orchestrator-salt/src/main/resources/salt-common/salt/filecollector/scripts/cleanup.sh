@@ -22,6 +22,7 @@ function main() {
     do
       delete_file "$file"
     done
+  fi
 }
 
 main "$@"
