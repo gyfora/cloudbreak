@@ -36,7 +36,7 @@ public class XService implements Experience {
 
     private final String pathPostfix;
 
-    public XService(@Value("${xp.protocol:https}") String experienceProtocol, @Value("${xp.path.postfix}") String pathPostfix,
+    public XService(@Value("${experience.scan.protocol}") String experienceProtocol, @Value("${experience.scan.path.postfix}") String pathPostfix,
                     CommonExperienceConnectorService experienceConnectorService, XPServices experienceProvider, CommonExperienceValidator experienceValidator) {
         this.experienceValidator = experienceValidator;
         this.configuredExperiences = identifyConfiguredExperiences(experienceProvider);

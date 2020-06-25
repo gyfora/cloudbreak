@@ -30,7 +30,7 @@ public class ExperienceConnectorService {
             LOGGER.debug("Collecting connected experiences for environment: {}", environment.getName());
             return experiences
                     .stream()
-                    .filter(experience -> experience.hasExistingClusterForEnvironment(environment))
+                    .filter(experience -> experience.   hasExistingClusterForEnvironment(environment))
                     .count();
         }
         LOGGER.info("Scanning experience(s) has disabled, which means the returning amount of connected experiences may not represent the reality!");

@@ -27,7 +27,8 @@ public class ExperiencesByLiftie implements Experience {
 
     private List<ClusterView> getClusterViews(String environmentName, String tenant) {
         List<ClusterView> clusterViews = new LinkedList<>();
-        ListClustersResponse first = liftieApi.listClusters(environmentName, tenant, "mon-platform", null);
+        //ListClustersResponse first = liftieApi.listClusters(environmentName, tenant, "mon-platform", null);
+        ListClustersResponse first = liftieApi.listClusters(environmentName, tenant, null, null);
         if (first.getPage().getTotalPages() > 1) {
             List<ListClustersResponse> clustersResponses = new LinkedList<>();
             clustersResponses.add(first);
