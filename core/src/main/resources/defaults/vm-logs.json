@@ -27,6 +27,18 @@
     "label": "cloud_init"
   },
   {
+    "path": "/var/log/find_device_and_format.log",
+    "label": "find_device_and_format"
+  },
+  {
+    "path": "/var/log/get_uuid_list.log",
+    "label": "get_uuid_list"
+  },
+  {
+    "path": "/var/log/-mount-disks.log",
+    "label": "mount_disks"
+  },
+  {
     "path": "/var/log/waagent.log",
     "label": "waagent"
   },
