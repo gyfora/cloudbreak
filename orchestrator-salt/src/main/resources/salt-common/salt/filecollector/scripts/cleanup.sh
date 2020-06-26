@@ -14,15 +14,22 @@ function delete_all() {
   rm -rf /var/lib/filecollector/**
 }
 
+function delete_tmp() {
+  log "Deleting /var/lib/filecollector/tmp folder..."
+  rm -rf /var/lib/filecollector/tmp
+}
+
 function main() {
-  if [[ "$1" == "true" ]]; then
+  if [[ "$1" == "LOCAL" ]]; then
+    delete_tmp
+  elif [[ "$1" == "ENG" ]]; then
     delete_all
   else
     for file in /var/lib/filecollector/*.gz
     do
       delete_file "$file"
     done
-    rm -rf /var/lib/filecollector/tmp
+    delete_tmp
   fi
 }
 
