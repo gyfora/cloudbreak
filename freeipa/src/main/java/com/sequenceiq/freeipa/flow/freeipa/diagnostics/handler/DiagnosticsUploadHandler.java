@@ -3,6 +3,8 @@ package com.sequenceiq.freeipa.flow.freeipa.diagnostics.handler;
 import static com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionHandlerSelectors.UPLOAD_DIAGNOSTICS_EVENT;
 import static com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionStateSelectors.START_DIAGNOSTICS_CLEANUP_EVENT;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -42,13 +44,14 @@ public class DiagnosticsUploadHandler extends EventSenderAwareHandler<Diagnostic
         DiagnosticsCollectionEvent data = event.getData();
         Long resourceId = data.getResourceId();
         String resourceCrn = data.getResourceCrn();
+        Map<String, Object> parameters = data.getParameters();
         try {
-            // TODO: start diagnostic upload
-            Thread.sleep(5000);
+            diagnosticsService.upload(resourceId, parameters);
             DiagnosticsCollectionEvent diagnosticsCollectionEvent = DiagnosticsCollectionEvent.builder()
                     .withResourceCrn(resourceCrn)
                     .withResourceId(resourceId)
                     .withSelector(START_DIAGNOSTICS_CLEANUP_EVENT.selector())
+                    .withParameters(parameters)
                     .build();
             eventSender().sendEvent(diagnosticsCollectionEvent, event.getHeaders());
         } catch (Exception e) {

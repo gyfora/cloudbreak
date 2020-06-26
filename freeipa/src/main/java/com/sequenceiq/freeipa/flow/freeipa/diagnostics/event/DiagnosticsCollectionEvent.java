@@ -25,6 +25,10 @@ public class DiagnosticsCollectionEvent extends BaseFlowEvent {
         return new DiagnosticsCollectionEventBuilder();
     }
 
+    public Map<String, Object> getParameters() {
+        return parameters;
+    }
+
     public static final class DiagnosticsCollectionEventBuilder {
 
         private String resourceCrn;

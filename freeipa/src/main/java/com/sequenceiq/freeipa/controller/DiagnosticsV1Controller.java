@@ -36,7 +36,7 @@ public class DiagnosticsV1Controller implements DiagnosticsV1Endpoint {
     @Override
     public OperationStatus collectDiagnostics(@Valid DiagnosticsCollectionRequest request) {
         String accountId = crnService.getCurrentAccountId();
-        diagnosticsService.collect(request, accountId, crnService.getUserCrn());
+        diagnosticsService.startDiagnosticsCollection(request, accountId, crnService.getUserCrn());
         return null;
     }
 

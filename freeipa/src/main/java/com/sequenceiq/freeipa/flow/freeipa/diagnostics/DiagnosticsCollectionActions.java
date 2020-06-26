@@ -39,6 +39,7 @@ public class DiagnosticsCollectionActions {
                         .withResourceId(payload.getResourceId())
                         .withResourceCrn(payload.getResourceCrn())
                         .withSelector(DiagnosticsCollectionHandlerSelectors.COLLECT_DIAGNOSTICS_EVENT.selector())
+                        .withParameters(payload.getParameters())
                         .build();
                 sendEvent(context, event);
             }
@@ -54,6 +55,7 @@ public class DiagnosticsCollectionActions {
                         .withResourceId(payload.getResourceId())
                         .withResourceCrn(payload.getResourceCrn())
                         .withSelector(DiagnosticsCollectionHandlerSelectors.UPLOAD_DIAGNOSTICS_EVENT.selector())
+                        .withParameters(payload.getParameters())
                         .build();
                 sendEvent(context, event);
             }
@@ -69,6 +71,7 @@ public class DiagnosticsCollectionActions {
                         .withResourceId(payload.getResourceId())
                         .withResourceCrn(payload.getResourceCrn())
                         .withSelector(DiagnosticsCollectionHandlerSelectors.CLEANUP_DIAGNOSTICS_EVENT.selector())
+                        .withParameters(payload.getParameters())
                         .build();
                 sendEvent(context, event);
             }
@@ -84,6 +87,7 @@ public class DiagnosticsCollectionActions {
                         .withResourceId(payload.getResourceId())
                         .withResourceCrn(payload.getResourceCrn())
                         .withSelector(DiagnosticsCollectionStateSelectors.FINALIZE_DIAGNOSTICS_COLLECTION_EVENT.selector())
+                        .withParameters(payload.getParameters())
                         .build();
                 sendEvent(context, event);
             }
@@ -99,6 +103,7 @@ public class DiagnosticsCollectionActions {
                         .withResourceId(payload.getResourceId())
                         .withResourceCrn(payload.getResourceCrn())
                         .withSelector(DiagnosticsCollectionStateSelectors.HANDLED_FAILED_DIAGNOSTICS_COLLECTION_EVENT.selector())
+                        .withParameters(payload.getParameters())
                         .build();
                 sendEvent(context, event);
             }
