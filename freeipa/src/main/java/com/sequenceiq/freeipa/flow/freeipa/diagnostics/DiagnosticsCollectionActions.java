@@ -3,8 +3,6 @@ package com.sequenceiq.freeipa.flow.freeipa.diagnostics;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -20,15 +18,27 @@ import com.sequenceiq.flow.core.FlowParameters;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionEvent;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionHandlerSelectors;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionStateSelectors;
-import com.sequenceiq.freeipa.service.stack.StackService;
 
 @Configuration
 public class DiagnosticsCollectionActions {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DiagnosticsCollectionActions.class);
 
-    @Inject
-    private StackService stackService;
+    @Bean(name = "DIAGNOSTICS_INIT_STATE")
+    public Action<?, ?> diagnosticsInitAction() {
+        return new AbstractDiagnosticsCollectionActions<>(DiagnosticsCollectionEvent.class) {
+            @Override
+            protected void doExecute(CommonContext context, DiagnosticsCollectionEvent payload, Map<Object, Object> variables) {
+                DiagnosticsCollectionEvent event = DiagnosticsCollectionEvent.builder()
+                        .withResourceId(payload.getResourceId())
+                        .withResourceCrn(payload.getResourceCrn())
+                        .withSelector(DiagnosticsCollectionHandlerSelectors.INIT_DIAGNOSTICS_EVENT.selector())
+                        .withParameters(payload.getParameters())
+                        .build();
+                sendEvent(context, event);
+            }
+        };
+    }
 
     @Bean(name = "DIAGNOSTICS_COLLECTION_STATE")
     public Action<?, ?> diagnosticsCollectionAction() {

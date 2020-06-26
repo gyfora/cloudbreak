@@ -25,7 +25,12 @@ public class DiagnosticsCollectionFlowConfig extends AbstractFlowConfiguration<D
             = new Transition.Builder<DiagnosticsCollectionsState, DiagnosticsCollectionStateSelectors>()
             .defaultFailureEvent(FAILED_DIAGNOSTICS_COLLECTION_EVENT)
 
-            .from(INIT_STATE).to(DIAGNOSTICS_COLLECTION_STATE)
+            .from(INIT_STATE).to(DIAGNOSTICS_INIT_STATE)
+            .event(START_DIAGNOSTICS_INIT_EVENT)
+            .failureState(DIAGNOSTICS_COLLECTION_FAILED_STATE)
+            .defaultFailureEvent()
+
+            .from(DIAGNOSTICS_INIT_STATE).to(DIAGNOSTICS_COLLECTION_STATE)
             .event(START_DIAGNOSTICS_COLLECTION_EVENT)
             .failureState(DIAGNOSTICS_COLLECTION_FAILED_STATE)
             .defaultFailureEvent()
@@ -77,7 +82,7 @@ public class DiagnosticsCollectionFlowConfig extends AbstractFlowConfiguration<D
     @Override
     public DiagnosticsCollectionStateSelectors[] getInitEvents() {
         return new DiagnosticsCollectionStateSelectors[] {
-                START_DIAGNOSTICS_COLLECTION_EVENT
+                START_DIAGNOSTICS_INIT_EVENT
         };
     }
 

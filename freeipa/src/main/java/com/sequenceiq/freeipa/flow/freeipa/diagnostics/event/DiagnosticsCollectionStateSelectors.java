@@ -3,6 +3,7 @@ package com.sequenceiq.freeipa.flow.freeipa.diagnostics.event;
 import com.sequenceiq.flow.core.FlowEvent;
 
 public enum DiagnosticsCollectionStateSelectors implements FlowEvent {
+    START_DIAGNOSTICS_INIT_EVENT,
     START_DIAGNOSTICS_COLLECTION_EVENT,
     START_DIAGNOSTICS_UPLOAD_EVENT,
     START_DIAGNOSTICS_CLEANUP_EVENT,

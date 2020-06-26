@@ -16,7 +16,6 @@ import com.sequenceiq.flow.reactor.api.handler.EventSenderAwareHandler;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionEvent;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionFailureEvent;
 import com.sequenceiq.freeipa.service.diagnostics.DiagnosticsService;
-import com.sequenceiq.freeipa.service.stack.StackService;
 
 import reactor.bus.Event;
 import reactor.bus.EventBus;
@@ -28,9 +27,6 @@ public class DiagnosticsCleanupHandler extends EventSenderAwareHandler<Diagnosti
 
     @Inject
     private EventBus eventBus;
-
-    @Inject
-    private StackService stackService;
 
     @Inject
     private DiagnosticsService diagnosticsService;

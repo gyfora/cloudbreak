@@ -1,7 +1,7 @@
 package com.sequenceiq.freeipa.flow.freeipa.diagnostics.handler;
 
-import static com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionHandlerSelectors.UPLOAD_DIAGNOSTICS_EVENT;
-import static com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionStateSelectors.START_DIAGNOSTICS_CLEANUP_EVENT;
+import static com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionHandlerSelectors.INIT_DIAGNOSTICS_EVENT;
+import static com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionStateSelectors.START_DIAGNOSTICS_COLLECTION_EVENT;
 
 import java.util.Map;
 
@@ -21,9 +21,9 @@ import reactor.bus.Event;
 import reactor.bus.EventBus;
 
 @Component
-public class DiagnosticsUploadHandler extends EventSenderAwareHandler<DiagnosticsCollectionEvent> {
+public class DiagnosticsInitHandler extends EventSenderAwareHandler<DiagnosticsCollectionEvent> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DiagnosticsUploadHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiagnosticsInitHandler.class);
 
     @Inject
     private EventBus eventBus;
@@ -31,7 +31,7 @@ public class DiagnosticsUploadHandler extends EventSenderAwareHandler<Diagnostic
     @Inject
     private DiagnosticsService diagnosticsService;
 
-    protected DiagnosticsUploadHandler(EventSender eventSender) {
+    public DiagnosticsInitHandler(EventSender eventSender) {
         super(eventSender);
     }
 
@@ -42,11 +42,11 @@ public class DiagnosticsUploadHandler extends EventSenderAwareHandler<Diagnostic
         String resourceCrn = data.getResourceCrn();
         Map<String, Object> parameters = data.getParameters();
         try {
-            diagnosticsService.upload(resourceId, parameters);
+            diagnosticsService.init(resourceId, parameters);
             DiagnosticsCollectionEvent diagnosticsCollectionEvent = DiagnosticsCollectionEvent.builder()
                     .withResourceCrn(resourceCrn)
                     .withResourceId(resourceId)
-                    .withSelector(START_DIAGNOSTICS_CLEANUP_EVENT.selector())
+                    .withSelector(START_DIAGNOSTICS_COLLECTION_EVENT.selector())
                     .withParameters(parameters)
                     .build();
             eventSender().sendEvent(diagnosticsCollectionEvent, event.getHeaders());
@@ -58,6 +58,6 @@ public class DiagnosticsUploadHandler extends EventSenderAwareHandler<Diagnostic
 
     @Override
     public String selector() {
-        return UPLOAD_DIAGNOSTICS_EVENT.selector();
+        return INIT_DIAGNOSTICS_EVENT.selector();
     }
 }

@@ -64,22 +64,31 @@ public class DiagnosticsService {
         DiagnosticsCollectionEvent diagnosticsCollectionEvent = DiagnosticsCollectionEvent.builder()
                 .withResourceId(stack.getId())
                 .withResourceCrn(stack.getResourceCrn())
-                .withSelector(DiagnosticsCollectionStateSelectors.START_DIAGNOSTICS_COLLECTION_EVENT.selector())
+                .withSelector(DiagnosticsCollectionStateSelectors.START_DIAGNOSTICS_INIT_EVENT.selector())
                 .withParameters(createDiagnosticCollectionParams(request))
                 .build();
         flowManager.notify(diagnosticsCollectionEvent, getFlowHeaders(userCrn));
     }
 
+    public void init(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
+        applyState("filecollector.init", stackId, parameters);
+    }
+
     public void collect(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
-        hostOrchestrator.applyDiagnosticsState(getGatewayConfigs(stackId), "filecollector.collect", parameters, new StackBasedExitCriteriaModel(stackId));
+        applyState("filecollector.collect", stackId, parameters);
     }
 
     public void upload(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
-        hostOrchestrator.applyDiagnosticsState(getGatewayConfigs(stackId), "filecollector.upload", parameters, new StackBasedExitCriteriaModel(stackId));
+        applyState("filecollector.upload", stackId, parameters);
     }
 
     public void cleanup(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
-        hostOrchestrator.applyDiagnosticsState(getGatewayConfigs(stackId), "filecollector.cleanup", parameters, new StackBasedExitCriteriaModel(stackId));
+        applyState("filecollector.cleanup", stackId, parameters);
+    }
+
+    private void applyState(String state, Long stackId,
+            Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
+        hostOrchestrator.applyDiagnosticsState(getGatewayConfigs(stackId), state, parameters, new StackBasedExitCriteriaModel(stackId));
     }
 
     private List<GatewayConfig> getGatewayConfigs(Long stackId) {
