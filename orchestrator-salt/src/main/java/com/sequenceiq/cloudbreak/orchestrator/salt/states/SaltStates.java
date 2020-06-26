@@ -262,7 +262,7 @@ public class SaltStates {
     public static ApplyResponse applyState(SaltConnector sc, String service, Target<String> target,
             Map<String, Object> inlinePillars) throws JsonProcessingException {
         String inlinePillarsStr = new ObjectMapper().writeValueAsString(inlinePillars);
-        return sc.run(target, "state.apply", LOCAL_ASYNC, ApplyResponse.class, service, String.format("pillar='%s'", inlinePillarsStr));
+        return sc.run(target, "state.apply", LOCAL_ASYNC, ApplyResponse.class, service, String.format("pillar=%s", inlinePillarsStr));
     }
 
     public static ApplyResponse applyStateAll(SaltConnector sc, String service) {

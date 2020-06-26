@@ -6,15 +6,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.sequenceiq.cloudbreak.telemetry.TelemetryClusterDetails;
-import com.sequenceiq.common.api.telemetry.model.VmLog;
 import com.sequenceiq.common.api.telemetry.model.Telemetry;
+import com.sequenceiq.common.api.telemetry.model.VmLog;
 
 @Service
 public class TelemetryCommonConfigService {
 
     private final String version;
 
-    public TelemetryCommonConfigService(@Value("${info.app.version:}") String version) {
+    private final AnonymizationRuleResolver anonymizationRuleResolver;
+
+    public TelemetryCommonConfigService(AnonymizationRuleResolver anonymizationRuleResolver,
+            @Value("${info.app.version:}") String version) {
+        this.anonymizationRuleResolver = anonymizationRuleResolver;
         this.version = version;
     }
 
@@ -30,7 +34,7 @@ public class TelemetryCommonConfigService {
                 .build();
         return new TelemetryCommonConfigView.Builder()
                 .withClusterDetails(clusterDetails)
-                .withRules(telemetry.getRules())
+                .withRules(anonymizationRuleResolver.decodeRules(telemetry.getRules()))
                 .withVmLogs(logs)
                 .build();
     }
