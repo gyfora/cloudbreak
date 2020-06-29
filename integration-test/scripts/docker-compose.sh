@@ -134,7 +134,8 @@ fi
 
 date
 echo -e "\n\033[1;96m--- Swagger check\033[0m\n"
-$INTEGCB_LOCATION/.deps/bin/docker-compose up swagger-diff
+$INTEGCB_LOCATION/.deps/bin/docker-compose up swagger-diff | tee swagger-diff.out
+grep "swagger diff finished succesfully" swagger-diff.out
 swaggerdiffresult=$?
 $INTEGCB_LOCATION/.deps/bin/docker-compose up swagger-validation | tee swagger-validation-result.out
 

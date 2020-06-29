@@ -20,6 +20,8 @@ for val in $DataList; do
 done
 IFS=$Field_Separator
 
+
+[ $cstatus -eq 0] && echo "swagger diff finished succesfully" || echo "swagger diff failed"
 exit $cstatus
 
 
