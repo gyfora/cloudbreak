@@ -25,7 +25,7 @@ function upload_file() {
 function upload_to_s3() {
   local filename=$1
   s3_filename="$(basename -- $filename)"
-  s3_file_path="s3://{{ filecollector.s3LogBucket }}/{{ filecollector.logFolder}}/bundles/${s3_filename}"
+  s3_file_path="{{ filecollector.s3BaseUrl }}/${s3_filename}"
   # --sse AES256
   /usr/bin/aws s3 cp --no-progress "${filename}" "${s3_file_path}"
 }
@@ -33,7 +33,7 @@ function upload_to_s3() {
 function upload_to_azure_storage() {
   local filename=$1
   az_storage_filename="$(basename -- $filename)"
-  az_storage_file_path="{{ filecollector.azureStorageDiagnosticsBaseUrl}}/${az_storage_filename}"
+  az_storage_file_path="{{ filecollector.adlsV2BaseUrl }}/${az_storage_filename}"
   {% if filecollector.azureInstanceMsi is defined and filecollector.azureInstanceMsi is not none and filecollector.azureInstanceMsi %}
   {% if grains['hostgroup'] == "idbroker" %}
   az_instance_msi="{{filecollector.azureIdBrokerInstanceMsi}}"

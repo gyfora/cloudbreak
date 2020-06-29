@@ -1,6 +1,5 @@
 package com.sequenceiq.freeipa.flow.freeipa.diagnostics;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,38 +14,29 @@ import com.sequenceiq.cloudbreak.orchestrator.exception.CloudbreakOrchestratorFa
 import com.sequenceiq.cloudbreak.orchestrator.host.HostOrchestrator;
 import com.sequenceiq.cloudbreak.orchestrator.model.GatewayConfig;
 import com.sequenceiq.flow.core.FlowConstants;
-import com.sequenceiq.freeipa.api.v1.diagnostics.model.DiagnosticsCollectionRequest;
 import com.sequenceiq.freeipa.entity.InstanceMetaData;
 import com.sequenceiq.freeipa.entity.Stack;
 import com.sequenceiq.freeipa.orchestrator.StackBasedExitCriteriaModel;
 import com.sequenceiq.freeipa.repository.InstanceMetaDataRepository;
-import com.sequenceiq.freeipa.repository.StackRepository;
 import com.sequenceiq.freeipa.service.GatewayConfigService;
 import com.sequenceiq.freeipa.service.freeipa.flow.FreeIpaFlowManager;
-import com.sequenceiq.freeipa.service.operation.OperationService;
 import com.sequenceiq.freeipa.service.stack.StackService;
 
 import reactor.bus.Event;
 
 @Service
-public class DiagnosticslFlowService {
+public class DiagnosticsFlowService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DiagnosticslFlowService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiagnosticsFlowService.class);
 
     @Inject
     private StackService stackService;
-
-    @Inject
-    private OperationService operationService;
 
     @Inject
     private FreeIpaFlowManager flowManager;
 
     @Inject
     private GatewayConfigService gatewayConfigService;
-
-    @Inject
-    private StackRepository stackRepository;
 
     @Inject
     private InstanceMetaDataRepository instanceMetaDataRepository;
@@ -83,11 +73,5 @@ public class DiagnosticslFlowService {
 
     private Event.Headers getFlowHeaders(String userCrn) {
         return new Event.Headers(Map.of(FlowConstants.FLOW_TRIGGER_USERCRN, userCrn));
-    }
-
-    private Map<String, Object> createDiagnosticCollectionParams(DiagnosticsCollectionRequest request) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("destination", request.getDestination().toString());
-        return parameters;
     }
 }

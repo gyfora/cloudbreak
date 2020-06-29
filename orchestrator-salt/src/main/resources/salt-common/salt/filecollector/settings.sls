@@ -1,29 +1,32 @@
-{%- from 'fluent/settings.sls' import fluent with context %}
 {% set filecollector = {} %}
 
-{% set log_folder = salt['pillar.get']('fluent:logFolderName') %}
-{% set s3_log_bucket = salt['pillar.get']('fluent:s3LogArchiveBucketName') %}
-{% set azure_storage_account = salt['pillar.get']('fluent:azureStorageAccount') %}
-{% set azure_container = salt['pillar.get']('fluent:azureContainer') %}
+{% set s3_base_url = salt['pillar.get']('filecollector:s3BaseUrl') %}
+{% set adlsv2_base_url = salt['pillar.get']('filecollector:adlsV2BaseUrl') %}
 {% set destination = salt['pillar.get']('filecollector:destination') %}
-{% set azure_storage_instance_msi = salt['pillar.get']('fluent:azureInstanceMsi') %}
-{% if salt['pillar.get']('fluent:azureIdBrokerInstanceMsi') %}
-    {% set azure_storage_idbroker_instance_msi = salt['pillar.get']('fluent:azureIdBrokerInstanceMsi') %}
+{% set issue = salt['pillar.get']('filecollector:issue') %}
+{% set description = salt['pillar.get']('filecollector:description') %}
+{% set start_time = salt['pillar.get']('filecollector:startTime') %}
+{% set end_time = salt['pillar.get']('filecollector:end_time') %}
+{% set description = salt['pillar.get']('filecollector:description') %}
+{% set label_filter = salt['pillar.get']('filecollector:labelFilter') %}
+{% set additional_logs = salt['pillar.get']('filecollector:additionalLogs') %}
+{% set azure_storage_instance_msi = salt['pillar.get']('filecollector:azureInstanceMsi') %}
+{% if salt['pillar.get']('filecollector:azureIdBrokerInstanceMsi') %}
+    {% set azure_storage_idbroker_instance_msi = salt['pillar.get']('filecollector:azureIdBrokerInstanceMsi') %}
 {% else %}
-    {% set azure_storage_idbroker_instance_msi = salt['pillar.get']('fluent:azureInstanceMsi') %}
-{% endif %}
-
-{% if azure_storage_account and azure_container %}
-  {% set azure_storage_diagnostics_base_url = 'https://' + azure_storage_account + '.dfs.core.windows.net/' + azure_container + log_folder + "/bundles" %}
-{% else %}
-  {% set azure_storage_diagnostics_base_url = '' %}
+    {% set azure_storage_idbroker_instance_msi = salt['pillar.get']('filecollector:azureInstanceMsi') %}
 {% endif %}
 
 {% do filecollector.update({
-    "logFolder": log_folder,
-    "s3LogBucket": s3_log_bucket,
     "destination": destination,
     "azureInstanceMsi": azure_storage_instance_msi,
     "azureIdBrokerInstanceMsi": azure_storage_idbroker_instance_msi,
-    "azureStorageDiagnosticsBaseUrl": azure_storage_diagnostics_base_url
+    "adlsV2BaseUrl": adlsv2_base_url,
+    "s3BaseUrl": s3_base_url,
+    "startTime": start_time,
+    "endTime": end_time,
+    "issue": issue,
+    "description": description,
+    "labelFilter": label_filter,
+    "additionalLogs": additional_logs
 }) %}

@@ -13,6 +13,10 @@ collector:
       label: cdp_info
       skipLabelFromPath: true
       useFullPath: false
+{% if filecollector.additionalLogs %}{% for extra_log in additionalLogs %}
+    - path: "{{ extra_log["path"] }}"
+      folderPrefix: logs
+      label: {{ extra_log["label"] }}{% endfor %}{% endif %}
     rules:{% for rule in telemetry.anonymizationRules %}{% set regex_value = rule["value"] %}{% set replacement = rule["replacement"] if rule["replacement"] else "[REDACTED]" %}
     - pattern: {{ regex_value }}
       replacement: "{{ replacement }}"{% endfor %}

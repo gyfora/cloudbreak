@@ -1,5 +1,6 @@
 package com.sequenceiq.freeipa.api.v1.diagnostics.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,10 @@ public class DiagnosticsCollectionRequest {
     private List<String> hosts;
 
     private List<String> labels;
+
+    private Date startTime;
+
+    private Date endTime;
 
     @NotNull
     private DiagnosticsDestination destination;
@@ -78,5 +83,21 @@ public class DiagnosticsCollectionRequest {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 }
