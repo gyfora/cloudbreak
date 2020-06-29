@@ -1,0 +1,4135 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "2.24.0-b139",
+    "title" : "Datalake API"
+  },
+  "basePath" : "/api",
+  "tags" : [ {
+    "name" : "authorization"
+  }, {
+    "name" : "sdx"
+  }, {
+    "name" : "internalsdx"
+  }, {
+    "name" : "sdxutils"
+  }, {
+    "name" : "flow"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/authorization/info" : {
+      "get" : {
+        "tags" : [ "authorization" ],
+        "summary" : "list of required permissions for APIs",
+        "description" : "",
+        "operationId" : "info",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ApiAuthorizationInfo"
+              },
+              "uniqueItems" : true
+            }
+          }
+        }
+      }
+    },
+    "/sdx/advertisedruntimes" : {
+      "get" : {
+        "tags" : [ "sdx" ],
+        "summary" : "list advertised datalake versions",
+        "description" : "",
+        "operationId" : "advertisedruntimes",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/AdvertisedRuntime"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sdx/crn/{clusterCrn}" : {
+      "get" : {
+        "tags" : [ "sdx" ],
+        "summary" : "get SDX cluster by crn",
+        "description" : "",
+        "operationId" : "getSdxByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "clusterCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SdxClusterResponse"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "sdx" ],
+        "summary" : "delete SDX cluster by crn",
+        "description" : "",
+        "operationId" : "deleteSdxByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "clusterCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "forced",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowIdentifier"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/{name}/manual_repair" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "repairs an sdxNode in the specified hostgroup",
+        "description" : "",
+        "operationId" : "repairSdxNode",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SdxRepairRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowIdentifier"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/crn/{crn}/sync" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "sync SDX cluster by crn",
+        "description" : "",
+        "operationId" : "syncSdxByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/sdx/envcrn/{envCrn}" : {
+      "get" : {
+        "tags" : [ "sdx" ],
+        "summary" : "get SDX cluster by environment crn",
+        "description" : "",
+        "operationId" : "getSdxByEnvCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "envCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SdxClusterResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sdx/{name}/detail" : {
+      "get" : {
+        "tags" : [ "sdx" ],
+        "summary" : "get SDX cluster detail",
+        "description" : "",
+        "operationId" : "getSdxDetail",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "entries",
+          "in" : "query",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SdxClusterDetailResponse"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/crn/{clusterCrn}/detail" : {
+      "get" : {
+        "tags" : [ "sdx" ],
+        "summary" : "get SDX cluster detail by crn",
+        "description" : "",
+        "operationId" : "getSdxDetailByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "clusterCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "entries",
+          "in" : "query",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SdxClusterDetailResponse"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/crn/{crn}/manual_repair" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "repairs an sdxNode in the specified hostgroup by crn",
+        "description" : "",
+        "operationId" : "repairSdxNodeByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SdxRepairRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowIdentifier"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/crn/{crn}/retry" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "retry sdx by crn",
+        "description" : "",
+        "operationId" : "retrySdxByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowIdentifier"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/{name}/start" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "start sdx",
+        "description" : "",
+        "operationId" : "startSdxByName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowIdentifier"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/crn/{crn}/start" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "start sdx by crn",
+        "description" : "",
+        "operationId" : "startSdxByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowIdentifier"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/{name}/stop" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "stop sdx",
+        "description" : "",
+        "operationId" : "stopSdxByName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowIdentifier"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/crn/{crn}/stop" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "stop sdx by crn",
+        "description" : "",
+        "operationId" : "stopSdxByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowIdentifier"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/{name}/retry" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "retry sdx",
+        "description" : "",
+        "operationId" : "retrySdx",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowIdentifier"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/{name}" : {
+      "get" : {
+        "tags" : [ "sdx" ],
+        "summary" : "get SDX cluster",
+        "description" : "",
+        "operationId" : "getSdx",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SdxClusterResponse"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "create SDX cluster",
+        "description" : "",
+        "operationId" : "createSdx",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SdxClusterRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SdxClusterResponse"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "sdx" ],
+        "summary" : "delete SDX cluster",
+        "description" : "",
+        "operationId" : "deleteSdx",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "forced",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowIdentifier"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/list" : {
+      "get" : {
+        "tags" : [ "sdx" ],
+        "summary" : "list SDX clusters",
+        "description" : "",
+        "operationId" : "listSdx",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "envName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SdxClusterResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sdx/{name}/sync" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "sync SDX cluster by name",
+        "description" : "",
+        "operationId" : "syncSdx",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/sdx/versions" : {
+      "get" : {
+        "tags" : [ "sdx" ],
+        "summary" : "list datalake versions",
+        "description" : "",
+        "operationId" : "versions",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/sdx/{name}" : {
+      "post" : {
+        "tags" : [ "internalsdx" ],
+        "summary" : "create internal SDX cluster",
+        "description" : "",
+        "operationId" : "createInternalSdx",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SdxInternalClusterRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SdxClusterResponse"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/{name}/upgrade" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "upgrades the datalake cluster",
+        "description" : "",
+        "operationId" : "upgradeDatalakeCluster",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SdxUpgradeRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SdxUpgradeResponse"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/crn/{crn}/upgrade" : {
+      "post" : {
+        "tags" : [ "sdx" ],
+        "summary" : "upgrades the datalake cluster",
+        "description" : "",
+        "operationId" : "upgradeDatalakeClusterByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SdxUpgradeRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SdxUpgradeResponse"
+            }
+          }
+        }
+      }
+    },
+    "/sdx/utils/client" : {
+      "get" : {
+        "tags" : [ "sdxutils" ],
+        "summary" : "checks the client version",
+        "description" : "",
+        "operationId" : "checkClientVersionOfSdx",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "version",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/VersionCheckResult"
+            }
+          }
+        }
+      }
+    },
+    "/flow/check/chainId/{chainId}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Check if there is a running flow for chain id",
+        "description" : "Flow log operations",
+        "operationId" : "hasFlowRunningByChainId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "chainId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowCheckResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/check/flowId/{flowId}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Check if there is a running flow for flow id",
+        "description" : "Flow log operations",
+        "operationId" : "hasFlowRunningByFlowId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flowId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowCheckResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/name/{resourceName}/last" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get last flow log for resource by resource name",
+        "description" : "Flow log operations",
+        "operationId" : "getLastFlowByResourceName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowLogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/{flowId}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get flow logs by flow id",
+        "description" : "Flow log operations",
+        "operationId" : "getFlowLogsByFlowId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flowId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FlowLogResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/{flowId}/last" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get last flow log by flow id",
+        "description" : "Flow log operations",
+        "operationId" : "getLastFlowById",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flowId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowLogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/crn/{resourceCrn}/last" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get last flow log for resource by resource CRN",
+        "description" : "Flow log operations",
+        "operationId" : "getLastFlowByResourceCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowLogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/crn/{resourceCrn}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get flow logs for resource by resource CRN",
+        "description" : "Flow log operations",
+        "operationId" : "getFlowLogsByResourceCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FlowLogResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/name/{resourceName}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get flow logs for resource by resource name",
+        "description" : "Flow log operations",
+        "operationId" : "getFlowLogsByResourceName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FlowLogResponse"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ApiAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "path" : {
+          "type" : "string"
+        },
+        "httpMethod" : {
+          "type" : "string"
+        },
+        "newAuthorization" : {
+          "$ref" : "#/definitions/NewAuthorizationInfo"
+        },
+        "legacyAuthorization" : {
+          "$ref" : "#/definitions/LegacyAuthorizationInfo"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FieldAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "fieldName" : {
+          "type" : "string"
+        },
+        "permission" : {
+          "type" : "string"
+        }
+      }
+    },
+    "LegacyAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "permissionNeeded" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "NewAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "permissionsNeededForApi" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "permissionsNeededForRequestObject" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/FieldAuthorizationInfo"
+          }
+        }
+      }
+    },
+    "AdvertisedRuntime" : {
+      "type" : "object",
+      "properties" : {
+        "runtimeVersion" : {
+          "type" : "string"
+        },
+        "defaultRuntimeVersion" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "FlowIdentifier" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "enum" : [ "FLOW", "FLOW_CHAIN", "NOT_TRIGGERED" ]
+        },
+        "pollableId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SdxClusterResponse" : {
+      "type" : "object",
+      "properties" : {
+        "crn" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "clusterShape" : {
+          "type" : "string",
+          "enum" : [ "CUSTOM", "LIGHT_DUTY", "MEDIUM_DUTY_HA" ]
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "REQUESTED", "WAIT_FOR_ENVIRONMENT", "ENVIRONMENT_CREATED", "STACK_CREATION_IN_PROGRESS", "STACK_CREATION_FINISHED", "STACK_DELETED", "STACK_DELETION_IN_PROGRESS", "EXTERNAL_DATABASE_CREATION_IN_PROGRESS", "EXTERNAL_DATABASE_DELETION_IN_PROGRESS", "EXTERNAL_DATABASE_START_IN_PROGRESS", "EXTERNAL_DATABASE_STARTED", "EXTERNAL_DATABASE_STOP_IN_PROGRESS", "EXTERNAL_DATABASE_STOPPED", "EXTERNAL_DATABASE_CREATED", "RUNNING", "PROVISIONING_FAILED", "REPAIR_IN_PROGRESS", "REPAIR_FAILED", "CHANGE_IMAGE_IN_PROGRESS", "UPGRADE_IN_PROGRESS", "UPGRADE_FAILED", "DATALAKE_UPGRADE_IN_PROGRESS", "DATALAKE_UPGRADE_FAILED", "DELETE_REQUESTED", "DELETED", "DELETE_FAILED", "DELETED_ON_PROVIDER_SIDE", "START_IN_PROGRESS", "START_FAILED", "STOP_IN_PROGRESS", "STOP_FAILED", "STOPPED", "CLUSTER_AMBIGUOUS", "SYNC_FAILED" ]
+        },
+        "statusReason" : {
+          "type" : "string"
+        },
+        "environmentName" : {
+          "type" : "string"
+        },
+        "environmentCrn" : {
+          "type" : "string"
+        },
+        "databaseServerCrn" : {
+          "type" : "string"
+        },
+        "stackCrn" : {
+          "type" : "string"
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "cloudStorageBaseLocation" : {
+          "type" : "string"
+        },
+        "cloudStorageFileSystemType" : {
+          "type" : "string",
+          "enum" : [ "WASB_INTEGRATED", "GCS", "WASB", "ADLS", "ADLS_GEN_2", "S3" ]
+        },
+        "runtime" : {
+          "type" : "string"
+        },
+        "flowIdentifier" : {
+          "$ref" : "#/definitions/FlowIdentifier"
+        },
+        "rangerRazEnabled" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "SdxRepairRequest" : {
+      "type" : "object",
+      "properties" : {
+        "hostGroupName" : {
+          "type" : "string"
+        },
+        "hostGroupNames" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "AccountMappingBase" : {
+      "type" : "object",
+      "properties" : {
+        "groupMappings" : {
+          "type" : "object",
+          "description" : "group mappings",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "userMappings" : {
+          "type" : "object",
+          "description" : "user mappings",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "AdlsCloudStorageV1Parameters" : {
+      "type" : "object",
+      "required" : [ "accountName", "clientId", "credential" ],
+      "properties" : {
+        "accountName" : {
+          "type" : "string"
+        },
+        "clientId" : {
+          "type" : "string"
+        },
+        "credential" : {
+          "type" : "string"
+        },
+        "tenantId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AdlsGen2CloudStorageV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "accountKey" : {
+          "type" : "string"
+        },
+        "accountName" : {
+          "type" : "string"
+        },
+        "managedIdentity" : {
+          "type" : "string"
+        },
+        "secure" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "AnonymizationRule" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        },
+        "replacement" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AttachedClusterInfoV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "id of the resource"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource"
+        }
+      }
+    },
+    "AwsEncryptionV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "encryption type for vm (DEFAULT|CUSTOM|NONE)",
+          "enum" : [ "DEFAULT", "NONE", "CUSTOM" ]
+        },
+        "key" : {
+          "type" : "string",
+          "description" : "encryption key for vm"
+        }
+      }
+    },
+    "AwsInstanceGroupV4Parameters" : {
+      "type" : "object"
+    },
+    "AwsInstanceTemplateV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "spot" : {
+          "description" : "aws specific spot instance parameters for template",
+          "$ref" : "#/definitions/AwsInstanceTemplateV4SpotParameters"
+        },
+        "encryption" : {
+          "description" : "encryption for vm",
+          "$ref" : "#/definitions/AwsEncryptionV4Parameters"
+        }
+      }
+    },
+    "AwsInstanceTemplateV4SpotParameters" : {
+      "type" : "object",
+      "properties" : {
+        "percentage" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "percentage of spot instances launched in instance group",
+          "minimum" : 0,
+          "maximum" : 100
+        }
+      }
+    },
+    "AwsNetworkV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "vpcId" : {
+          "type" : "string"
+        },
+        "internetGatewayId" : {
+          "type" : "string"
+        },
+        "subnetId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AwsStackV4Parameters" : {
+      "type" : "object"
+    },
+    "AwsStorageParameters" : {
+      "type" : "object",
+      "properties" : {
+        "s3Guard" : {
+          "$ref" : "#/definitions/S3Guard"
+        }
+      }
+    },
+    "AzureAvailabiltySetV4" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "faultDomainCount" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "updateDomainCount" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "AzureInstanceGroupV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "availabilitySet" : {
+          "$ref" : "#/definitions/AzureAvailabiltySetV4"
+        }
+      }
+    },
+    "AzureInstanceTemplateV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "privateId" : {
+          "type" : "string",
+          "description" : "private id for azure"
+        },
+        "encrypted" : {
+          "type" : "boolean"
+        },
+        "managedDisk" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "AzureNetworkV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "noPublicIp" : {
+          "type" : "boolean"
+        },
+        "resourceGroupName" : {
+          "type" : "string"
+        },
+        "networkId" : {
+          "type" : "string"
+        },
+        "subnetId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AzureStackV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "resourceGroupName" : {
+          "type" : "string"
+        },
+        "encryptStorage" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "BlueprintV4Response" : {
+      "type" : "object",
+      "required" : [ "crn", "name" ],
+      "properties" : {
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "blueprint" : {
+          "type" : "string",
+          "description" : "blueprint, set this or the url field"
+        },
+        "tags" : {
+          "type" : "object",
+          "description" : "user defined tags for blueprint",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "^[^;\\/%]*$"
+        },
+        "crn" : {
+          "type" : "string",
+          "description" : "the unique crn of the resource"
+        },
+        "hostGroupCount" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "number of host groups"
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "status of the blueprint",
+          "enum" : [ "DEFAULT", "DEFAULT_DELETED", "USER_MANAGED", "OUTDATED" ]
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "CloudStorageResponse" : {
+      "type" : "object",
+      "properties" : {
+        "aws" : {
+          "$ref" : "#/definitions/AwsStorageParameters"
+        },
+        "locations" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/StorageLocationBase"
+          }
+        },
+        "identities" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/StorageIdentityBase"
+          }
+        },
+        "accountMapping" : {
+          "description" : "cloud storage account mapping",
+          "$ref" : "#/definitions/AccountMappingBase"
+        }
+      }
+    },
+    "CloudbreakDetailsV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "version" : {
+          "type" : "string",
+          "description" : "version of the Cloudbreak that provisioned the stack"
+        }
+      }
+    },
+    "CloudbreakEventV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "eventType" : {
+          "type" : "string",
+          "description" : "type of the event"
+        },
+        "eventTimestamp" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "timestamp of the event"
+        },
+        "eventMessage" : {
+          "type" : "string",
+          "description" : "message of the event"
+        },
+        "userId" : {
+          "type" : "string",
+          "description" : "User ID in the new authorization model"
+        },
+        "notificationType" : {
+          "type" : "string",
+          "description" : "Type of the notification to be identifiable by the UI"
+        },
+        "cloud" : {
+          "type" : "string",
+          "description" : "type of cloud provider"
+        },
+        "region" : {
+          "type" : "string",
+          "description" : "region of the stack"
+        },
+        "availabilityZone" : {
+          "type" : "string",
+          "description" : "availability zone of the stack"
+        },
+        "blueprintId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "blueprint id for the cluster"
+        },
+        "blueprintName" : {
+          "type" : "string",
+          "description" : "gathered from blueprintName field from the blueprint"
+        },
+        "clusterId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "id of the cluster"
+        },
+        "clusterName" : {
+          "type" : "string",
+          "description" : "name of the cluster"
+        },
+        "stackCrn" : {
+          "type" : "string",
+          "description" : "the unique crn of the resource"
+        },
+        "stackName" : {
+          "type" : "string",
+          "description" : "name of the stack"
+        },
+        "stackStatus" : {
+          "type" : "string",
+          "description" : "status of the stack",
+          "enum" : [ "REQUESTED", "CREATE_IN_PROGRESS", "AVAILABLE", "UPDATE_IN_PROGRESS", "UPDATE_REQUESTED", "UPDATE_FAILED", "CREATE_FAILED", "ENABLE_SECURITY_FAILED", "PRE_DELETE_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED_ON_PROVIDER_SIDE", "DELETE_COMPLETED", "STOPPED", "STOP_REQUESTED", "START_REQUESTED", "STOP_IN_PROGRESS", "START_IN_PROGRESS", "START_FAILED", "STOP_FAILED", "WAIT_FOR_SYNC", "MAINTENANCE_MODE_ENABLED", "AMBIGUOUS", "EXTERNAL_DATABASE_CREATION_IN_PROGRESS", "EXTERNAL_DATABASE_CREATION_FAILED", "EXTERNAL_DATABASE_DELETION_IN_PROGRESS", "EXTERNAL_DATABASE_DELETION_FINISHED", "EXTERNAL_DATABASE_DELETION_FAILED" ]
+        },
+        "nodeCount" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "number of nodes"
+        },
+        "instanceGroup" : {
+          "type" : "string",
+          "description" : "name of the instance group"
+        },
+        "clusterStatus" : {
+          "type" : "string",
+          "description" : "status of the cluster",
+          "enum" : [ "REQUESTED", "CREATE_IN_PROGRESS", "AVAILABLE", "UPDATE_IN_PROGRESS", "UPDATE_REQUESTED", "UPDATE_FAILED", "CREATE_FAILED", "ENABLE_SECURITY_FAILED", "PRE_DELETE_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED_ON_PROVIDER_SIDE", "DELETE_COMPLETED", "STOPPED", "STOP_REQUESTED", "START_REQUESTED", "STOP_IN_PROGRESS", "START_IN_PROGRESS", "START_FAILED", "STOP_FAILED", "WAIT_FOR_SYNC", "MAINTENANCE_MODE_ENABLED", "AMBIGUOUS", "EXTERNAL_DATABASE_CREATION_IN_PROGRESS", "EXTERNAL_DATABASE_CREATION_FAILED", "EXTERNAL_DATABASE_DELETION_IN_PROGRESS", "EXTERNAL_DATABASE_DELETION_FINISHED", "EXTERNAL_DATABASE_DELETION_FAILED" ]
+        },
+        "workspaceId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Workspace ID of the resource"
+        },
+        "tenantName" : {
+          "type" : "string",
+          "description" : "name of the current tenant"
+        },
+        "ldapDetails" : {
+          "$ref" : "#/definitions/LdapDetails"
+        },
+        "rdsDetails" : {
+          "$ref" : "#/definitions/RdsDetails"
+        }
+      }
+    },
+    "ClouderaManagerProductV4Response" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the Cloudera manager product"
+        },
+        "version" : {
+          "type" : "string",
+          "description" : "version of the Cloudera manager product"
+        },
+        "parcel" : {
+          "type" : "string",
+          "description" : "parcel url of the Cloudera manager product"
+        },
+        "csd" : {
+          "type" : "array",
+          "description" : "CSD (service descriptor) urls for the Cloudera manager product",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "ClouderaManagerRepositoryV4Response" : {
+      "type" : "object",
+      "required" : [ "version" ],
+      "properties" : {
+        "version" : {
+          "type" : "string",
+          "description" : "version of the cluster manager"
+        },
+        "baseUrl" : {
+          "type" : "string",
+          "description" : "url of the cluster manager repository"
+        },
+        "gpgKeyUrl" : {
+          "type" : "string",
+          "description" : "gpg key of the cluster manager repository"
+        }
+      }
+    },
+    "ClouderaManagerV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "repository" : {
+          "description" : "details of the Cloudera Manager package repository",
+          "$ref" : "#/definitions/ClouderaManagerRepositoryV4Response"
+        },
+        "products" : {
+          "type" : "array",
+          "description" : "list of Cloudera Manager product detials",
+          "items" : {
+            "$ref" : "#/definitions/ClouderaManagerProductV4Response"
+          }
+        },
+        "enableAutoTls" : {
+          "type" : "boolean",
+          "description" : "Enable autotls on clusters generated by Cloudera Manager"
+        }
+      }
+    },
+    "CloudwatchParams" : {
+      "type" : "object",
+      "required" : [ "instanceProfile" ],
+      "properties" : {
+        "instanceProfile" : {
+          "type" : "string"
+        },
+        "region" : {
+          "type" : "string",
+          "description" : "telemetry - CloudWatch related AWS region (should be used only outside of AWS platform)"
+        },
+        "streamKey" : {
+          "type" : "string",
+          "description" : "telemetry - CloudWatch releated parameters",
+          "enum" : [ "HOSTNAME", "COMPONENT" ]
+        }
+      }
+    },
+    "ClusterExposedServiceV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "serviceName" : {
+          "type" : "string"
+        },
+        "displayName" : {
+          "type" : "string"
+        },
+        "knoxService" : {
+          "type" : "string"
+        },
+        "serviceUrl" : {
+          "type" : "string"
+        },
+        "open" : {
+          "type" : "boolean"
+        },
+        "mode" : {
+          "type" : "string",
+          "enum" : [ "SSO_PROVIDER", "SSO_PROVIDER_FROM_UMS", "NONE", "PAM" ]
+        }
+      }
+    },
+    "ClusterV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "id of the resource"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource"
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "status of the cluster",
+          "enum" : [ "REQUESTED", "CREATE_IN_PROGRESS", "AVAILABLE", "UPDATE_IN_PROGRESS", "UPDATE_REQUESTED", "UPDATE_FAILED", "CREATE_FAILED", "ENABLE_SECURITY_FAILED", "PRE_DELETE_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED_ON_PROVIDER_SIDE", "DELETE_COMPLETED", "STOPPED", "STOP_REQUESTED", "START_REQUESTED", "STOP_IN_PROGRESS", "START_IN_PROGRESS", "START_FAILED", "STOP_FAILED", "WAIT_FOR_SYNC", "MAINTENANCE_MODE_ENABLED", "AMBIGUOUS", "EXTERNAL_DATABASE_CREATION_IN_PROGRESS", "EXTERNAL_DATABASE_CREATION_FAILED", "EXTERNAL_DATABASE_DELETION_IN_PROGRESS", "EXTERNAL_DATABASE_DELETION_FINISHED", "EXTERNAL_DATABASE_DELETION_FAILED" ]
+        },
+        "hoursUp" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "duration - how long the cluster is running in hours"
+        },
+        "minutesUp" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "duration - how long the cluster is running in minutes (minus hours)"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource"
+        },
+        "statusReason" : {
+          "type" : "string",
+          "description" : "status message of the cluster"
+        },
+        "databases" : {
+          "type" : "array",
+          "description" : "Database configurations for the cluster",
+          "items" : {
+            "$ref" : "#/definitions/DatabaseV4Response"
+          }
+        },
+        "proxyConfigCrn" : {
+          "type" : "string",
+          "description" : "proxy CRN for the cluster"
+        },
+        "proxyConfigName" : {
+          "type" : "string"
+        },
+        "cloudStorage" : {
+          "description" : "filesystem for a specific stack",
+          "$ref" : "#/definitions/CloudStorageResponse"
+        },
+        "cm" : {
+          "$ref" : "#/definitions/ClouderaManagerV4Response"
+        },
+        "gateway" : {
+          "$ref" : "#/definitions/GatewayV4Response"
+        },
+        "attributes" : {
+          "type" : "object",
+          "description" : "Additional information for ambari cluster",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        },
+        "customContainers" : {
+          "description" : "custom containers",
+          "$ref" : "#/definitions/CustomContainerV4Response"
+        },
+        "customQueue" : {
+          "type" : "string",
+          "description" : "custom queue for yarn orchestrator"
+        },
+        "creationFinished" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Epoch time of cluster creation finish"
+        },
+        "uptime" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "duration - how long the cluster is running in milliseconds"
+        },
+        "exposedServices" : {
+          "type" : "object",
+          "description" : "cluster exposed services for topologies",
+          "additionalProperties" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/ClusterExposedServiceV4Response"
+            }
+          }
+        },
+        "workspace" : {
+          "description" : "workspace of the resource",
+          "$ref" : "#/definitions/WorkspaceResourceV4Response"
+        },
+        "cmMgmtUser" : {
+          "description" : "CM username for shared usage",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "cmMgmtPassword" : {
+          "description" : "CM password for shared usage",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "blueprint" : {
+          "description" : "blueprint for the cluster",
+          "$ref" : "#/definitions/BlueprintV4Response"
+        },
+        "extendedBlueprintText" : {
+          "type" : "string",
+          "description" : "blueprint, set this or the url field"
+        },
+        "serverIp" : {
+          "type" : "string",
+          "description" : "public ambari ip of the stack"
+        },
+        "serverFqdn" : {
+          "type" : "string",
+          "description" : "FQDN of the gateway node for the stack"
+        },
+        "serverUrl" : {
+          "type" : "string",
+          "description" : "public ambari url"
+        },
+        "databaseServerCrn" : {
+          "type" : "string",
+          "description" : "Contains valid Crn for a redbeams database server"
+        },
+        "rangerRazEnabled" : {
+          "type" : "boolean",
+          "description" : "Enables Ranger Raz for the cluster on ADLSv2."
+        }
+      }
+    },
+    "CustomContainerV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "definitions" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "CustomDomainSettingsV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "domainName" : {
+          "type" : "string",
+          "description" : "custom domain name for the nodes in the stack"
+        },
+        "hostname" : {
+          "type" : "string",
+          "description" : "custom hostname for nodes in the stack"
+        },
+        "clusterNameAsSubdomain" : {
+          "type" : "boolean",
+          "description" : "using the cluster name to create subdomain"
+        },
+        "hostgroupNameAsHostname" : {
+          "type" : "boolean",
+          "description" : "using the hostgroup names to create hostnames"
+        }
+      }
+    },
+    "DatabaseResponse" : {
+      "type" : "object",
+      "required" : [ "availabilityType" ],
+      "properties" : {
+        "availabilityType" : {
+          "type" : "string",
+          "enum" : [ "NONE", "NON_HA", "HA" ]
+        }
+      }
+    },
+    "DatabaseV4Response" : {
+      "type" : "object",
+      "required" : [ "connectionDriver", "connectionURL", "databaseEngine", "databaseEngineDisplayName", "name", "type" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Name of the RDS configuration resource",
+          "minLength" : 5,
+          "maxLength" : 100,
+          "pattern" : "(^[a-z][-a-z0-9]*[a-z0-9]$)"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "connectionURL" : {
+          "type" : "string",
+          "description" : "JDBC connection URL in the form of jdbc:<db-type>://<address>:<port>/<db>"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "Type of RDS, aka the service name that will use the RDS like HIVE, DRUID, SUPERSET, RANGER, etc."
+        },
+        "connectorJarUrl" : {
+          "type" : "string",
+          "description" : "URL that points to the jar of the connection driver(connector)"
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "id of the resource"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "creation time of the resource in long"
+        },
+        "clusterNames" : {
+          "type" : "array",
+          "description" : "list of clusters which use config",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "databaseEngine" : {
+          "type" : "string",
+          "description" : "Name of the external database engine (MYSQL, POSTGRES...)"
+        },
+        "connectionDriver" : {
+          "type" : "string",
+          "description" : "Name of the JDBC connection driver (for example: 'org.postgresql.Driver')"
+        },
+        "databaseEngineDisplayName" : {
+          "type" : "string",
+          "description" : "Display name of the external database engine (Mysql, PostgreSQL...)"
+        },
+        "connectionUserName" : {
+          "description" : "Username to use for the jdbc connection",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "connectionPassword" : {
+          "description" : "Password to use for the jdbc connection",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "workspace" : {
+          "description" : "workspace of the resource",
+          "$ref" : "#/definitions/WorkspaceResourceV4Response"
+        }
+      }
+    },
+    "FeatureSetting" : {
+      "type" : "object",
+      "required" : [ "enabled" ],
+      "properties" : {
+        "enabled" : {
+          "type" : "boolean",
+          "description" : "enabled"
+        }
+      }
+    },
+    "FeaturesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "clusterLogsCollection" : {
+          "description" : "enable cluster logs collection",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "monitoring" : {
+          "description" : "enable monitoring for cluster services",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "metering" : {
+          "description" : "Telemetry metering feature setting",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "useSharedAltusCredential" : {
+          "description" : "enable shared Altus credential usage",
+          "$ref" : "#/definitions/FeatureSetting"
+        }
+      }
+    },
+    "GatewayTopologyV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "topologyName" : {
+          "type" : "string",
+          "description" : "Knox topology name"
+        },
+        "exposedServices" : {
+          "type" : "array",
+          "description" : "exposed Knox services - those services that should be accessible through Knox gateway.",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "GatewayV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "topologies" : {
+          "type" : "array",
+          "description" : "Topology definitions of the gateway.",
+          "items" : {
+            "$ref" : "#/definitions/GatewayTopologyV4Response"
+          }
+        },
+        "tokenCert" : {
+          "type" : "string",
+          "description" : "SSO Provider certificate"
+        },
+        "gatewayType" : {
+          "type" : "string",
+          "description" : "Knox gateway type",
+          "enum" : [ "CENTRAL", "INDIVIDUAL" ]
+        },
+        "ssoType" : {
+          "type" : "string",
+          "description" : "Knox SSO type",
+          "enum" : [ "SSO_PROVIDER", "NONE" ]
+        }
+      }
+    },
+    "GcpEncryptionV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "encryption type for vm (DEFAULT|CUSTOM|NONE)",
+          "enum" : [ "DEFAULT", "NONE", "CUSTOM" ]
+        },
+        "key" : {
+          "type" : "string",
+          "description" : "encryption key for vm"
+        },
+        "keyEncryptionMethod" : {
+          "type" : "string",
+          "description" : "encryption method for the key (RAW|RSA)",
+          "enum" : [ "RAW", "RSA", "KMS" ]
+        }
+      }
+    },
+    "GcpInstanceGroupV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "opId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "GcpInstanceTemplateV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "encryption" : {
+          "description" : "encryption for vm",
+          "$ref" : "#/definitions/GcpEncryptionV4Parameters"
+        },
+        "preemptible" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "GcpNetworkV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "networkId" : {
+          "type" : "string"
+        },
+        "subnetId" : {
+          "type" : "string"
+        },
+        "sharedProjectId" : {
+          "type" : "string"
+        },
+        "noPublicIp" : {
+          "type" : "boolean"
+        },
+        "noFirewallRules" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "GcpStackV4Parameters" : {
+      "type" : "object"
+    },
+    "GcsCloudStorageV1Parameters" : {
+      "type" : "object",
+      "required" : [ "serviceAccountEmail" ],
+      "properties" : {
+        "serviceAccountEmail" : {
+          "type" : "string"
+        }
+      }
+    },
+    "HardwareInfoGroupV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "recoveryMode" : {
+          "type" : "string",
+          "description" : "recovery mode of the hostgroup's nodes",
+          "enum" : [ "MANUAL", "AUTO" ]
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "hardwareInfos" : {
+          "type" : "array",
+          "description" : "Metadata of instances.",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/HardwareInfoV4Response"
+          }
+        }
+      }
+    },
+    "HardwareInfoV4Response" : {
+      "type" : "object",
+      "required" : [ "groupName", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource"
+        },
+        "groupName" : {
+          "type" : "string",
+          "description" : "name of the host group"
+        },
+        "state" : {
+          "type" : "string",
+          "description" : "state of the host"
+        },
+        "privateIp" : {
+          "type" : "string",
+          "description" : "private ip of the insctance"
+        },
+        "publicIp" : {
+          "type" : "string",
+          "description" : "public ip of the instance"
+        },
+        "sshPort" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "instanceId" : {
+          "type" : "string",
+          "description" : "id of the instance"
+        },
+        "ambariServer" : {
+          "type" : "boolean",
+          "description" : "ambari server address"
+        },
+        "discoveryFQDN" : {
+          "type" : "string",
+          "description" : "the fully qualified domain name of the node in the service discovery cluster"
+        },
+        "instanceGroup" : {
+          "type" : "string",
+          "description" : "name of the instance group"
+        },
+        "instanceStatus" : {
+          "type" : "string",
+          "description" : "status of the instance",
+          "enum" : [ "REQUESTED", "FAILED", "CREATED", "ORCHESTRATION_FAILED", "SERVICES_RUNNING", "SERVICES_HEALTHY", "SERVICES_UNHEALTHY", "WAITING_FOR_REPAIR", "STOPPED", "DELETED_ON_PROVIDER_SIDE", "DELETED_BY_PROVIDER", "DELETE_REQUESTED", "DECOMMISSIONED", "DECOMMISSION_FAILED", "TERMINATED" ]
+        },
+        "instanceMetadataType" : {
+          "type" : "string",
+          "description" : "type of the instance",
+          "enum" : [ "GATEWAY", "GATEWAY_PRIMARY", "CORE" ]
+        },
+        "imageName" : {
+          "type" : "string"
+        },
+        "os" : {
+          "type" : "string"
+        },
+        "osType" : {
+          "type" : "string"
+        },
+        "imageCatalogUrl" : {
+          "type" : "string"
+        },
+        "imageId" : {
+          "type" : "string"
+        },
+        "imageCatalogName" : {
+          "type" : "string"
+        },
+        "packageVersions" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "template" : {
+          "description" : "instancegroup related template",
+          "$ref" : "#/definitions/InstanceTemplateV4Response"
+        }
+      }
+    },
+    "InstanceGroupV4Response" : {
+      "type" : "object",
+      "required" : [ "name", "nodeCount" ],
+      "properties" : {
+        "nodeCount" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "number of nodes",
+          "minimum" : 0,
+          "maximum" : 100000
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the instance group"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "type of the instance group, default value is CORE",
+          "enum" : [ "CORE", "GATEWAY" ]
+        },
+        "azure" : {
+          "description" : "azure specific parameters for instance group",
+          "$ref" : "#/definitions/AzureInstanceGroupV4Parameters"
+        },
+        "gcp" : {
+          "description" : "gcp specific parameters for instance group",
+          "$ref" : "#/definitions/GcpInstanceGroupV4Parameters"
+        },
+        "aws" : {
+          "description" : "aws specific parameters for instance group",
+          "$ref" : "#/definitions/AwsInstanceGroupV4Parameters"
+        },
+        "openstack" : {
+          "description" : "openstack specific parameters for instance group",
+          "$ref" : "#/definitions/OpenStackInstanceGroupV4Parameters"
+        },
+        "recoveryMode" : {
+          "type" : "string",
+          "description" : "recovery mode of the hostgroup's nodes",
+          "enum" : [ "MANUAL", "AUTO" ]
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "id of the resource"
+        },
+        "metadata" : {
+          "type" : "array",
+          "description" : "metadata of instances",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/InstanceMetaDataV4Response"
+          }
+        },
+        "template" : {
+          "description" : "instancegroup related template",
+          "$ref" : "#/definitions/InstanceTemplateV4Response"
+        },
+        "securityGroup" : {
+          "description" : "instancegroup related securitygroup",
+          "$ref" : "#/definitions/SecurityGroupV4Response"
+        },
+        "recipes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RecipeV4Response"
+          }
+        }
+      }
+    },
+    "InstanceMetaDataV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "privateIp" : {
+          "type" : "string",
+          "description" : "private ip of the insctance"
+        },
+        "publicIp" : {
+          "type" : "string",
+          "description" : "public ip of the instance"
+        },
+        "sshPort" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "instanceId" : {
+          "type" : "string",
+          "description" : "id of the instance"
+        },
+        "ambariServer" : {
+          "type" : "boolean",
+          "description" : "ambari server address"
+        },
+        "discoveryFQDN" : {
+          "type" : "string",
+          "description" : "the fully qualified domain name of the node in the service discovery cluster"
+        },
+        "instanceGroup" : {
+          "type" : "string",
+          "description" : "name of the instance group"
+        },
+        "instanceStatus" : {
+          "type" : "string",
+          "description" : "status of the instance",
+          "enum" : [ "REQUESTED", "FAILED", "CREATED", "ORCHESTRATION_FAILED", "SERVICES_RUNNING", "SERVICES_HEALTHY", "SERVICES_UNHEALTHY", "WAITING_FOR_REPAIR", "STOPPED", "DELETED_ON_PROVIDER_SIDE", "DELETED_BY_PROVIDER", "DELETE_REQUESTED", "DECOMMISSIONED", "DECOMMISSION_FAILED", "TERMINATED" ]
+        },
+        "instanceType" : {
+          "type" : "string",
+          "description" : "type of the instance",
+          "enum" : [ "GATEWAY", "GATEWAY_PRIMARY", "CORE" ]
+        },
+        "state" : {
+          "type" : "string",
+          "description" : "state of the host"
+        },
+        "statusReason" : {
+          "type" : "string",
+          "description" : "reason of the state"
+        },
+        "mountedVolumes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MountedVolumeV4Response"
+          }
+        },
+        "lifeCycle" : {
+          "type" : "string",
+          "enum" : [ "NORMAL", "SPOT" ]
+        }
+      }
+    },
+    "InstanceTemplateV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "aws" : {
+          "description" : "aws specific parameters for template",
+          "$ref" : "#/definitions/AwsInstanceTemplateV4Parameters"
+        },
+        "azure" : {
+          "description" : "azure specific parameters for template",
+          "$ref" : "#/definitions/AzureInstanceTemplateV4Parameters"
+        },
+        "gcp" : {
+          "description" : "gcp specific parameters for template",
+          "$ref" : "#/definitions/GcpInstanceTemplateV4Parameters"
+        },
+        "openstack" : {
+          "description" : "openstack specific parameters for template",
+          "$ref" : "#/definitions/OpenStackInstanceTemplateV4Parameters"
+        },
+        "yarn" : {
+          "description" : "yarn specific parameters for template",
+          "$ref" : "#/definitions/YarnInstanceTemplateV4Parameters"
+        },
+        "mock" : {
+          "description" : "yarn specific parameters for template",
+          "$ref" : "#/definitions/MockInstanceTemplateV4Parameters"
+        },
+        "instanceType" : {
+          "type" : "string",
+          "description" : "type of the instance"
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "id of the resource"
+        },
+        "rootVolume" : {
+          "$ref" : "#/definitions/RootVolumeV4Response"
+        },
+        "ephemeralVolume" : {
+          "$ref" : "#/definitions/VolumeV4Response"
+        },
+        "attachedVolumes" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/VolumeV4Response"
+          }
+        }
+      }
+    },
+    "LdapDetails" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "serverHost" : {
+          "type" : "string"
+        },
+        "serverPort" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "protocol" : {
+          "type" : "string"
+        },
+        "userSearchBase" : {
+          "type" : "string"
+        },
+        "userDnPattern" : {
+          "type" : "string"
+        },
+        "groupSearchBase" : {
+          "type" : "string"
+        },
+        "userNameAttribute" : {
+          "type" : "string"
+        },
+        "domain" : {
+          "type" : "string"
+        },
+        "directoryType" : {
+          "type" : "string"
+        },
+        "userObjectClass" : {
+          "type" : "string"
+        },
+        "groupObjectClass" : {
+          "type" : "string"
+        },
+        "groupNameAttribute" : {
+          "type" : "string"
+        },
+        "groupMemberAttribute" : {
+          "type" : "string"
+        },
+        "adminGroup" : {
+          "type" : "string"
+        },
+        "certificate" : {
+          "type" : "string"
+        },
+        "workspaceId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "userId" : {
+          "type" : "string"
+        },
+        "userName" : {
+          "type" : "string"
+        },
+        "tenantName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "LoggingResponse" : {
+      "type" : "object",
+      "required" : [ "storageLocation" ],
+      "properties" : {
+        "storageLocation" : {
+          "type" : "string",
+          "description" : "telemetry - logging storage location / container"
+        },
+        "s3" : {
+          "description" : "telemetry - logging s3 attributes",
+          "$ref" : "#/definitions/S3CloudStorageV1Parameters"
+        },
+        "adlsGen2" : {
+          "description" : "telemetry - logging adls gen2 attributes",
+          "$ref" : "#/definitions/AdlsGen2CloudStorageV1Parameters"
+        },
+        "cloudwatch" : {
+          "description" : "telemetry - logging cloudwatch attributes",
+          "$ref" : "#/definitions/CloudwatchParams"
+        }
+      }
+    },
+    "MockInstanceTemplateV4Parameters" : {
+      "type" : "object"
+    },
+    "MountedVolumeV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "volumeId" : {
+          "type" : "string"
+        },
+        "device" : {
+          "type" : "string"
+        },
+        "volumeType" : {
+          "type" : "string"
+        },
+        "volumeSize" : {
+          "type" : "string"
+        }
+      }
+    },
+    "NetworkV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "subnetCIDR" : {
+          "type" : "string",
+          "description" : "the subnet definition of the network in CIDR format"
+        },
+        "aws" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/AwsNetworkV4Parameters"
+        },
+        "gcp" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/GcpNetworkV4Parameters"
+        },
+        "azure" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/AzureNetworkV4Parameters"
+        },
+        "openstack" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/OpenStackNetworkV4Parameters"
+        },
+        "workspace" : {
+          "description" : "workspace of the resource",
+          "$ref" : "#/definitions/WorkspaceResourceV4Response"
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "id of the resource",
+          "readOnly" : true
+        }
+      }
+    },
+    "OpenStackInstanceGroupV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "server" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OpenStackInstanceTemplateV4Parameters" : {
+      "type" : "object"
+    },
+    "OpenStackNetworkV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "networkId" : {
+          "type" : "string"
+        },
+        "routerId" : {
+          "type" : "string"
+        },
+        "subnetId" : {
+          "type" : "string"
+        },
+        "publicNetId" : {
+          "type" : "string"
+        },
+        "networkingOption" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OpenStackStackV4Parameters" : {
+      "type" : "object"
+    },
+    "PlacementSettingsV4Response" : {
+      "type" : "object",
+      "required" : [ "region" ],
+      "properties" : {
+        "availabilityZone" : {
+          "type" : "string",
+          "description" : "availability zone of the stack"
+        },
+        "region" : {
+          "type" : "string",
+          "description" : "region of the stack"
+        }
+      }
+    },
+    "RdsDetails" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "connectionURL" : {
+          "type" : "string"
+        },
+        "databaseEngine" : {
+          "type" : "string"
+        },
+        "connectionDriver" : {
+          "type" : "string"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "stackVersion" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "connectorJarUrl" : {
+          "type" : "string"
+        },
+        "workspaceId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "userId" : {
+          "type" : "string"
+        },
+        "userName" : {
+          "type" : "string"
+        },
+        "tenantName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "RecipeV4Response" : {
+      "type" : "object",
+      "required" : [ "type" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource",
+          "minLength" : 5,
+          "maxLength" : 100,
+          "pattern" : "(^[a-z][-a-z0-9]*[a-z0-9]$)"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "type of recipe [PRE_CLOUDERA_MANAGER_START,PRE_TERMINATION,POST_CLOUDERA_MANAGER_START,POST_CLUSTER_INSTALL]. The default is PRE_CLOUDERA_MANAGER_START",
+          "enum" : [ "PRE_CLOUDERA_MANAGER_START", "PRE_TERMINATION", "POST_CLOUDERA_MANAGER_START", "POST_CLUSTER_INSTALL" ]
+        },
+        "content" : {
+          "type" : "string",
+          "description" : "content of recipe"
+        },
+        "workspace" : {
+          "description" : "workspace of the resource",
+          "$ref" : "#/definitions/WorkspaceResourceV4Response"
+        },
+        "creator" : {
+          "type" : "string",
+          "description" : "the creator of the resource"
+        },
+        "crn" : {
+          "type" : "string",
+          "description" : "the unique crn of the resource"
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      },
+      "description" : "A recipe is a script that runs on all nodes of a selected node group at a specific time. You can use recipes for tasks such as installing additional software or performing advanced cluster configuration. For example, you can use a recipe to put a JAR file on the Hadoop classpath."
+    },
+    "RootVolumeV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "size" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "size of the root volume"
+        }
+      }
+    },
+    "S3CloudStorageV1Parameters" : {
+      "type" : "object",
+      "required" : [ "instanceProfile" ],
+      "properties" : {
+        "instanceProfile" : {
+          "type" : "string"
+        }
+      }
+    },
+    "S3Guard" : {
+      "type" : "object",
+      "properties" : {
+        "dynamoTableName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SdxClusterDetailResponse" : {
+      "type" : "object",
+      "properties" : {
+        "crn" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "clusterShape" : {
+          "type" : "string",
+          "enum" : [ "CUSTOM", "LIGHT_DUTY", "MEDIUM_DUTY_HA" ]
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "REQUESTED", "WAIT_FOR_ENVIRONMENT", "ENVIRONMENT_CREATED", "STACK_CREATION_IN_PROGRESS", "STACK_CREATION_FINISHED", "STACK_DELETED", "STACK_DELETION_IN_PROGRESS", "EXTERNAL_DATABASE_CREATION_IN_PROGRESS", "EXTERNAL_DATABASE_DELETION_IN_PROGRESS", "EXTERNAL_DATABASE_START_IN_PROGRESS", "EXTERNAL_DATABASE_STARTED", "EXTERNAL_DATABASE_STOP_IN_PROGRESS", "EXTERNAL_DATABASE_STOPPED", "EXTERNAL_DATABASE_CREATED", "RUNNING", "PROVISIONING_FAILED", "REPAIR_IN_PROGRESS", "REPAIR_FAILED", "CHANGE_IMAGE_IN_PROGRESS", "UPGRADE_IN_PROGRESS", "UPGRADE_FAILED", "DATALAKE_UPGRADE_IN_PROGRESS", "DATALAKE_UPGRADE_FAILED", "DELETE_REQUESTED", "DELETED", "DELETE_FAILED", "DELETED_ON_PROVIDER_SIDE", "START_IN_PROGRESS", "START_FAILED", "STOP_IN_PROGRESS", "STOP_FAILED", "STOPPED", "CLUSTER_AMBIGUOUS", "SYNC_FAILED" ]
+        },
+        "statusReason" : {
+          "type" : "string"
+        },
+        "environmentName" : {
+          "type" : "string"
+        },
+        "environmentCrn" : {
+          "type" : "string"
+        },
+        "databaseServerCrn" : {
+          "type" : "string"
+        },
+        "stackCrn" : {
+          "type" : "string"
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "cloudStorageBaseLocation" : {
+          "type" : "string"
+        },
+        "cloudStorageFileSystemType" : {
+          "type" : "string",
+          "enum" : [ "WASB_INTEGRATED", "GCS", "WASB", "ADLS", "ADLS_GEN_2", "S3" ]
+        },
+        "runtime" : {
+          "type" : "string"
+        },
+        "flowIdentifier" : {
+          "$ref" : "#/definitions/FlowIdentifier"
+        },
+        "rangerRazEnabled" : {
+          "type" : "boolean"
+        },
+        "stackV4Response" : {
+          "$ref" : "#/definitions/StackV4Response"
+        }
+      }
+    },
+    "SecretResponse" : {
+      "type" : "object",
+      "properties" : {
+        "enginePath" : {
+          "type" : "string",
+          "description" : "Engine path of the secret."
+        },
+        "secretPath" : {
+          "type" : "string",
+          "description" : "Path of the secret."
+        }
+      }
+    },
+    "SecurityGroupV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "securityGroupIds" : {
+          "type" : "array",
+          "description" : "Exisiting security group ids",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "securityRules" : {
+          "type" : "array",
+          "description" : "list of security rules that relates to the security group",
+          "items" : {
+            "$ref" : "#/definitions/SecurityRuleV4Response"
+          }
+        }
+      }
+    },
+    "SecurityRuleV4Response" : {
+      "type" : "object",
+      "required" : [ "ports", "protocol", "subnet" ],
+      "properties" : {
+        "subnet" : {
+          "type" : "string",
+          "description" : "definition of allowed subnet in CIDR format"
+        },
+        "ports" : {
+          "type" : "array",
+          "description" : "list of accessible ports",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "protocol" : {
+          "type" : "string",
+          "description" : "protocol of the rule"
+        },
+        "modifiable" : {
+          "type" : "boolean",
+          "description" : "flag for making the rule modifiable"
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "id of the resource"
+        }
+      }
+    },
+    "SharedServiceV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "sharedClusterName" : {
+          "type" : "string"
+        },
+        "sharedClusterId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "sdxName" : {
+          "type" : "string"
+        },
+        "sdxCrn" : {
+          "type" : "string"
+        },
+        "attachedClusters" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/AttachedClusterInfoV4Response"
+          }
+        }
+      }
+    },
+    "StackAuthenticationV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "publicKey" : {
+          "type" : "string",
+          "description" : "public key for accessing instances",
+          "minLength" : 0,
+          "maxLength" : 2048
+        },
+        "publicKeyId" : {
+          "type" : "string",
+          "description" : "public key id for accessing instances",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "loginUserName" : {
+          "type" : "string",
+          "description" : "authentication name for machines",
+          "minLength" : 0,
+          "maxLength" : 32
+        }
+      }
+    },
+    "StackImageV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the image"
+        },
+        "catalogUrl" : {
+          "type" : "string",
+          "description" : "url of the image catalog"
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "id of the image"
+        },
+        "catalogName" : {
+          "type" : "string",
+          "description" : "name of the image catalog"
+        }
+      }
+    },
+    "StackV4Response" : {
+      "type" : "object",
+      "required" : [ "name", "placement" ],
+      "properties" : {
+        "cloudPlatform" : {
+          "type" : "string",
+          "description" : "Cloudplatform of the stack",
+          "enum" : [ "AWS", "GCP", "AZURE", "OPENSTACK", "YARN", "MOCK" ]
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the stack"
+        },
+        "aws" : {
+          "description" : "aws specific parameters for stack",
+          "$ref" : "#/definitions/AwsStackV4Parameters"
+        },
+        "gcp" : {
+          "description" : "gcp specific parameters for stack",
+          "$ref" : "#/definitions/GcpStackV4Parameters"
+        },
+        "azure" : {
+          "description" : "azure specific parameters for stack",
+          "$ref" : "#/definitions/AzureStackV4Parameters"
+        },
+        "openstack" : {
+          "description" : "openstack specific parameters for stack",
+          "$ref" : "#/definitions/OpenStackStackV4Parameters"
+        },
+        "yarn" : {
+          "description" : "openstack specific parameters for stack",
+          "$ref" : "#/definitions/YarnStackV4Parameters"
+        },
+        "timeToLive" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "crn" : {
+          "type" : "string"
+        },
+        "environmentCrn" : {
+          "type" : "string"
+        },
+        "environmentName" : {
+          "type" : "string"
+        },
+        "credentialName" : {
+          "type" : "string"
+        },
+        "credentialCrn" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "status of the stack",
+          "enum" : [ "REQUESTED", "CREATE_IN_PROGRESS", "AVAILABLE", "UPDATE_IN_PROGRESS", "UPDATE_REQUESTED", "UPDATE_FAILED", "CREATE_FAILED", "ENABLE_SECURITY_FAILED", "PRE_DELETE_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED_ON_PROVIDER_SIDE", "DELETE_COMPLETED", "STOPPED", "STOP_REQUESTED", "START_REQUESTED", "STOP_IN_PROGRESS", "START_IN_PROGRESS", "START_FAILED", "STOP_FAILED", "WAIT_FOR_SYNC", "MAINTENANCE_MODE_ENABLED", "AMBIGUOUS", "EXTERNAL_DATABASE_CREATION_IN_PROGRESS", "EXTERNAL_DATABASE_CREATION_FAILED", "EXTERNAL_DATABASE_DELETION_IN_PROGRESS", "EXTERNAL_DATABASE_DELETION_FINISHED", "EXTERNAL_DATABASE_DELETION_FAILED" ]
+        },
+        "cluster" : {
+          "description" : "cluster object on stack",
+          "$ref" : "#/definitions/ClusterV4Response"
+        },
+        "statusReason" : {
+          "type" : "string",
+          "description" : "status message of the stack"
+        },
+        "network" : {
+          "description" : "stack related network",
+          "$ref" : "#/definitions/NetworkV4Response"
+        },
+        "instanceGroups" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/InstanceGroupV4Response"
+          }
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "creation time of the stack in long"
+        },
+        "terminated" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "termination completion time of stack in long"
+        },
+        "gatewayPort" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "port of the gateway secured proxy"
+        },
+        "image" : {
+          "description" : "image of the stack",
+          "$ref" : "#/definitions/StackImageV4Response"
+        },
+        "cloudbreakDetails" : {
+          "description" : "details of the Cloudbreak that provisioned the stack",
+          "$ref" : "#/definitions/CloudbreakDetailsV4Response"
+        },
+        "authentication" : {
+          "description" : "stack related authentication",
+          "$ref" : "#/definitions/StackAuthenticationV4Response"
+        },
+        "nodeCount" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "node count of the stack"
+        },
+        "hardwareInfoGroups" : {
+          "type" : "array",
+          "description" : "hardware information where pairing hostmetadata with instancemetadata",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/HardwareInfoGroupV4Response"
+          }
+        },
+        "cloudbreakEvents" : {
+          "type" : "array",
+          "description" : "related events for a cloudbreak stack",
+          "items" : {
+            "$ref" : "#/definitions/CloudbreakEventV4Response"
+          }
+        },
+        "tags" : {
+          "description" : "stack related tags",
+          "$ref" : "#/definitions/TagsV4Response"
+        },
+        "telemetry" : {
+          "description" : "stack related telemetry settings",
+          "$ref" : "#/definitions/TelemetryResponse"
+        },
+        "workspace" : {
+          "description" : "workspace of the resource",
+          "$ref" : "#/definitions/WorkspaceResourceV4Response"
+        },
+        "customDomains" : {
+          "$ref" : "#/definitions/CustomDomainSettingsV4Response"
+        },
+        "placement" : {
+          "description" : "placement configuration parameters for a cluster (e.g. 'region', 'availabilityZone')",
+          "$ref" : "#/definitions/PlacementSettingsV4Response"
+        },
+        "sharedService" : {
+          "description" : "Shared service request",
+          "$ref" : "#/definitions/SharedServiceV4Response"
+        },
+        "tunnel" : {
+          "type" : "string",
+          "description" : "Configuration that the connection going directly or with cluster proxy or with ccm and cluster proxy.",
+          "enum" : [ "DIRECT", "CCM", "CLUSTER_PROXY" ]
+        },
+        "flowIdentifier" : {
+          "description" : "Flow identifier for the current stack creation. Only returned during the stack create request/response.",
+          "$ref" : "#/definitions/FlowIdentifier"
+        },
+        "externalDatabase" : {
+          "description" : "External database parameters for the stack.",
+          "$ref" : "#/definitions/DatabaseResponse"
+        }
+      }
+    },
+    "StorageIdentityBase" : {
+      "type" : "object",
+      "properties" : {
+        "adls" : {
+          "$ref" : "#/definitions/AdlsCloudStorageV1Parameters"
+        },
+        "wasb" : {
+          "$ref" : "#/definitions/WasbCloudStorageV1Parameters"
+        },
+        "gcs" : {
+          "$ref" : "#/definitions/GcsCloudStorageV1Parameters"
+        },
+        "s3" : {
+          "$ref" : "#/definitions/S3CloudStorageV1Parameters"
+        },
+        "adlsGen2" : {
+          "$ref" : "#/definitions/AdlsGen2CloudStorageV1Parameters"
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "ID_BROKER", "LOG" ]
+        }
+      }
+    },
+    "StorageLocationBase" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "enum" : [ "ZEPPELIN_NOTEBOOK", "YARN_LOG", "HIVE_METASTORE_WAREHOUSE", "HIVE_METASTORE_EXTERNAL_WAREHOUSE", "HIVE_REPLICA_WAREHOUSE", "HBASE_ROOT", "RANGER_AUDIT", "PROFILER_SERVICE_FS_URI", "DEFAULT_FS" ]
+        },
+        "value" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TagsV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "application" : {
+          "type" : "object",
+          "description" : "stack related application tags",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "userDefined" : {
+          "type" : "object",
+          "description" : "stack related userdefined tags",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "defaults" : {
+          "type" : "object",
+          "description" : "stack related default tags",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "TelemetryResponse" : {
+      "type" : "object",
+      "properties" : {
+        "fluentAttributes" : {
+          "type" : "object",
+          "description" : "Telemetry fluent settings (overrides).",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        },
+        "logging" : {
+          "description" : "Cloud Logging (telemetry) settings.",
+          "$ref" : "#/definitions/LoggingResponse"
+        },
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/WorkloadAnalyticsResponse"
+        },
+        "features" : {
+          "description" : "Telemetry features settings",
+          "$ref" : "#/definitions/FeaturesResponse"
+        },
+        "rules" : {
+          "type" : "array",
+          "description" : "Telemetry anonymization rules (persistent on cluster level) that are applied on shipped logs.",
+          "items" : {
+            "$ref" : "#/definitions/AnonymizationRule"
+          }
+        }
+      }
+    },
+    "VolumeV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "count" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "number of volumes"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "type of the volumes"
+        },
+        "size" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "size of volume"
+        }
+      }
+    },
+    "WasbCloudStorageV1Parameters" : {
+      "type" : "object",
+      "required" : [ "accountKey", "accountName" ],
+      "properties" : {
+        "accountKey" : {
+          "type" : "string"
+        },
+        "accountName" : {
+          "type" : "string"
+        },
+        "secure" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "WorkloadAnalyticsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "attributes" : {
+          "type" : "object",
+          "description" : "Workload analytics (telemetry) attributes.",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "WorkspaceResourceV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "id of the workspace"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the workspace"
+        }
+      }
+    },
+    "YarnInstanceTemplateV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "memory" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "cpus" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "YarnStackV4Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "yarnQueue" : {
+          "type" : "string"
+        },
+        "lifetime" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "SdxAwsRequest" : {
+      "type" : "object",
+      "properties" : {
+        "spot" : {
+          "$ref" : "#/definitions/SdxAwsSpotParameters"
+        }
+      }
+    },
+    "SdxAwsSpotParameters" : {
+      "type" : "object",
+      "properties" : {
+        "percentage" : {
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 0,
+          "maximum" : 100
+        }
+      }
+    },
+    "SdxCloudStorageRequest" : {
+      "type" : "object",
+      "properties" : {
+        "adls" : {
+          "$ref" : "#/definitions/AdlsCloudStorageV1Parameters"
+        },
+        "wasb" : {
+          "$ref" : "#/definitions/WasbCloudStorageV1Parameters"
+        },
+        "gcs" : {
+          "$ref" : "#/definitions/GcsCloudStorageV1Parameters"
+        },
+        "s3" : {
+          "$ref" : "#/definitions/S3CloudStorageV1Parameters"
+        },
+        "adlsGen2" : {
+          "$ref" : "#/definitions/AdlsGen2CloudStorageV1Parameters"
+        },
+        "fileSystemType" : {
+          "type" : "string",
+          "enum" : [ "WASB_INTEGRATED", "GCS", "WASB", "ADLS", "ADLS_GEN_2", "S3" ]
+        },
+        "baseLocation" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SdxClusterRequest" : {
+      "type" : "object",
+      "required" : [ "clusterShape", "environment" ],
+      "properties" : {
+        "environment" : {
+          "type" : "string"
+        },
+        "clusterShape" : {
+          "type" : "string",
+          "enum" : [ "CUSTOM", "LIGHT_DUTY", "MEDIUM_DUTY_HA" ]
+        },
+        "runtime" : {
+          "type" : "string"
+        },
+        "cloudStorage" : {
+          "$ref" : "#/definitions/SdxCloudStorageRequest"
+        },
+        "externalDatabase" : {
+          "$ref" : "#/definitions/SdxDatabaseRequest"
+        },
+        "aws" : {
+          "$ref" : "#/definitions/SdxAwsRequest"
+        },
+        "tags" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "enableRangerRaz" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "SdxDatabaseRequest" : {
+      "type" : "object",
+      "properties" : {
+        "create" : {
+          "type" : "boolean"
+        },
+        "availabilityType" : {
+          "type" : "string",
+          "enum" : [ "NONE", "NON_HA", "HA" ]
+        }
+      }
+    },
+    "CloudStorageRequest" : {
+      "type" : "object",
+      "properties" : {
+        "aws" : {
+          "$ref" : "#/definitions/AwsStorageParameters"
+        },
+        "locations" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/StorageLocationBase"
+          }
+        },
+        "identities" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/StorageIdentityBase"
+          }
+        },
+        "accountMapping" : {
+          "description" : "cloud storage account mapping",
+          "$ref" : "#/definitions/AccountMappingBase"
+        }
+      }
+    },
+    "ClouderaManagerProductV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the Cloudera manager product"
+        },
+        "version" : {
+          "type" : "string",
+          "description" : "version of the Cloudera manager product"
+        },
+        "parcel" : {
+          "type" : "string",
+          "description" : "parcel url of the Cloudera manager product"
+        },
+        "csd" : {
+          "type" : "array",
+          "description" : "CSD (service descriptor) urls for the Cloudera manager product",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "ClouderaManagerRepositoryV4Request" : {
+      "type" : "object",
+      "required" : [ "version" ],
+      "properties" : {
+        "version" : {
+          "type" : "string",
+          "description" : "version of the cluster manager"
+        },
+        "baseUrl" : {
+          "type" : "string",
+          "description" : "url of the cluster manager repository"
+        },
+        "gpgKeyUrl" : {
+          "type" : "string",
+          "description" : "gpg key of the cluster manager repository"
+        }
+      }
+    },
+    "ClouderaManagerV4Request" : {
+      "type" : "object",
+      "required" : [ "enableAutoTls" ],
+      "properties" : {
+        "repository" : {
+          "description" : "details of the Cloudera Manager package repository",
+          "$ref" : "#/definitions/ClouderaManagerRepositoryV4Request"
+        },
+        "products" : {
+          "type" : "array",
+          "description" : "list of Cloudera Manager product detials",
+          "items" : {
+            "$ref" : "#/definitions/ClouderaManagerProductV4Request"
+          }
+        },
+        "enableAutoTls" : {
+          "type" : "boolean",
+          "description" : "Enable autotls on clusters generated by Cloudera Manager"
+        }
+      }
+    },
+    "ClusterV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "userName" : {
+          "type" : "string",
+          "description" : "ambari username",
+          "minLength" : 5,
+          "maxLength" : 15,
+          "pattern" : "(^[a-z][-a-z0-9]*[a-z0-9]$)"
+        },
+        "password" : {
+          "type" : "string",
+          "description" : "ambari password",
+          "minLength" : 8,
+          "maxLength" : 100
+        },
+        "databases" : {
+          "type" : "array",
+          "description" : "RDS configuration names for the cluster",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "databaseServerCrn" : {
+          "type" : "string",
+          "description" : "Contains valid Crn for a redbeams database server"
+        },
+        "proxyConfigCrn" : {
+          "type" : "string",
+          "description" : "proxy CRN for the cluster"
+        },
+        "cloudStorage" : {
+          "description" : "external cloud storage configuration",
+          "$ref" : "#/definitions/CloudStorageRequest"
+        },
+        "cm" : {
+          "description" : "cloudera manager specific requests",
+          "$ref" : "#/definitions/ClouderaManagerV4Request"
+        },
+        "gateway" : {
+          "$ref" : "#/definitions/GatewayV4Request"
+        },
+        "customContainer" : {
+          "description" : "custom containers",
+          "$ref" : "#/definitions/CustomContainerV4Request"
+        },
+        "customQueue" : {
+          "type" : "string",
+          "description" : "custom queue for yarn orchestrator"
+        },
+        "executorType" : {
+          "type" : "string",
+          "description" : "executor type of cluster",
+          "enum" : [ "CONTAINER", "DEFAULT" ]
+        },
+        "blueprintName" : {
+          "type" : "string",
+          "description" : "blueprint name for the cluster"
+        },
+        "validateBlueprint" : {
+          "type" : "boolean",
+          "description" : "blueprint validation"
+        },
+        "rangerRazEnabled" : {
+          "type" : "boolean",
+          "description" : "Enables Ranger Raz for the cluster on ADLSv2."
+        }
+      }
+    },
+    "CustomContainerV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "definitions" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "CustomDomainSettingsV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "domainName" : {
+          "type" : "string",
+          "description" : "custom domain name for the nodes in the stack"
+        },
+        "hostname" : {
+          "type" : "string",
+          "description" : "custom hostname for nodes in the stack"
+        },
+        "clusterNameAsSubdomain" : {
+          "type" : "boolean",
+          "description" : "using the cluster name to create subdomain"
+        },
+        "hostgroupNameAsHostname" : {
+          "type" : "boolean",
+          "description" : "using the hostgroup names to create hostnames"
+        }
+      }
+    },
+    "DatabaseRequest" : {
+      "type" : "object",
+      "required" : [ "availabilityType" ],
+      "properties" : {
+        "availabilityType" : {
+          "type" : "string",
+          "enum" : [ "NONE", "NON_HA", "HA" ]
+        }
+      }
+    },
+    "FeaturesRequest" : {
+      "type" : "object",
+      "properties" : {
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "clusterLogsCollection" : {
+          "description" : "enable cluster logs collection",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "monitoring" : {
+          "description" : "enable monitoring for cluster services",
+          "$ref" : "#/definitions/FeatureSetting"
+        }
+      }
+    },
+    "GatewayTopologyV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "topologyName" : {
+          "type" : "string",
+          "description" : "Knox topology name"
+        },
+        "exposedServices" : {
+          "type" : "array",
+          "description" : "exposed Knox services - those services that should be accessible through Knox gateway.",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "GatewayV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "topologies" : {
+          "type" : "array",
+          "description" : "Topology definitions of the gateway.",
+          "items" : {
+            "$ref" : "#/definitions/GatewayTopologyV4Request"
+          }
+        },
+        "tokenCert" : {
+          "type" : "string",
+          "description" : "SSO Provider certificate"
+        },
+        "gatewayType" : {
+          "type" : "string",
+          "description" : "Knox gateway type",
+          "enum" : [ "CENTRAL", "INDIVIDUAL" ]
+        },
+        "ssoType" : {
+          "type" : "string",
+          "description" : "Knox SSO type",
+          "enum" : [ "SSO_PROVIDER", "NONE" ]
+        }
+      }
+    },
+    "ImageSettingsV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "catalog" : {
+          "type" : "string",
+          "description" : "custom image catalog URL"
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "virtual machine image id from ImageCatalog, machines of the cluster will be started from this image"
+        },
+        "os" : {
+          "type" : "string",
+          "description" : "os type of the image, this property is only considered when no specific image id is provided"
+        }
+      }
+    },
+    "InstanceGroupV4Request" : {
+      "type" : "object",
+      "required" : [ "name", "nodeCount", "template" ],
+      "properties" : {
+        "nodeCount" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "number of nodes",
+          "minimum" : 0,
+          "maximum" : 100000
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the instance group"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "type of the instance group, default value is CORE",
+          "enum" : [ "CORE", "GATEWAY" ]
+        },
+        "azure" : {
+          "description" : "azure specific parameters for instance group",
+          "$ref" : "#/definitions/AzureInstanceGroupV4Parameters"
+        },
+        "gcp" : {
+          "description" : "gcp specific parameters for instance group",
+          "$ref" : "#/definitions/GcpInstanceGroupV4Parameters"
+        },
+        "aws" : {
+          "description" : "aws specific parameters for instance group",
+          "$ref" : "#/definitions/AwsInstanceGroupV4Parameters"
+        },
+        "openstack" : {
+          "description" : "openstack specific parameters for instance group",
+          "$ref" : "#/definitions/OpenStackInstanceGroupV4Parameters"
+        },
+        "recoveryMode" : {
+          "type" : "string",
+          "description" : "recovery mode of the hostgroup's nodes",
+          "enum" : [ "MANUAL", "AUTO" ]
+        },
+        "template" : {
+          "description" : "instancegroup related template",
+          "$ref" : "#/definitions/InstanceTemplateV4Request"
+        },
+        "securityGroup" : {
+          "description" : "instancegroup related securitygroup",
+          "$ref" : "#/definitions/SecurityGroupV4Request"
+        },
+        "recipeNames" : {
+          "type" : "array",
+          "description" : "referenced recipe names",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "InstanceTemplateV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "aws" : {
+          "description" : "aws specific parameters for template",
+          "$ref" : "#/definitions/AwsInstanceTemplateV4Parameters"
+        },
+        "azure" : {
+          "description" : "azure specific parameters for template",
+          "$ref" : "#/definitions/AzureInstanceTemplateV4Parameters"
+        },
+        "gcp" : {
+          "description" : "gcp specific parameters for template",
+          "$ref" : "#/definitions/GcpInstanceTemplateV4Parameters"
+        },
+        "openstack" : {
+          "description" : "openstack specific parameters for template",
+          "$ref" : "#/definitions/OpenStackInstanceTemplateV4Parameters"
+        },
+        "yarn" : {
+          "description" : "yarn specific parameters for template",
+          "$ref" : "#/definitions/YarnInstanceTemplateV4Parameters"
+        },
+        "mock" : {
+          "description" : "yarn specific parameters for template",
+          "$ref" : "#/definitions/MockInstanceTemplateV4Parameters"
+        },
+        "instanceType" : {
+          "type" : "string",
+          "description" : "type of the instance"
+        },
+        "rootVolume" : {
+          "$ref" : "#/definitions/RootVolumeV4Request"
+        },
+        "ephemeralVolume" : {
+          "$ref" : "#/definitions/VolumeV4Request"
+        },
+        "attachedVolumes" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/VolumeV4Request"
+          }
+        }
+      }
+    },
+    "LoggingRequest" : {
+      "type" : "object",
+      "required" : [ "storageLocation" ],
+      "properties" : {
+        "storageLocation" : {
+          "type" : "string",
+          "description" : "telemetry - logging storage location / container"
+        },
+        "s3" : {
+          "description" : "telemetry - logging s3 attributes",
+          "$ref" : "#/definitions/S3CloudStorageV1Parameters"
+        },
+        "adlsGen2" : {
+          "description" : "telemetry - logging adls gen2 attributes",
+          "$ref" : "#/definitions/AdlsGen2CloudStorageV1Parameters"
+        },
+        "cloudwatch" : {
+          "description" : "telemetry - logging cloudwatch attributes",
+          "$ref" : "#/definitions/CloudwatchParams"
+        }
+      }
+    },
+    "NetworkV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "subnetCIDR" : {
+          "type" : "string",
+          "description" : "the subnet definition of the network in CIDR format"
+        },
+        "aws" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/AwsNetworkV4Parameters"
+        },
+        "gcp" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/GcpNetworkV4Parameters"
+        },
+        "azure" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/AzureNetworkV4Parameters"
+        },
+        "openstack" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/OpenStackNetworkV4Parameters"
+        }
+      }
+    },
+    "PlacementSettingsV4Request" : {
+      "type" : "object",
+      "required" : [ "region" ],
+      "properties" : {
+        "availabilityZone" : {
+          "type" : "string",
+          "description" : "availability zone of the stack"
+        },
+        "region" : {
+          "type" : "string",
+          "description" : "region of the stack"
+        }
+      }
+    },
+    "RootVolumeV4Request" : {
+      "type" : "object",
+      "required" : [ "size" ],
+      "properties" : {
+        "size" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "size of the root volume"
+        }
+      }
+    },
+    "SdxInternalClusterRequest" : {
+      "type" : "object",
+      "required" : [ "clusterShape", "environment" ],
+      "properties" : {
+        "environment" : {
+          "type" : "string"
+        },
+        "clusterShape" : {
+          "type" : "string",
+          "enum" : [ "CUSTOM", "LIGHT_DUTY", "MEDIUM_DUTY_HA" ]
+        },
+        "runtime" : {
+          "type" : "string"
+        },
+        "cloudStorage" : {
+          "$ref" : "#/definitions/SdxCloudStorageRequest"
+        },
+        "externalDatabase" : {
+          "$ref" : "#/definitions/SdxDatabaseRequest"
+        },
+        "aws" : {
+          "$ref" : "#/definitions/SdxAwsRequest"
+        },
+        "tags" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "enableRangerRaz" : {
+          "type" : "boolean"
+        },
+        "stackV4Request" : {
+          "$ref" : "#/definitions/StackV4Request"
+        }
+      }
+    },
+    "SecurityGroupV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "securityGroupIds" : {
+          "type" : "array",
+          "description" : "Exisiting security group ids",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "securityRules" : {
+          "type" : "array",
+          "description" : "list of security rules that relates to the security group",
+          "items" : {
+            "$ref" : "#/definitions/SecurityRuleV4Request"
+          }
+        }
+      }
+    },
+    "SecurityRuleV4Request" : {
+      "type" : "object",
+      "required" : [ "ports", "protocol", "subnet" ],
+      "properties" : {
+        "subnet" : {
+          "type" : "string",
+          "description" : "definition of allowed subnet in CIDR format"
+        },
+        "ports" : {
+          "type" : "array",
+          "description" : "list of accessible ports",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "protocol" : {
+          "type" : "string",
+          "description" : "protocol of the rule"
+        },
+        "modifiable" : {
+          "type" : "boolean",
+          "description" : "flag for making the rule modifiable"
+        }
+      }
+    },
+    "SharedServiceV4Request" : {
+      "type" : "object",
+      "required" : [ "datalakeName" ],
+      "properties" : {
+        "datalakeName" : {
+          "type" : "string"
+        },
+        "runtimeVersion" : {
+          "type" : "string"
+        }
+      }
+    },
+    "StackAuthenticationV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "publicKey" : {
+          "type" : "string",
+          "description" : "public key for accessing instances",
+          "minLength" : 0,
+          "maxLength" : 2048
+        },
+        "publicKeyId" : {
+          "type" : "string",
+          "description" : "public key id for accessing instances",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "loginUserName" : {
+          "type" : "string",
+          "description" : "authentication name for machines",
+          "minLength" : 0,
+          "maxLength" : 32
+        }
+      }
+    },
+    "StackV4Request" : {
+      "type" : "object",
+      "required" : [ "authentication", "environmentCrn", "instanceGroups", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the stack"
+        },
+        "aws" : {
+          "description" : "aws specific parameters for stack",
+          "$ref" : "#/definitions/AwsStackV4Parameters"
+        },
+        "gcp" : {
+          "description" : "gcp specific parameters for stack",
+          "$ref" : "#/definitions/GcpStackV4Parameters"
+        },
+        "azure" : {
+          "description" : "azure specific parameters for stack",
+          "$ref" : "#/definitions/AzureStackV4Parameters"
+        },
+        "openstack" : {
+          "description" : "openstack specific parameters for stack",
+          "$ref" : "#/definitions/OpenStackStackV4Parameters"
+        },
+        "yarn" : {
+          "description" : "openstack specific parameters for stack",
+          "$ref" : "#/definitions/YarnStackV4Parameters"
+        },
+        "timeToLive" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment which the stack is assigned to"
+        },
+        "customDomain" : {
+          "description" : "settings related to custom domain names",
+          "$ref" : "#/definitions/CustomDomainSettingsV4Request"
+        },
+        "tags" : {
+          "description" : "stack related tags",
+          "$ref" : "#/definitions/TagsV4Request"
+        },
+        "telemetry" : {
+          "description" : "stack related telemetry settings",
+          "$ref" : "#/definitions/TelemetryRequest"
+        },
+        "placement" : {
+          "description" : "placement configuration parameters for a cluster (e.g. 'region', 'availabilityZone')",
+          "$ref" : "#/definitions/PlacementSettingsV4Request"
+        },
+        "instanceGroups" : {
+          "type" : "array",
+          "description" : "collection of instance groupst",
+          "items" : {
+            "$ref" : "#/definitions/InstanceGroupV4Request"
+          }
+        },
+        "authentication" : {
+          "description" : "stack related authentication",
+          "$ref" : "#/definitions/StackAuthenticationV4Request"
+        },
+        "network" : {
+          "description" : "stack related network",
+          "$ref" : "#/definitions/NetworkV4Request"
+        },
+        "image" : {
+          "description" : "settings for custom images",
+          "$ref" : "#/definitions/ImageSettingsV4Request"
+        },
+        "cluster" : {
+          "description" : "cluster request object on stack",
+          "$ref" : "#/definitions/ClusterV4Request"
+        },
+        "gatewayPort" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "port of the gateway secured proxy",
+          "minimum" : 1025,
+          "maximum" : 65535
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "WORKLOAD", "DATALAKE", "TEMPLATE" ]
+        },
+        "sharedService" : {
+          "description" : "Shared service request",
+          "$ref" : "#/definitions/SharedServiceV4Request"
+        },
+        "inputs" : {
+          "type" : "object",
+          "description" : "dynamic properties",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        },
+        "externalDatabase" : {
+          "description" : "External database parameters for the stack.",
+          "$ref" : "#/definitions/DatabaseRequest"
+        },
+        "resourceCrn" : {
+          "type" : "string",
+          "description" : "CRN of the cluster if there is corresponding cluster in another service (for example in SDX)"
+        }
+      }
+    },
+    "TagsV4Request" : {
+      "type" : "object",
+      "properties" : {
+        "application" : {
+          "type" : "object",
+          "description" : "stack related application tags",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "userDefined" : {
+          "type" : "object",
+          "description" : "stack related userdefined tags",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "defaults" : {
+          "type" : "object",
+          "description" : "stack related default tags",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "TelemetryRequest" : {
+      "type" : "object",
+      "properties" : {
+        "fluentAttributes" : {
+          "type" : "object",
+          "description" : "Telemetry fluent settings (overrides).",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        },
+        "logging" : {
+          "description" : "Cloud Logging (telemetry) settings.",
+          "$ref" : "#/definitions/LoggingRequest"
+        },
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/WorkloadAnalyticsRequest"
+        },
+        "features" : {
+          "description" : "Telemetry features settings",
+          "$ref" : "#/definitions/FeaturesRequest"
+        }
+      }
+    },
+    "VolumeV4Request" : {
+      "type" : "object",
+      "required" : [ "size" ],
+      "properties" : {
+        "size" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "size of volume"
+        },
+        "count" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "number of volumes"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "type of the volumes"
+        }
+      }
+    },
+    "WorkloadAnalyticsRequest" : {
+      "type" : "object",
+      "properties" : {
+        "attributes" : {
+          "type" : "object",
+          "description" : "Workload analytics (telemetry) attributes.",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "ImageComponentVersions" : {
+      "type" : "object",
+      "properties" : {
+        "cm" : {
+          "type" : "string"
+        },
+        "cmGBN" : {
+          "type" : "string"
+        },
+        "cdp" : {
+          "type" : "string"
+        },
+        "cdpGBN" : {
+          "type" : "string"
+        },
+        "os" : {
+          "type" : "string"
+        },
+        "osPatchLevel" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ImageInfoV4Response" : {
+      "type" : "object",
+      "properties" : {
+        "imageName" : {
+          "type" : "string"
+        },
+        "imageId" : {
+          "type" : "string"
+        },
+        "imageCatalogName" : {
+          "type" : "string"
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "date" : {
+          "type" : "string"
+        },
+        "componentVersions" : {
+          "$ref" : "#/definitions/ImageComponentVersions"
+        }
+      }
+    },
+    "SdxUpgradeResponse" : {
+      "type" : "object",
+      "properties" : {
+        "current" : {
+          "$ref" : "#/definitions/ImageInfoV4Response"
+        },
+        "upgradeCandidates" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ImageInfoV4Response"
+          }
+        },
+        "reason" : {
+          "type" : "string"
+        },
+        "flowIdentifier" : {
+          "$ref" : "#/definitions/FlowIdentifier"
+        }
+      }
+    },
+    "SdxUpgradeRequest" : {
+      "type" : "object",
+      "properties" : {
+        "imageId" : {
+          "type" : "string"
+        },
+        "runtime" : {
+          "type" : "string"
+        },
+        "lockComponents" : {
+          "type" : "boolean"
+        },
+        "dryRun" : {
+          "type" : "boolean"
+        },
+        "empty" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "VersionCheckResult" : {
+      "type" : "object",
+      "properties" : {
+        "versionCheckOk" : {
+          "type" : "boolean"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FlowCheckResponse" : {
+      "type" : "object",
+      "properties" : {
+        "flowId" : {
+          "type" : "string"
+        },
+        "flowChainId" : {
+          "type" : "string"
+        },
+        "hasActiveFlow" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "FlowLogResponse" : {
+      "type" : "object",
+      "properties" : {
+        "resourceId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "flowId" : {
+          "type" : "string"
+        },
+        "flowChainId" : {
+          "type" : "string"
+        },
+        "nextEvent" : {
+          "type" : "string"
+        },
+        "currentState" : {
+          "type" : "string"
+        },
+        "finalized" : {
+          "type" : "boolean"
+        },
+        "nodeId" : {
+          "type" : "string"
+        },
+        "stateStatus" : {
+          "type" : "string",
+          "enum" : [ "PENDING", "SUCCESSFUL", "FAILED" ]
+        },
+        "flowTriggerUserCrn" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

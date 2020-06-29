@@ -1,0 +1,4823 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Environment operation related API.",
+    "version" : "2.24.0-b138",
+    "title" : "Environment API"
+  },
+  "basePath" : "/api",
+  "tags" : [ {
+    "name" : "authorization"
+  }, {
+    "name" : "v1credentials"
+  }, {
+    "name" : "v1env"
+  }, {
+    "name" : "v1platform_resources"
+  }, {
+    "name" : "v1proxies"
+  }, {
+    "name" : "v1tags"
+  }, {
+    "name" : "v1telemetry"
+  }, {
+    "name" : "v1utils"
+  }, {
+    "name" : "flow"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/authorization/info" : {
+      "get" : {
+        "tags" : [ "authorization" ],
+        "summary" : "list of required permissions for APIs",
+        "description" : "",
+        "operationId" : "info",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ApiAuthorizationInfo"
+              },
+              "uniqueItems" : true
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials" : {
+      "get" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "list credentials",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "listCredentialsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Responses"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "create credential",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "createCredentialV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CredentialV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "modify public credential resource",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "putCredentialV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CredentialV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "delete multiple credentials by name",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "deleteCredentialsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Responses"
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials/interactive_login" : {
+      "post" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "interactive login",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "interactiveLoginCredentialV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CredentialV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/InteractiveV1Credential"
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials/code_grant_flow/init" : {
+      "post" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "start a credential creation with Oauth2 Authorization Code Grant flow",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "codeGrantFlowBasedCredentialV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CredentialV1Request"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/credentials/code_grant_flow/authorization/{cloudPlatform}" : {
+      "get" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "Authorize Oauth2 Authorization Code Grant flow",
+        "description" : "Authorize code grant flow based credential creation.",
+        "operationId" : "authorizeCodeGrantFlowBasedCredentialV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "cloudPlatform",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "code",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "state",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials/prerequisites/{cloudPlatform}" : {
+      "get" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "get credential prerequisites for cloud platform",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "getPrerequisitesForCloudPlatform",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "cloudPlatform",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "deploymentAddress",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialPrerequisitesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials/name/{name}" : {
+      "get" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "get credential by name",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "getCredentialByNameV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "delete credential by name",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "deleteCredentialByNameV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials/crn/{crn}/verify" : {
+      "get" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "verify permissions by crn",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "verifyCredentialByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials/name/{name}/verify" : {
+      "get" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "verify permissions by name",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "verifyCredentialByName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials/crn/{crn}" : {
+      "get" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "get credential by crn",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "getCredentialByResourceCrnV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "delete credential by crn",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "deleteCredentialByResourceCrnV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials/environment/name/{environmentName}" : {
+      "get" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "get credential by environment name",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "getCredentialByEnvironmentNameV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials/code_grant_flow/init/{name}" : {
+      "get" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "Reinitialize Oauth2 Authorization Code Grant flow on an existing credential",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "codeGrantFlowOnExistingCredentialV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/credentials/cli_create" : {
+      "post" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "produce cli command input for credential creation",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "getCreateCredentialForCli",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CredentialV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/v1/credentials/environment/crn/{environmentCrn}" : {
+      "get" : {
+        "tags" : [ "v1credentials" ],
+        "summary" : "get credential by environment crn",
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account.",
+        "operationId" : "getCredentialByEnvironmentCrnV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CredentialV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/crn/{crn}" : {
+      "get" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Get an environment by CRN.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "getEnvironmentV1ByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DetailedEnvironmentV1Response"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Edit an environment by CRN. Location, regions and description can be changed.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "editEnvironmentV1ByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EnvironmentEditV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DetailedEnvironmentV1Response"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Delete an environment by CRN. Only possible if no cluster is running in the environment.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "deleteEnvironmentV1ByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "cascading",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : true
+        }, {
+          "name" : "forced",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEnvironmentV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/name/{name}/change_credential" : {
+      "put" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Changes the credential of the environment and the clusters in the environment of a given name.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "changeCredentialInEnvironmentV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EnvironmentChangeCredentialV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DetailedEnvironmentV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/crn/{crn}/change_credential" : {
+      "put" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Changes the credential of the environment and the clusters in the environment of a given CRN.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "changeCredentialInEnvironmentV1ByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EnvironmentChangeCredentialV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DetailedEnvironmentV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/name/{name}/change_telemetry_features" : {
+      "put" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Changes telemetry features(s) of the environment in the environment of a given name.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "changeTelemetryFeaturesInEnvironmentV1ByName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/FeaturesRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DetailedEnvironmentV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/crn/{crn}/change_telemetry_features" : {
+      "put" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Changes telemetry features(s) of the environment in the environment of a given CRN.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "changeTelemetryFeaturesInEnvironmentV1ByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/FeaturesRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DetailedEnvironmentV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/name" : {
+      "delete" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Delete multiple environment by names. Only possible if no cluster is running in the environments.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "deleteEnvironmentsByName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "cascading",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : true
+        }, {
+          "name" : "forced",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEnvironmentV1Responses"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/crn" : {
+      "delete" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Delete multiple environment by CRNs. Only possible if no cluster is running in the environments.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "deleteEnvironmentsByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "cascading",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : true
+        }, {
+          "name" : "forced",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEnvironmentV1Responses"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/name/{name}" : {
+      "get" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Get an environment by name.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "getEnvironmentV1ByName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DetailedEnvironmentV1Response"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Edit an environment by name. Location, regions and description can be changed.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "editEnvironmentV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EnvironmentEditV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DetailedEnvironmentV1Response"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Delete an environment by name. Only possible if no cluster is running in the environment.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "deleteEnvironmentV1ByName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "cascading",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : true
+        }, {
+          "name" : "forced",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEnvironmentV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env" : {
+      "get" : {
+        "tags" : [ "v1env" ],
+        "summary" : "List all environments.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "listEnvironmentV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEnvironmentV1Responses"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Create an environment.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "createEnvironmentV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EnvironmentV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DetailedEnvironmentV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/crnByName/{name}" : {
+      "get" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Get the crn of an environment by name.",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "getCrnByNameV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/EnvironmentCrnV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/name/{name}/start" : {
+      "post" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Start an environment by name. The freeipa, datalake and datahubs will be started in this order",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "startEnvironmentByNameV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/env/crn/{crn}/start" : {
+      "post" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Start an environment by CRN. The freeipa, datalake and datahubs will be started in this order",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "startEnvironmentByCrnV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/env/name/{name}/stop" : {
+      "post" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Stop an environment by name. The datahubs, datalake and freeipa will be stopped in this order",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "stopEnvironmentByNameV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/env/crn/{crn}/stop" : {
+      "post" : {
+        "tags" : [ "v1env" ],
+        "summary" : "Stop an environment by CRN. The datahubs, datalake and freeipa will be stopped in this order",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "stopEnvironmentByCrnV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/env/name/{name}/cli_create" : {
+      "post" : {
+        "tags" : [ "v1env" ],
+        "summary" : "produce cli command input for environment creation",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "getCreateEnvironmentForCliByName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/crn/{crn}/cli_create" : {
+      "post" : {
+        "tags" : [ "v1env" ],
+        "summary" : "produce cli command input for environment creation",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "getCreateEnvironmentForCliByCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/v1/env/cli_create" : {
+      "post" : {
+        "tags" : [ "v1env" ],
+        "summary" : "produce cli command input for environment creation",
+        "description" : "Environment consists of a credential and various other resources and enables users to quickly create clusters in given regions in a given cloud provider.",
+        "operationId" : "getCreateEnvironmentForCli",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EnvironmentV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/networks" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve network properties",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getPlatformNetworks",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "credentialName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentialCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "platformVariant",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZone",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PlatformNetworksResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/security_groups" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve securitygroups properties",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getPlatformSecurityGroups",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "credentialName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentialCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "platformVariant",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZone",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PlatformSecurityGroupsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/machine_types" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve vmtype properties by credential",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getVmTypesByCredential",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "credentialName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentialCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "platformVariant",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZone",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "resourceType",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "DATAHUB", "DATALAKE", "DEFAULT" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PlatformVmtypesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/regions" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve regions by type",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getRegionsByCredential",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "credentialName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentialCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "platformVariant",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZone",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZonesNeeded",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CompactRegionV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/ip_pools" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve ip pools with properties",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getIpPoolsCredentialId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "credentialName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentialCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "platformVariant",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZone",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PlatformIpPoolsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/gateways" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve gateways with properties",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getGatewaysCredentialId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "credentialName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentialCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "platformVariant",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZone",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PlatformGatewaysResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/encryption_keys" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve encryption keys with properties",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getEncryptionKeys",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "credentialName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentialCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "platformVariant",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZone",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PlatformEncryptionKeysResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/ssh_keys" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve sshkeys properties",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getPlatformSShKeys",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "credentialName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentialCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "platformVariant",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZone",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PlatformSshKeysResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/access_configs" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve access configs with properties",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getAccessConfigs",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "credentialName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentialCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "platformVariant",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZone",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "accessConfigType",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "default" : "INSTANCE_PROFILE",
+          "enum" : [ "ROLE", "INSTANCE_PROFILE" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PlatformAccessConfigsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/nosql_tables" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve nosql tables",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getNoSqlTables",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "credentialName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentialCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "region",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "platformVariant",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "availabilityZone",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PlatformNoSqlTablesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/tag_specifications" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve tag specifications",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getTagSpecifications",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/TagSpecificationsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/platform_resources/disk_types" : {
+      "get" : {
+        "tags" : [ "v1platform_resources" ],
+        "summary" : "retrieve available disk types",
+        "description" : "Each cloud provider has it's own specific resources like instance types and disk types. These endpoints are collecting them.",
+        "operationId" : "getDisktypes",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PlatformDisksResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/proxies" : {
+      "get" : {
+        "tags" : [ "v1proxies" ],
+        "summary" : "list proxy configurations",
+        "description" : "An proxy Configuration describe a connection to an external proxy server which provides internet access cluster members. It's applied for package manager and Ambari too",
+        "operationId" : "listProxyConfigsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ProxyResponses"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "v1proxies" ],
+        "summary" : "create proxy configuration",
+        "description" : "An proxy Configuration describe a connection to an external proxy server which provides internet access cluster members. It's applied for package manager and Ambari too",
+        "operationId" : "createProxyConfigV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ProxyRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ProxyResponse"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1proxies" ],
+        "summary" : "delete multiple proxy configurations by name",
+        "description" : "An proxy Configuration describe a connection to an external proxy server which provides internet access cluster members. It's applied for package manager and Ambari too",
+        "operationId" : "deleteProxyConfigsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ProxyResponses"
+            }
+          }
+        }
+      }
+    },
+    "/v1/proxies/crn/{crn}" : {
+      "get" : {
+        "tags" : [ "v1proxies" ],
+        "summary" : "get proxy configuration ",
+        "description" : "An proxy Configuration describe a connection to an external proxy server which provides internet access cluster members. It's applied for package manager and Ambari too",
+        "operationId" : "getProxyConfigByCrnV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ProxyResponse"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1proxies" ],
+        "summary" : "delete proxy configuration by crn",
+        "description" : "An proxy Configuration describe a connection to an external proxy server which provides internet access cluster members. It's applied for package manager and Ambari too",
+        "operationId" : "deleteProxyConfigByCrnV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "crn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ProxyResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/proxies/name/{name}" : {
+      "get" : {
+        "tags" : [ "v1proxies" ],
+        "summary" : "get proxy configuration ",
+        "description" : "An proxy Configuration describe a connection to an external proxy server which provides internet access cluster members. It's applied for package manager and Ambari too",
+        "operationId" : "getProxyConfigByNameV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ProxyResponse"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1proxies" ],
+        "summary" : "delete proxy configuration by name",
+        "description" : "An proxy Configuration describe a connection to an external proxy server which provides internet access cluster members. It's applied for package manager and Ambari too",
+        "operationId" : "deleteProxyConfigByNameV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ProxyResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/proxies/{name}/request" : {
+      "get" : {
+        "tags" : [ "v1proxies" ],
+        "summary" : "get request by name",
+        "description" : "An proxy Configuration describe a connection to an external proxy server which provides internet access cluster members. It's applied for package manager and Ambari too",
+        "operationId" : "getProxyRequestFromNameV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ProxyRequest"
+            }
+          }
+        }
+      }
+    },
+    "/v1/proxies/environment/crn/{environmentCrn}" : {
+      "get" : {
+        "tags" : [ "v1proxies" ],
+        "summary" : "get proxyconfig by environment crn",
+        "description" : "An proxy Configuration describe a connection to an external proxy server which provides internet access cluster members. It's applied for package manager and Ambari too",
+        "operationId" : "getProxyConfigByEnvironmentCrnV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ProxyResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/tags/generate" : {
+      "get" : {
+        "tags" : [ "v1tags" ],
+        "summary" : "get generated tag configurations",
+        "description" : "CDP allows you to define your tag configuration information as a shared resource so that you can provide the tag information to multiple resource that you create with CDP. This endpoint generate accountTags.",
+        "operationId" : "getGeneratedTagsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/GeneratedAccountTagResponses"
+            }
+          }
+        }
+      }
+    },
+    "/v1/tags" : {
+      "get" : {
+        "tags" : [ "v1tags" ],
+        "summary" : "list tag configurations",
+        "description" : "CDP allows you to save your tag configuration information as a shared resource so that you can provide the tag information to multiple resource that you create with CDP",
+        "operationId" : "listTagsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AccountTagResponses"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "v1tags" ],
+        "summary" : "put tag configurations",
+        "description" : "CDP allows you to save your tag configuration information as a shared resource so that you can provide the tag information to multiple resource that you create with CDP",
+        "operationId" : "putTagsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AccountTagRequests"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AccountTagResponses"
+            }
+          }
+        }
+      }
+    },
+    "/v1/telemetry/rules/test" : {
+      "post" : {
+        "tags" : [ "v1telemetry" ],
+        "summary" : "test anonymization pattern",
+        "description" : "Testing anonymization pattern - check the pattern is valid against an input and found matches",
+        "operationId" : "testRuleV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/TestAnonymizationRuleRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/TestAnonymizationRuleResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/telemetry/features" : {
+      "get" : {
+        "tags" : [ "v1telemetry" ],
+        "summary" : "get account specific telemetry settings",
+        "description" : "Gather telemetry related settings (features and anonymization rules) these are used as global settings for environments",
+        "operationId" : "listFeaturesV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FeaturesResponse"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "v1telemetry" ],
+        "summary" : "get account specific telemetry feature settings",
+        "description" : "For account level telemetry settings, different features can be defined globally, these features can be overriden by environemnt level telemetry settings",
+        "operationId" : "updateRulesV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/FeaturesRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FeaturesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/telemetry/rules" : {
+      "get" : {
+        "tags" : [ "v1telemetry" ],
+        "summary" : "get account specific telemetry settings",
+        "description" : "Gather telemetry related settings (features and anonymization rules) these are used as global settings for environments",
+        "operationId" : "listRulesV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/AnonymizationRule"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/telemetry" : {
+      "get" : {
+        "tags" : [ "v1telemetry" ],
+        "summary" : "get account specific telemetry settings",
+        "description" : "Gather telemetry related settings (features and anonymization rules) these are used as global settings for environments",
+        "operationId" : "getAccountTelemetryV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AccountTelemetryResponse"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "v1telemetry" ],
+        "summary" : "update account specific telemetry settings",
+        "description" : "Update account level telemetry settings - will override already existing settings and archive old one",
+        "operationId" : "updateAccountTelemetryV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AccountTelemetryRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AccountTelemetryResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/telemetry/default" : {
+      "get" : {
+        "tags" : [ "v1telemetry" ],
+        "summary" : "get default account specific telemetry settings",
+        "description" : "Gather default telemetry account level settings - default rules contains email/card number regex patterns",
+        "operationId" : "getDefaultAccountTelemetryV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AccountTelemetryResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/utils/client" : {
+      "get" : {
+        "tags" : [ "v1utils" ],
+        "summary" : "checks the client version",
+        "description" : "",
+        "operationId" : "checkClientVersionOfEnvironmentV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "version",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/VersionCheckResult"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/name/{resourceName}/last" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get last flow log for resource by resource name",
+        "description" : "Flow log operations",
+        "operationId" : "getLastFlowByResourceName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowLogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/crn/{resourceCrn}/last" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get last flow log for resource by resource CRN",
+        "description" : "Flow log operations",
+        "operationId" : "getLastFlowByResourceCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowLogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/crn/{resourceCrn}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get flow logs for resource by resource CRN",
+        "description" : "Flow log operations",
+        "operationId" : "getFlowLogsByResourceCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FlowLogResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/name/{resourceName}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get flow logs for resource by resource name",
+        "description" : "Flow log operations",
+        "operationId" : "getFlowLogsByResourceName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FlowLogResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flow/check/chainId/{chainId}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Check if there is a running flow for chain id",
+        "description" : "Flow log operations",
+        "operationId" : "hasFlowRunningByChainId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "chainId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowCheckResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/check/flowId/{flowId}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Check if there is a running flow for flow id",
+        "description" : "Flow log operations",
+        "operationId" : "hasFlowRunningByFlowId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flowId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowCheckResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/{flowId}/last" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get last flow log by flow id",
+        "description" : "Flow log operations",
+        "operationId" : "getLastFlowById",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flowId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowLogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/{flowId}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get flow logs by flow id",
+        "description" : "Flow log operations",
+        "operationId" : "getFlowLogsByFlowId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flowId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FlowLogResponse"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ApiAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "path" : {
+          "type" : "string"
+        },
+        "httpMethod" : {
+          "type" : "string"
+        },
+        "newAuthorization" : {
+          "$ref" : "#/definitions/NewAuthorizationInfo"
+        },
+        "legacyAuthorization" : {
+          "$ref" : "#/definitions/LegacyAuthorizationInfo"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FieldAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "fieldName" : {
+          "type" : "string"
+        },
+        "permission" : {
+          "type" : "string"
+        }
+      }
+    },
+    "LegacyAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "permissionNeeded" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "NewAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "permissionsNeededForApi" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "permissionsNeededForRequestObject" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/FieldAuthorizationInfo"
+          }
+        }
+      }
+    },
+    "AppBasedV1Request" : {
+      "type" : "object",
+      "required" : [ "accessKey", "secretKey" ],
+      "properties" : {
+        "accessKey" : {
+          "type" : "string"
+        },
+        "secretKey" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AwsCredentialV1Parameters" : {
+      "type" : "object",
+      "required" : [ "govCloud" ],
+      "properties" : {
+        "keyBased" : {
+          "$ref" : "#/definitions/KeyBasedV1Parameters"
+        },
+        "roleBased" : {
+          "$ref" : "#/definitions/RoleBasedV1Parameters"
+        },
+        "govCloud" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "AzureCredentialV1RequestParameters" : {
+      "type" : "object",
+      "required" : [ "subscriptionId", "tenantId" ],
+      "properties" : {
+        "subscriptionId" : {
+          "type" : "string",
+          "example" : "a8d4457d-310v-41p6-sc53-14g8d733e514"
+        },
+        "tenantId" : {
+          "type" : "string",
+          "example" : "b10u3481-2451-10ba-7sfd-9o2d1v60185d"
+        },
+        "appBased" : {
+          "$ref" : "#/definitions/AppBasedV1Request"
+        },
+        "roleBased" : {
+          "$ref" : "#/definitions/RoleBasedV1Request"
+        }
+      }
+    },
+    "AzureCredentialV1ResponseParameters" : {
+      "type" : "object",
+      "properties" : {
+        "subscriptionId" : {
+          "type" : "string"
+        },
+        "tenantId" : {
+          "type" : "string"
+        },
+        "accessKey" : {
+          "type" : "string"
+        },
+        "roleBased" : {
+          "$ref" : "#/definitions/RoleBasedV1Response"
+        }
+      }
+    },
+    "CredentialBase" : {
+      "type" : "object",
+      "required" : [ "cloudPlatform", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource",
+          "minLength" : 5,
+          "maxLength" : 100,
+          "pattern" : "(^[a-z][-a-z0-9]*[a-z0-9]$)"
+        },
+        "cloudPlatform" : {
+          "type" : "string",
+          "description" : "type of cloud provider"
+        },
+        "aws" : {
+          "description" : "custom parameters for AWS credential",
+          "$ref" : "#/definitions/AwsCredentialV1Parameters"
+        },
+        "gcp" : {
+          "description" : "custom parameters for GCP credential",
+          "$ref" : "#/definitions/GcpV1Parameters"
+        },
+        "openstack" : {
+          "description" : "custom parameters for Openstack credential",
+          "$ref" : "#/definitions/OpenstackV1Parameters"
+        },
+        "yarn" : {
+          "description" : "custom parameters for Yarn credential",
+          "$ref" : "#/definitions/YarnV1Parameters"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "verificationStatusText" : {
+          "type" : "string",
+          "description" : "verification status text for credential, if empty then there is no verification issue"
+        },
+        "verifyPermissions" : {
+          "type" : "boolean",
+          "description" : "verify credential permissions"
+        }
+      }
+    },
+    "CredentialV1Request" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/CredentialBase"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "azure" : {
+            "description" : "custom parameters for Azure credential",
+            "$ref" : "#/definitions/AzureCredentialV1RequestParameters"
+          }
+        },
+        "description" : "Cloudbreak is launching Hadoop clusters on the user's behalf - on different cloud providers. One key point is that Cloudbreak does not store your Cloud provider account details (such as username, password, keys, private SSL certificates, etc). We work around the concept that Identity and Access Management is fully controlled by you - the end user. The Cloudbreak deployer is purely acting on behalf of the end user - without having access to the user's account."
+      } ]
+    },
+    "CredentialV1Response" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/CredentialBase"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "attributes" : {
+            "description" : "provider specific attributes of the credential",
+            "$ref" : "#/definitions/SecretResponse"
+          },
+          "azure" : {
+            "description" : "custom parameters for Azure credential",
+            "$ref" : "#/definitions/AzureCredentialV1ResponseParameters"
+          },
+          "crn" : {
+            "type" : "string",
+            "description" : "global identifiers of the resource"
+          },
+          "creator" : {
+            "type" : "string",
+            "description" : "crn of the creator"
+          },
+          "created" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "creation time of the credential in long"
+          }
+        },
+        "description" : "Credential of the environment."
+      } ]
+    },
+    "CredentialV1Responses" : {
+      "type" : "object",
+      "properties" : {
+        "responses" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CredentialV1Response"
+          }
+        }
+      },
+      "description" : "Wrapper which contains multiple CredentialV1Response"
+    },
+    "DomainKeystoneV3Parameters" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/KeystoneV3Base"
+      }, {
+        "type" : "object",
+        "required" : [ "domainName" ],
+        "properties" : {
+          "domainName" : {
+            "type" : "string"
+          }
+        }
+      } ]
+    },
+    "GcpV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "p12" : {
+          "$ref" : "#/definitions/P12V1Parameters"
+        },
+        "json" : {
+          "$ref" : "#/definitions/JsonV1Parameters"
+        }
+      }
+    },
+    "JsonV1Parameters" : {
+      "type" : "object",
+      "required" : [ "credentialJson" ],
+      "properties" : {
+        "credentialJson" : {
+          "type" : "string"
+        }
+      }
+    },
+    "KeyBasedV1Parameters" : {
+      "type" : "object",
+      "required" : [ "accessKey", "secretKey" ],
+      "properties" : {
+        "accessKey" : {
+          "type" : "string",
+          "example" : "ASIBJ34QYCJ1IBLK24KA"
+        },
+        "secretKey" : {
+          "type" : "string",
+          "example" : "Ratk5cM9edxGuN6jdGb/8Jf621ZuTVGkoO14GPwN"
+        }
+      }
+    },
+    "KeystoneV2Parameters" : {
+      "type" : "object",
+      "required" : [ "tenantName" ],
+      "properties" : {
+        "tenantName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "KeystoneV3Base" : {
+      "type" : "object",
+      "required" : [ "userDomain" ],
+      "properties" : {
+        "userDomain" : {
+          "type" : "string"
+        }
+      }
+    },
+    "KeystoneV3Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "project" : {
+          "$ref" : "#/definitions/ProjectKeystoneV3Parameters"
+        },
+        "domain" : {
+          "$ref" : "#/definitions/DomainKeystoneV3Parameters"
+        }
+      }
+    },
+    "OpenstackV1Parameters" : {
+      "type" : "object",
+      "required" : [ "endpoint", "facing", "password", "userName" ],
+      "properties" : {
+        "endpoint" : {
+          "type" : "string"
+        },
+        "facing" : {
+          "type" : "string",
+          "enum" : [ "public", "admin", "internal" ]
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "userName" : {
+          "type" : "string"
+        },
+        "keystoneV2" : {
+          "$ref" : "#/definitions/KeystoneV2Parameters"
+        },
+        "keystoneV3" : {
+          "$ref" : "#/definitions/KeystoneV3Parameters"
+        }
+      }
+    },
+    "P12V1Parameters" : {
+      "type" : "object",
+      "required" : [ "projectId", "serviceAccountId", "serviceAccountPrivateKey" ],
+      "properties" : {
+        "projectId" : {
+          "type" : "string"
+        },
+        "serviceAccountId" : {
+          "type" : "string",
+          "example" : "serviceaccountemailaddress@example.com"
+        },
+        "serviceAccountPrivateKey" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ProjectKeystoneV3Parameters" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/KeystoneV3Base"
+      }, {
+        "type" : "object",
+        "required" : [ "projectDomainName", "projectName" ],
+        "properties" : {
+          "projectDomainName" : {
+            "type" : "string"
+          },
+          "projectName" : {
+            "type" : "string"
+          }
+        }
+      } ]
+    },
+    "RoleBasedV1Parameters" : {
+      "type" : "object",
+      "required" : [ "roleArn" ],
+      "properties" : {
+        "roleArn" : {
+          "type" : "string",
+          "example" : "arn:aws:iam::981628461338:role/example-role",
+          "description" : "the role ARN of the credential",
+          "minLength" : 20,
+          "maxLength" : 100
+        }
+      }
+    },
+    "RoleBasedV1Request" : {
+      "type" : "object",
+      "required" : [ "roleName" ],
+      "properties" : {
+        "roleName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "RoleBasedV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "spDisplayName" : {
+          "type" : "string"
+        },
+        "codeGrantFlow" : {
+          "type" : "boolean"
+        },
+        "appObjectId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SecretResponse" : {
+      "type" : "object",
+      "properties" : {
+        "enginePath" : {
+          "type" : "string",
+          "description" : "Engine path of the secret."
+        },
+        "secretPath" : {
+          "type" : "string",
+          "description" : "Path of the secret."
+        }
+      }
+    },
+    "YarnV1Parameters" : {
+      "type" : "object",
+      "required" : [ "endpoint" ],
+      "properties" : {
+        "endpoint" : {
+          "type" : "string"
+        }
+      }
+    },
+    "InteractiveV1Credential" : {
+      "type" : "object",
+      "properties" : {
+        "userCode" : {
+          "type" : "string",
+          "example" : "B8ZT2QD4K",
+          "description" : "The user code what has to be used for the sign-in process on the Azure portal"
+        },
+        "verificationUrl" : {
+          "type" : "string",
+          "example" : "https://microsoft.com/devicelogin",
+          "description" : "The url provided by Azure where the user have to use the given user code to sign in"
+        }
+      },
+      "description" : "Contains values from an Azure interactive login attempt"
+    },
+    "AwsCredentialPrerequisites" : {
+      "type" : "object",
+      "required" : [ "externalId", "policyJson" ],
+      "properties" : {
+        "externalId" : {
+          "type" : "string",
+          "description" : "AWS specific identifier for role based credential creation - External id for 'Another AWS account' typed roles."
+        },
+        "policyJson" : {
+          "type" : "string",
+          "description" : "AWS specific JSON file that is base64 encoded and describes the necessary AWS policies for cloud resource provisioning."
+        }
+      }
+    },
+    "AzureCredentialPrerequisites" : {
+      "type" : "object",
+      "required" : [ "appCreationCommand", "roleDefitionJson" ],
+      "properties" : {
+        "appCreationCommand" : {
+          "type" : "string",
+          "description" : "Azure CLI command to create Azure AD Application as prerequisite for credential creation.The field is base64 encoded."
+        },
+        "roleDefitionJson" : {
+          "type" : "string",
+          "description" : "Azure specific JSON file that is base64 encoded and describes the necessary Azure role for cloud resource provisioning."
+        }
+      }
+    },
+    "CredentialPrerequisitesResponse" : {
+      "type" : "object",
+      "required" : [ "cloudPlatform" ],
+      "properties" : {
+        "cloudPlatform" : {
+          "type" : "string",
+          "description" : "type of cloud provider"
+        },
+        "accountId" : {
+          "type" : "string",
+          "description" : "provider specific identifier of the account/subscription/project that is used by Cloudbreak"
+        },
+        "aws" : {
+          "description" : "AWS specific credential prerequisites.",
+          "$ref" : "#/definitions/AwsCredentialPrerequisites"
+        },
+        "azure" : {
+          "description" : "Azure specific credential prerequisites.",
+          "$ref" : "#/definitions/AzureCredentialPrerequisites"
+        },
+        "gcp" : {
+          "description" : "GCP specific credential prerequisites.",
+          "$ref" : "#/definitions/GcpCredentialPrerequisites"
+        }
+      }
+    },
+    "GcpCredentialPrerequisites" : {
+      "type" : "object",
+      "required" : [ "creationCommand" ],
+      "properties" : {
+        "creationCommand" : {
+          "type" : "string",
+          "description" : "GCP specific 'gcloud' CLI based commands to create prerequisites for Cloudbreak credential creation. The field is base64 encoded."
+        }
+      }
+    },
+    "AdlsGen2CloudStorageV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "accountKey" : {
+          "type" : "string"
+        },
+        "accountName" : {
+          "type" : "string"
+        },
+        "managedIdentity" : {
+          "type" : "string"
+        },
+        "secure" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "AnonymizationRule" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        },
+        "replacement" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AttachedFreeIpaRequestAwsParameters" : {
+      "type" : "object",
+      "properties" : {
+        "spot" : {
+          "description" : "Aws spot instance related parameters.",
+          "$ref" : "#/definitions/AttachedFreeIpaRequestAwsSpotParameters"
+        }
+      }
+    },
+    "AttachedFreeIpaRequestAwsSpotParameters" : {
+      "type" : "object",
+      "properties" : {
+        "percentage" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Percentage of spot instances launched in FreeIpa instance group",
+          "minimum" : 0,
+          "maximum" : 100
+        }
+      }
+    },
+    "AwsEnvironmentV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "s3guard" : {
+          "description" : "S3Guard parameters.",
+          "$ref" : "#/definitions/S3GuardV1Parameters"
+        }
+      }
+    },
+    "AzureEnvironmentV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "resourceGroup" : {
+          "description" : "Azure resource group parameters.",
+          "$ref" : "#/definitions/AzureResourceGroupV1Parameters"
+        }
+      }
+    },
+    "AzureResourceGroupV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Name of an existing azure resource group."
+        },
+        "resourceGroupUsage" : {
+          "type" : "string",
+          "description" : "Resource group usage: single resource group for all resources where possible or use multiple resource groups.",
+          "enum" : [ "SINGLE", "MULTIPLE" ]
+        }
+      }
+    },
+    "CloudSubnet" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "availabilityZone" : {
+          "type" : "string"
+        },
+        "cidr" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "PUBLIC", "MLX", "DWX", "PRIVATE" ]
+        },
+        "privateSubnet" : {
+          "type" : "boolean"
+        },
+        "mapPublicIpOnLaunch" : {
+          "type" : "boolean"
+        },
+        "igwAvailable" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "CloudwatchParams" : {
+      "type" : "object",
+      "required" : [ "instanceProfile" ],
+      "properties" : {
+        "instanceProfile" : {
+          "type" : "string"
+        },
+        "region" : {
+          "type" : "string",
+          "description" : "telemetry - CloudWatch related AWS region (should be used only outside of AWS platform)"
+        },
+        "streamKey" : {
+          "type" : "string",
+          "description" : "telemetry - CloudWatch releated parameters",
+          "enum" : [ "HOSTNAME", "COMPONENT" ]
+        }
+      }
+    },
+    "CompactRegionV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "displayNames" : {
+          "type" : "object",
+          "description" : "regions with displayNames",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "availabilityZones" : {
+          "type" : "object",
+          "description" : "availability zones",
+          "additionalProperties" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "defaultRegion" : {
+          "type" : "string",
+          "description" : "default regions"
+        },
+        "locations" : {
+          "type" : "array",
+          "description" : "regions with location data",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "k8sSupportedlocations" : {
+          "type" : "array",
+          "description" : "regions with k8s support",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "names" : {
+          "type" : "array",
+          "description" : "Regions of the environment.",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "CredentialViewV1Response" : {
+      "type" : "object",
+      "required" : [ "cloudPlatform" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource"
+        },
+        "crn" : {
+          "type" : "string",
+          "description" : "global identifiers of the resource"
+        },
+        "creator" : {
+          "type" : "string",
+          "description" : "crn of the creator"
+        },
+        "cloudPlatform" : {
+          "type" : "string",
+          "description" : "type of cloud provider"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource"
+        },
+        "verificationStatusText" : {
+          "type" : "string",
+          "description" : "verification status text for credential, if empty then there is no verification issue"
+        }
+      },
+      "description" : "Credential view of the environment that does not contain secrets."
+    },
+    "EnvironmentAuthenticationV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "publicKey" : {
+          "type" : "string",
+          "description" : "SSH Public key string."
+        },
+        "publicKeyId" : {
+          "type" : "string",
+          "description" : "Public key ID registered at the cloud provider."
+        },
+        "loginUserName" : {
+          "type" : "string",
+          "description" : "User name created on the nodes for SSH access"
+        }
+      }
+    },
+    "EnvironmentNetworkAwsV1Params" : {
+      "type" : "object",
+      "required" : [ "vpcId" ],
+      "properties" : {
+        "vpcId" : {
+          "type" : "string",
+          "description" : "Subnet ids of the specified networks",
+          "minLength" : 0,
+          "maxLength" : 255
+        }
+      }
+    },
+    "EnvironmentNetworkAzureV1Params" : {
+      "type" : "object",
+      "required" : [ "networkId", "noPublicIp", "resourceGroupName" ],
+      "properties" : {
+        "networkId" : {
+          "type" : "string",
+          "description" : "Subnet ids of the specified networks",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "resourceGroupName" : {
+          "type" : "string",
+          "description" : "Subnet ids of the specified networks",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "noPublicIp" : {
+          "type" : "boolean",
+          "description" : "Subnet ids of the specified networks"
+        }
+      }
+    },
+    "EnvironmentNetworkMockV1Params" : {
+      "type" : "object",
+      "required" : [ "vpcId" ],
+      "properties" : {
+        "vpcId" : {
+          "type" : "string",
+          "description" : "Subnet ids of the specified networks",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "internetGatewayId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "EnvironmentNetworkV1Response" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "subnetIds" : {
+          "type" : "array",
+          "description" : "Subnet ids of the specified networks",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "networkCidr" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "privateSubnetCreation" : {
+          "type" : "string",
+          "description" : "A flag to enable or disable the private subnet creation.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "serviceEndpointCreation" : {
+          "type" : "string",
+          "description" : "A flag to enable or disable the service endpoint creation.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "outboundInternetTraffic" : {
+          "type" : "string",
+          "description" : "A flag to enable or disable the outbound internet traffic from the instances.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "aws" : {
+          "description" : "Subnet ids of the specified networks",
+          "$ref" : "#/definitions/EnvironmentNetworkAwsV1Params"
+        },
+        "azure" : {
+          "description" : "Subnet ids of the specified networks",
+          "$ref" : "#/definitions/EnvironmentNetworkAzureV1Params"
+        },
+        "yarn" : {
+          "description" : "Yarn parameters",
+          "$ref" : "#/definitions/EnvironmentNetworkYarnV1Params"
+        },
+        "mock" : {
+          "description" : "Mock parameters",
+          "$ref" : "#/definitions/EnvironmentNetworkMockV1Params"
+        },
+        "crn" : {
+          "type" : "string",
+          "description" : "id of the resource"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource"
+        },
+        "subnetMetas" : {
+          "type" : "object",
+          "description" : "Subnet metadata of the specified networks",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/CloudSubnet"
+          }
+        },
+        "cbSubnets" : {
+          "type" : "object",
+          "description" : "Subnet metadata of CB subnets, union of the DWX and public subnets",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/CloudSubnet"
+          }
+        },
+        "dwxSubnets" : {
+          "type" : "object",
+          "description" : "Subnet metadata of DWX subnets",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/CloudSubnet"
+          }
+        },
+        "mlxSubnets" : {
+          "type" : "object",
+          "description" : "Subnet metadata of MLX subnets (Deprecated)",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/CloudSubnet"
+          }
+        },
+        "liftieSubnets" : {
+          "type" : "object",
+          "description" : "Subnet metadata of CB subnets, union of the DWX and public subnets",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/CloudSubnet"
+          }
+        },
+        "existingNetwork" : {
+          "type" : "boolean",
+          "description" : "The existing network is created by the user, otherwise created by the Cloudbreak."
+        },
+        "preferedSubnetId" : {
+          "type" : "string",
+          "description" : "The subnet in which resource should be deployed if not specified by user"
+        },
+        "networkCidrs" : {
+          "type" : "array",
+          "description" : "The network cidrs for the configured vpc",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "EnvironmentNetworkYarnV1Params" : {
+      "type" : "object",
+      "required" : [ "queue" ],
+      "properties" : {
+        "queue" : {
+          "type" : "string",
+          "description" : "Queue for Yarn deployments"
+        },
+        "lifetime" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Lifetime for Yarn deployments in seconds"
+        }
+      }
+    },
+    "FeatureSetting" : {
+      "type" : "object",
+      "required" : [ "enabled" ],
+      "properties" : {
+        "enabled" : {
+          "type" : "boolean",
+          "description" : "enabled"
+        }
+      }
+    },
+    "FeaturesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "clusterLogsCollection" : {
+          "description" : "enable cluster logs collection",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "monitoring" : {
+          "description" : "enable monitoring for cluster services",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "metering" : {
+          "description" : "Telemetry metering feature setting",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "useSharedAltusCredential" : {
+          "description" : "enable shared Altus credential usage",
+          "$ref" : "#/definitions/FeatureSetting"
+        }
+      }
+    },
+    "FreeIpaResponse" : {
+      "type" : "object",
+      "properties" : {
+        "instanceCountByGroup" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The number of FreeIPA instances to create per group when creating freeipa in environment"
+        },
+        "aws" : {
+          "description" : "Aws specific FreeIpa parameters",
+          "$ref" : "#/definitions/AttachedFreeIpaRequestAwsParameters"
+        }
+      }
+    },
+    "LocationV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Location of the environment."
+        },
+        "displayName" : {
+          "type" : "string",
+          "description" : "Display name of the location of the environment."
+        },
+        "latitude" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Location latitude of the environment."
+        },
+        "longitude" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Location longitude of the environment."
+        }
+      }
+    },
+    "LoggingResponse" : {
+      "type" : "object",
+      "required" : [ "storageLocation" ],
+      "properties" : {
+        "storageLocation" : {
+          "type" : "string",
+          "description" : "telemetry - logging storage location / container"
+        },
+        "s3" : {
+          "description" : "telemetry - logging s3 attributes",
+          "$ref" : "#/definitions/S3CloudStorageV1Parameters"
+        },
+        "adlsGen2" : {
+          "description" : "telemetry - logging adls gen2 attributes",
+          "$ref" : "#/definitions/AdlsGen2CloudStorageV1Parameters"
+        },
+        "cloudwatch" : {
+          "description" : "telemetry - logging cloudwatch attributes",
+          "$ref" : "#/definitions/CloudwatchParams"
+        }
+      }
+    },
+    "ProxyViewResponse" : {
+      "type" : "object",
+      "required" : [ "host", "name", "port", "protocol" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Name of the proxy configuration resource",
+          "minLength" : 4,
+          "maxLength" : 100,
+          "pattern" : "(^[a-z][-a-z0-9]*[a-z0-9]$)"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "host" : {
+          "type" : "string",
+          "description" : "host or IP address of proxy server",
+          "minLength" : 1,
+          "maxLength" : 255,
+          "pattern" : "(^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$)"
+        },
+        "port" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "port of proxy server (typically: 3128 or 8080)",
+          "minimum" : 1,
+          "maximum" : 65535
+        },
+        "protocol" : {
+          "type" : "string",
+          "description" : "determines the protocol (http or https)",
+          "pattern" : "^http(s)?$"
+        },
+        "crn" : {
+          "type" : "string",
+          "description" : "proxy configuration id for the cluster"
+        },
+        "creator" : {
+          "type" : "string",
+          "description" : "crn of the creator"
+        }
+      },
+      "description" : "Cloudbreak allows you to save your existing proxy configuration information as an external source so that you can provide the proxy information to multiple clusters that you create with Cloudbreak"
+    },
+    "S3CloudStorageV1Parameters" : {
+      "type" : "object",
+      "required" : [ "instanceProfile" ],
+      "properties" : {
+        "instanceProfile" : {
+          "type" : "string"
+        }
+      }
+    },
+    "S3GuardV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "dynamoDbTableName" : {
+          "type" : "string",
+          "description" : "S3Guard Dynamo table name.",
+          "pattern" : "^[a-zA-Z0-9\\.\\-_]{3,255}$"
+        }
+      }
+    },
+    "SecurityAccessV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "securityGroupIdForKnox" : {
+          "type" : "string",
+          "description" : "Security group where Knox-enabled hosts are placed.",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "defaultSecurityGroupId" : {
+          "type" : "string",
+          "description" : "Security group where all other hosts are placed.",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "cidr" : {
+          "type" : "string",
+          "description" : "CIDR range which is allowed for inbound traffic. Either IPv4 or IPv6 is allowed.",
+          "minLength" : 5,
+          "maxLength" : 255
+        }
+      }
+    },
+    "SimpleEnvironmentV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "crn" : {
+          "type" : "string",
+          "description" : "id of the resource"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource"
+        },
+        "cloudPlatform" : {
+          "type" : "string",
+          "description" : "Cloud platform of the environment."
+        },
+        "creator" : {
+          "type" : "string",
+          "description" : "crn of the creator"
+        },
+        "createFreeIpa" : {
+          "type" : "boolean",
+          "description" : "Create freeipa in environment"
+        },
+        "freeIpa" : {
+          "description" : "The FreeIPA paramaters",
+          "$ref" : "#/definitions/FreeIpaResponse"
+        },
+        "regions" : {
+          "description" : "Regions of the environment.",
+          "$ref" : "#/definitions/CompactRegionV1Response"
+        },
+        "location" : {
+          "description" : "Location of the environment.",
+          "$ref" : "#/definitions/LocationV1Response"
+        },
+        "telemetry" : {
+          "description" : "Telemetry related specifics of the environment.",
+          "$ref" : "#/definitions/TelemetryResponse"
+        },
+        "network" : {
+          "description" : "Network related specifics of the environment.",
+          "$ref" : "#/definitions/EnvironmentNetworkV1Response"
+        },
+        "environmentStatus" : {
+          "type" : "string",
+          "description" : "Status of the environment.",
+          "enum" : [ "CREATION_INITIATED", "DELETE_INITIATED", "UPDATE_INITIATED", "ENVIRONMENT_INITIALIZATION_IN_PROGRESS", "ENVIRONMENT_VALIDATION_IN_PROGRESS", "PREREQUISITES_CREATE_IN_PROGRESS", "NETWORK_CREATION_IN_PROGRESS", "NETWORK_DELETE_IN_PROGRESS", "RDBMS_DELETE_IN_PROGRESS", "FREEIPA_CREATION_IN_PROGRESS", "FREEIPA_DELETE_IN_PROGRESS", "CLUSTER_DEFINITION_CLEANUP_PROGRESS", "UMS_RESOURCE_DELETE_IN_PROGRESS", "PREREQUISITES_DELETE_IN_PROGRESS", "IDBROKER_MAPPINGS_DELETE_IN_PROGRESS", "S3GUARD_TABLE_DELETE_IN_PROGRESS", "DATAHUB_CLUSTERS_DELETE_IN_PROGRESS", "DATALAKE_CLUSTERS_DELETE_IN_PROGRESS", "PUBLICKEY_CREATE_IN_PROGRESS", "PUBLICKEY_DELETE_IN_PROGRESS", "AVAILABLE", "ARCHIVED", "CREATE_FAILED", "DELETE_FAILED", "UPDATE_FAILED", "STOP_DATAHUB_STARTED", "STOP_DATAHUB_FAILED", "STOP_DATALAKE_STARTED", "STOP_DATALAKE_FAILED", "STOP_FREEIPA_STARTED", "STOP_FREEIPA_FAILED", "ENV_STOPPED", "START_DATAHUB_STARTED", "START_DATAHUB_FAILED", "START_DATALAKE_STARTED", "START_DATALAKE_FAILED", "START_FREEIPA_STARTED", "START_FREEIPA_FAILED", "FREEIPA_DELETED_ON_PROVIDER_SIDE" ]
+        },
+        "authentication" : {
+          "description" : "SSH key for accessing cluster node instances.",
+          "$ref" : "#/definitions/EnvironmentAuthenticationV1Response"
+        },
+        "statusReason" : {
+          "type" : "string"
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "tunnel" : {
+          "type" : "string",
+          "description" : "Configuration that the connection going directly or with cluster proxy or with ccm and cluster proxy.",
+          "enum" : [ "DIRECT", "CCM", "CLUSTER_PROXY" ]
+        },
+        "securityAccess" : {
+          "description" : "Security control for FreeIPA and Datalake deployment.",
+          "$ref" : "#/definitions/SecurityAccessV1Response"
+        },
+        "idBrokerMappingSource" : {
+          "type" : "string",
+          "description" : "IDBroker mapping source.",
+          "enum" : [ "NONE", "MOCK", "IDBMMS" ]
+        },
+        "cloudStorageValidation" : {
+          "type" : "string",
+          "description" : "Cloud storage validation enabled or not.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "adminGroupName" : {
+          "type" : "string",
+          "description" : "Name of the admin group to be used for all the services."
+        },
+        "aws" : {
+          "description" : "AWS Specific parameters.",
+          "$ref" : "#/definitions/AwsEnvironmentV1Parameters"
+        },
+        "azure" : {
+          "description" : "Azure Specific parameters.",
+          "$ref" : "#/definitions/AzureEnvironmentV1Parameters"
+        },
+        "tags" : {
+          "description" : "Tags for environments.",
+          "$ref" : "#/definitions/TagResponse"
+        },
+        "parentEnvironmentCrn" : {
+          "type" : "string",
+          "description" : "Parent environment global identifier"
+        },
+        "parentEnvironmentName" : {
+          "type" : "string",
+          "description" : "Parent environment name"
+        },
+        "parentEnvironmentCloudPlatform" : {
+          "type" : "string",
+          "description" : "Parent environment cloud platform"
+        },
+        "credential" : {
+          "$ref" : "#/definitions/CredentialViewV1Response"
+        },
+        "proxyConfig" : {
+          "$ref" : "#/definitions/ProxyViewResponse"
+        }
+      }
+    },
+    "TagResponse" : {
+      "type" : "object",
+      "properties" : {
+        "userDefined" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "defaults" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "TelemetryResponse" : {
+      "type" : "object",
+      "properties" : {
+        "fluentAttributes" : {
+          "type" : "object",
+          "description" : "Telemetry fluent settings (overrides).",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        },
+        "logging" : {
+          "description" : "Cloud Logging (telemetry) settings.",
+          "$ref" : "#/definitions/LoggingResponse"
+        },
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/WorkloadAnalyticsResponse"
+        },
+        "features" : {
+          "description" : "Telemetry features settings",
+          "$ref" : "#/definitions/FeaturesResponse"
+        },
+        "rules" : {
+          "type" : "array",
+          "description" : "Telemetry anonymization rules (persistent on cluster level) that are applied on shipped logs.",
+          "items" : {
+            "$ref" : "#/definitions/AnonymizationRule"
+          }
+        }
+      }
+    },
+    "WorkloadAnalyticsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "attributes" : {
+          "type" : "object",
+          "description" : "Workload analytics (telemetry) attributes.",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "DetailedEnvironmentV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "crn" : {
+          "type" : "string",
+          "description" : "id of the resource"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource"
+        },
+        "cloudPlatform" : {
+          "type" : "string",
+          "description" : "Cloud platform of the environment."
+        },
+        "creator" : {
+          "type" : "string",
+          "description" : "crn of the creator"
+        },
+        "createFreeIpa" : {
+          "type" : "boolean",
+          "description" : "Create freeipa in environment"
+        },
+        "freeIpa" : {
+          "description" : "The FreeIPA paramaters",
+          "$ref" : "#/definitions/FreeIpaResponse"
+        },
+        "regions" : {
+          "description" : "Regions of the environment.",
+          "$ref" : "#/definitions/CompactRegionV1Response"
+        },
+        "location" : {
+          "description" : "Location of the environment.",
+          "$ref" : "#/definitions/LocationV1Response"
+        },
+        "telemetry" : {
+          "description" : "Telemetry related specifics of the environment.",
+          "$ref" : "#/definitions/TelemetryResponse"
+        },
+        "network" : {
+          "description" : "Network related specifics of the environment.",
+          "$ref" : "#/definitions/EnvironmentNetworkV1Response"
+        },
+        "environmentStatus" : {
+          "type" : "string",
+          "description" : "Status of the environment.",
+          "enum" : [ "CREATION_INITIATED", "DELETE_INITIATED", "UPDATE_INITIATED", "ENVIRONMENT_INITIALIZATION_IN_PROGRESS", "ENVIRONMENT_VALIDATION_IN_PROGRESS", "PREREQUISITES_CREATE_IN_PROGRESS", "NETWORK_CREATION_IN_PROGRESS", "NETWORK_DELETE_IN_PROGRESS", "RDBMS_DELETE_IN_PROGRESS", "FREEIPA_CREATION_IN_PROGRESS", "FREEIPA_DELETE_IN_PROGRESS", "CLUSTER_DEFINITION_CLEANUP_PROGRESS", "UMS_RESOURCE_DELETE_IN_PROGRESS", "PREREQUISITES_DELETE_IN_PROGRESS", "IDBROKER_MAPPINGS_DELETE_IN_PROGRESS", "S3GUARD_TABLE_DELETE_IN_PROGRESS", "DATAHUB_CLUSTERS_DELETE_IN_PROGRESS", "DATALAKE_CLUSTERS_DELETE_IN_PROGRESS", "PUBLICKEY_CREATE_IN_PROGRESS", "PUBLICKEY_DELETE_IN_PROGRESS", "AVAILABLE", "ARCHIVED", "CREATE_FAILED", "DELETE_FAILED", "UPDATE_FAILED", "STOP_DATAHUB_STARTED", "STOP_DATAHUB_FAILED", "STOP_DATALAKE_STARTED", "STOP_DATALAKE_FAILED", "STOP_FREEIPA_STARTED", "STOP_FREEIPA_FAILED", "ENV_STOPPED", "START_DATAHUB_STARTED", "START_DATAHUB_FAILED", "START_DATALAKE_STARTED", "START_DATALAKE_FAILED", "START_FREEIPA_STARTED", "START_FREEIPA_FAILED", "FREEIPA_DELETED_ON_PROVIDER_SIDE" ]
+        },
+        "authentication" : {
+          "description" : "SSH key for accessing cluster node instances.",
+          "$ref" : "#/definitions/EnvironmentAuthenticationV1Response"
+        },
+        "statusReason" : {
+          "type" : "string"
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "tunnel" : {
+          "type" : "string",
+          "description" : "Configuration that the connection going directly or with cluster proxy or with ccm and cluster proxy.",
+          "enum" : [ "DIRECT", "CCM", "CLUSTER_PROXY" ]
+        },
+        "securityAccess" : {
+          "description" : "Security control for FreeIPA and Datalake deployment.",
+          "$ref" : "#/definitions/SecurityAccessV1Response"
+        },
+        "idBrokerMappingSource" : {
+          "type" : "string",
+          "description" : "IDBroker mapping source.",
+          "enum" : [ "NONE", "MOCK", "IDBMMS" ]
+        },
+        "cloudStorageValidation" : {
+          "type" : "string",
+          "description" : "Cloud storage validation enabled or not.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "adminGroupName" : {
+          "type" : "string",
+          "description" : "Name of the admin group to be used for all the services."
+        },
+        "aws" : {
+          "description" : "AWS Specific parameters.",
+          "$ref" : "#/definitions/AwsEnvironmentV1Parameters"
+        },
+        "azure" : {
+          "description" : "Azure Specific parameters.",
+          "$ref" : "#/definitions/AzureEnvironmentV1Parameters"
+        },
+        "tags" : {
+          "description" : "Tags for environments.",
+          "$ref" : "#/definitions/TagResponse"
+        },
+        "parentEnvironmentCrn" : {
+          "type" : "string",
+          "description" : "Parent environment global identifier"
+        },
+        "parentEnvironmentName" : {
+          "type" : "string",
+          "description" : "Parent environment name"
+        },
+        "parentEnvironmentCloudPlatform" : {
+          "type" : "string",
+          "description" : "Parent environment cloud platform"
+        },
+        "credential" : {
+          "description" : "Credential of the environment.",
+          "$ref" : "#/definitions/CredentialV1Response"
+        },
+        "proxyConfig" : {
+          "description" : "ProxyConfig attached to the environment.",
+          "$ref" : "#/definitions/ProxyResponse"
+        }
+      }
+    },
+    "ProxyResponse" : {
+      "type" : "object",
+      "required" : [ "host", "name", "port", "protocol" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Name of the proxy configuration resource",
+          "minLength" : 4,
+          "maxLength" : 100,
+          "pattern" : "(^[a-z][-a-z0-9]*[a-z0-9]$)"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "host" : {
+          "type" : "string",
+          "description" : "host or IP address of proxy server",
+          "minLength" : 1,
+          "maxLength" : 255,
+          "pattern" : "(^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$)"
+        },
+        "port" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "port of proxy server (typically: 3128 or 8080)",
+          "minimum" : 1,
+          "maximum" : 65535
+        },
+        "protocol" : {
+          "type" : "string",
+          "description" : "determines the protocol (http or https)",
+          "pattern" : "^http(s)?$"
+        },
+        "crn" : {
+          "type" : "string",
+          "description" : "proxy configuration id for the cluster"
+        },
+        "userName" : {
+          "description" : "Username to use for basic authentication",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "password" : {
+          "description" : "Password to use for basic authentication",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "creator" : {
+          "type" : "string",
+          "description" : "crn of the creator"
+        }
+      },
+      "description" : "Cloudbreak allows you to save your existing proxy configuration information as an external source so that you can provide the proxy information to multiple clusters that you create with Cloudbreak"
+    },
+    "EnvironmentChangeCredentialV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "credentialName" : {
+          "type" : "string",
+          "description" : "Name of the credential of the environment. If the name is given, the detailed credential is ignored in the request."
+        },
+        "credential" : {
+          "description" : "If credentialName is not specified, the credential is used to create the new credential for the environment.",
+          "$ref" : "#/definitions/CredentialV1Request"
+        }
+      }
+    },
+    "FeaturesRequest" : {
+      "type" : "object",
+      "properties" : {
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "clusterLogsCollection" : {
+          "description" : "enable cluster logs collection",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "monitoring" : {
+          "description" : "enable monitoring for cluster services",
+          "$ref" : "#/definitions/FeatureSetting"
+        }
+      }
+    },
+    "SimpleEnvironmentV1Responses" : {
+      "type" : "object",
+      "properties" : {
+        "responses" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SimpleEnvironmentV1Response"
+          }
+        }
+      },
+      "description" : "Wrapper which contains multiple SimpleEnvironmentV1Responses"
+    },
+    "EnvironmentAuthenticationV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "publicKey" : {
+          "type" : "string",
+          "description" : "SSH Public key string."
+        },
+        "publicKeyId" : {
+          "type" : "string",
+          "description" : "Public key ID registered at the cloud provider.",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "loginUserName" : {
+          "type" : "string",
+          "description" : "User name created on the nodes for SSH access",
+          "minLength" : 1,
+          "maxLength" : 32,
+          "pattern" : "(^[a-z_]([a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\\$)$)"
+        }
+      }
+    },
+    "EnvironmentEditV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "network" : {
+          "description" : "Network related specifics of the environment.",
+          "$ref" : "#/definitions/EnvironmentNetworkV1Request"
+        },
+        "authentication" : {
+          "description" : "SSH key for accessing cluster node instances.",
+          "$ref" : "#/definitions/EnvironmentAuthenticationV1Request"
+        },
+        "telemetry" : {
+          "description" : "Telemetry related specifics of the environment.",
+          "$ref" : "#/definitions/TelemetryRequest"
+        },
+        "securityAccess" : {
+          "description" : "Security control for FreeIPA and Datalake deployment.",
+          "$ref" : "#/definitions/SecurityAccessV1Request"
+        },
+        "idBrokerMappingSource" : {
+          "type" : "string",
+          "description" : "IDBroker mapping source.",
+          "enum" : [ "NONE", "MOCK", "IDBMMS" ]
+        },
+        "cloudStorageValidation" : {
+          "type" : "string",
+          "description" : "Cloud storage validation enabled or not.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "adminGroupName" : {
+          "type" : "string",
+          "description" : "Name of the admin group to be used for all the services."
+        },
+        "aws" : {
+          "description" : "AWS Specific parameters.",
+          "$ref" : "#/definitions/AwsEnvironmentV1Parameters"
+        }
+      }
+    },
+    "EnvironmentNetworkV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "subnetIds" : {
+          "type" : "array",
+          "description" : "Subnet ids of the specified networks",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "networkCidr" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "privateSubnetCreation" : {
+          "type" : "string",
+          "description" : "A flag to enable or disable the private subnet creation.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "serviceEndpointCreation" : {
+          "type" : "string",
+          "description" : "A flag to enable or disable the service endpoint creation.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "outboundInternetTraffic" : {
+          "type" : "string",
+          "description" : "A flag to enable or disable the outbound internet traffic from the instances.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "aws" : {
+          "description" : "Subnet ids of the specified networks",
+          "$ref" : "#/definitions/EnvironmentNetworkAwsV1Params"
+        },
+        "azure" : {
+          "description" : "Subnet ids of the specified networks",
+          "$ref" : "#/definitions/EnvironmentNetworkAzureV1Params"
+        },
+        "yarn" : {
+          "description" : "Yarn parameters",
+          "$ref" : "#/definitions/EnvironmentNetworkYarnV1Params"
+        },
+        "mock" : {
+          "description" : "Mock parameters",
+          "$ref" : "#/definitions/EnvironmentNetworkMockV1Params"
+        }
+      }
+    },
+    "LoggingRequest" : {
+      "type" : "object",
+      "required" : [ "storageLocation" ],
+      "properties" : {
+        "storageLocation" : {
+          "type" : "string",
+          "description" : "telemetry - logging storage location / container"
+        },
+        "s3" : {
+          "description" : "telemetry - logging s3 attributes",
+          "$ref" : "#/definitions/S3CloudStorageV1Parameters"
+        },
+        "adlsGen2" : {
+          "description" : "telemetry - logging adls gen2 attributes",
+          "$ref" : "#/definitions/AdlsGen2CloudStorageV1Parameters"
+        },
+        "cloudwatch" : {
+          "description" : "telemetry - logging cloudwatch attributes",
+          "$ref" : "#/definitions/CloudwatchParams"
+        }
+      }
+    },
+    "SecurityAccessV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "securityGroupIdForKnox" : {
+          "type" : "string",
+          "description" : "Security group where Knox-enabled hosts are placed.",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "defaultSecurityGroupId" : {
+          "type" : "string",
+          "description" : "Security group where all other hosts are placed.",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "cidr" : {
+          "type" : "string",
+          "description" : "CIDR range which is allowed for inbound traffic. Either IPv4 or IPv6 is allowed.",
+          "minLength" : 5,
+          "maxLength" : 255
+        }
+      }
+    },
+    "TelemetryRequest" : {
+      "type" : "object",
+      "properties" : {
+        "fluentAttributes" : {
+          "type" : "object",
+          "description" : "Telemetry fluent settings (overrides).",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        },
+        "logging" : {
+          "description" : "Cloud Logging (telemetry) settings.",
+          "$ref" : "#/definitions/LoggingRequest"
+        },
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/WorkloadAnalyticsRequest"
+        },
+        "features" : {
+          "description" : "Telemetry features settings",
+          "$ref" : "#/definitions/FeaturesRequest"
+        }
+      }
+    },
+    "WorkloadAnalyticsRequest" : {
+      "type" : "object",
+      "properties" : {
+        "attributes" : {
+          "type" : "object",
+          "description" : "Workload analytics (telemetry) attributes.",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "AttachedFreeIpaRequest" : {
+      "type" : "object",
+      "required" : [ "create" ],
+      "properties" : {
+        "create" : {
+          "type" : "boolean",
+          "description" : "Create freeipa in environment"
+        },
+        "instanceCountByGroup" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The number of FreeIPA instances to create per group when creating freeipa in environment"
+        },
+        "aws" : {
+          "description" : "Aws specific FreeIpa parameters",
+          "$ref" : "#/definitions/AttachedFreeIpaRequestAwsParameters"
+        }
+      }
+    },
+    "EnvironmentV1Request" : {
+      "type" : "object",
+      "required" : [ "location", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource",
+          "minLength" : 5,
+          "maxLength" : 28,
+          "pattern" : "(^[a-z][-a-z0-9]*[a-z0-9]$)"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "credentialName" : {
+          "type" : "string",
+          "description" : "Name of the credential of the environment. If the name is given, the detailed credential is ignored in the request."
+        },
+        "regions" : {
+          "type" : "array",
+          "description" : "Regions of the environment.",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "location" : {
+          "description" : "Location of the environment.",
+          "$ref" : "#/definitions/LocationV1Request"
+        },
+        "network" : {
+          "description" : "Network related specifics of the environment.",
+          "$ref" : "#/definitions/EnvironmentNetworkV1Request"
+        },
+        "telemetry" : {
+          "description" : "Telemetry related specifics of the environment.",
+          "$ref" : "#/definitions/TelemetryRequest"
+        },
+        "authentication" : {
+          "description" : "SSH key for accessing cluster node instances.",
+          "$ref" : "#/definitions/EnvironmentAuthenticationV1Request"
+        },
+        "freeIpa" : {
+          "description" : "Properties for FreeIpa which can be attached to the given environment",
+          "$ref" : "#/definitions/AttachedFreeIpaRequest"
+        },
+        "securityAccess" : {
+          "description" : "Security control for FreeIPA and Datalake deployment.",
+          "$ref" : "#/definitions/SecurityAccessV1Request"
+        },
+        "tunnel" : {
+          "type" : "string",
+          "description" : "Configuration that the connection going directly or with cluster proxy or with ccm and cluster proxy.",
+          "enum" : [ "DIRECT", "CCM", "CLUSTER_PROXY" ]
+        },
+        "idBrokerMappingSource" : {
+          "type" : "string",
+          "description" : "IDBroker mapping source.",
+          "enum" : [ "NONE", "MOCK", "IDBMMS" ]
+        },
+        "cloudStorageValidation" : {
+          "type" : "string",
+          "description" : "Cloud storage validation enabled or not.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "adminGroupName" : {
+          "type" : "string",
+          "description" : "Name of the admin group to be used for all the services."
+        },
+        "proxyConfigName" : {
+          "type" : "string",
+          "description" : "Name of the proxyconfig of the environment."
+        },
+        "aws" : {
+          "description" : "AWS Specific parameters.",
+          "$ref" : "#/definitions/AwsEnvironmentV1Parameters"
+        },
+        "azure" : {
+          "description" : "AWS Specific parameters.",
+          "$ref" : "#/definitions/AzureEnvironmentV1Parameters"
+        },
+        "tags" : {
+          "type" : "object",
+          "description" : "Tags for environments.",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "parentEnvironmentName" : {
+          "type" : "string",
+          "description" : "Parent environment name"
+        }
+      }
+    },
+    "LocationV1Request" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Location of the environment.",
+          "minLength" : 0,
+          "maxLength" : 100
+        },
+        "latitude" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Location latitude of the environment."
+        },
+        "longitude" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Location longitude of the environment."
+        }
+      }
+    },
+    "EnvironmentCrnV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "environmentName" : {
+          "type" : "string"
+        },
+        "environmentCrn" : {
+          "type" : "string"
+        }
+      }
+    },
+    "PlatformNetworkResponse" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "subnets" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "subnetMetadata" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/CloudSubnet"
+          }
+        },
+        "properties" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "PlatformNetworksResponse" : {
+      "type" : "object",
+      "properties" : {
+        "networks" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "array",
+            "uniqueItems" : true,
+            "items" : {
+              "$ref" : "#/definitions/PlatformNetworkResponse"
+            }
+          }
+        }
+      }
+    },
+    "PlatformSecurityGroupResponse" : {
+      "type" : "object",
+      "properties" : {
+        "groupName" : {
+          "type" : "string"
+        },
+        "groupId" : {
+          "type" : "string"
+        },
+        "properties" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "PlatformSecurityGroupsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "securityGroups" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "array",
+            "uniqueItems" : true,
+            "items" : {
+              "$ref" : "#/definitions/PlatformSecurityGroupResponse"
+            }
+          }
+        }
+      }
+    },
+    "PlatformVmtypesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "vmTypes" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/VirtualMachinesResponse"
+          }
+        }
+      }
+    },
+    "VirtualMachinesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "virtualMachines" : {
+          "type" : "array",
+          "description" : "virtual machines",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/VmTypeResponse"
+          }
+        },
+        "defaultVirtualMachine" : {
+          "description" : "default virtual machines",
+          "$ref" : "#/definitions/VmTypeResponse"
+        }
+      }
+    },
+    "VmTypeMetaJson" : {
+      "type" : "object",
+      "properties" : {
+        "configs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/VolumeParameterConfigResponse"
+          }
+        },
+        "properties" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "VmTypeResponse" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        },
+        "vmTypeMetaJson" : {
+          "$ref" : "#/definitions/VmTypeMetaJson"
+        }
+      }
+    },
+    "VolumeParameterConfigResponse" : {
+      "type" : "object",
+      "properties" : {
+        "volumeParameterType" : {
+          "type" : "string"
+        },
+        "minimumSize" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "maximumSize" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "minimumNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "maximumNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "IpPoolResponse" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "properties" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "PlatformIpPoolsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "ippools" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "array",
+            "uniqueItems" : true,
+            "items" : {
+              "$ref" : "#/definitions/IpPoolResponse"
+            }
+          }
+        }
+      }
+    },
+    "CloudGatewayRequest" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "properties" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "PlatformGatewaysResponse" : {
+      "type" : "object",
+      "properties" : {
+        "gateways" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "array",
+            "uniqueItems" : true,
+            "items" : {
+              "$ref" : "#/definitions/CloudGatewayRequest"
+            }
+          }
+        }
+      }
+    },
+    "EncryptionKeyConfigResponse" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "displayName" : {
+          "type" : "string"
+        },
+        "properties" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "PlatformEncryptionKeysResponse" : {
+      "type" : "object",
+      "properties" : {
+        "encryptionKeyConfigs" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/EncryptionKeyConfigResponse"
+          }
+        }
+      }
+    },
+    "PlatformSshKeyResponse" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "properties" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "PlatformSshKeysResponse" : {
+      "type" : "object",
+      "properties" : {
+        "sshKeys" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "array",
+            "uniqueItems" : true,
+            "items" : {
+              "$ref" : "#/definitions/PlatformSshKeyResponse"
+            }
+          }
+        }
+      }
+    },
+    "AccessConfigResponse" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "properties" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "PlatformAccessConfigsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "accessConfigs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AccessConfigResponse"
+          }
+        }
+      }
+    },
+    "PlatformNoSqlTableResponse" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "PlatformNoSqlTablesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "noSqlTables" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PlatformNoSqlTableResponse"
+          }
+        }
+      }
+    },
+    "TagSpecificationsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "specifications" : {
+          "type" : "object",
+          "description" : "tag specifications",
+          "additionalProperties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "PlatformDisksResponse" : {
+      "type" : "object",
+      "properties" : {
+        "diskTypes" : {
+          "type" : "object",
+          "description" : "disk types",
+          "additionalProperties" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "defaultDisks" : {
+          "type" : "object",
+          "description" : "default disks",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "diskMappings" : {
+          "type" : "object",
+          "description" : "disk mappings",
+          "additionalProperties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        },
+        "displayNames" : {
+          "type" : "object",
+          "description" : "disk displayNames",
+          "additionalProperties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "ProxyResponses" : {
+      "type" : "object",
+      "properties" : {
+        "responses" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ProxyResponse"
+          }
+        }
+      },
+      "description" : "Cloudbreak allows you to save your existing proxy configuration information as an external source so that you can provide the proxy information to multiple clusters that you create with Cloudbreak"
+    },
+    "ProxyRequest" : {
+      "type" : "object",
+      "required" : [ "host", "name", "port", "protocol" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Name of the proxy configuration resource",
+          "minLength" : 4,
+          "maxLength" : 100,
+          "pattern" : "(^[a-z][-a-z0-9]*[a-z0-9]$)"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "host" : {
+          "type" : "string",
+          "description" : "host or IP address of proxy server",
+          "minLength" : 1,
+          "maxLength" : 255,
+          "pattern" : "(^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$)"
+        },
+        "port" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "port of proxy server (typically: 3128 or 8080)",
+          "minimum" : 1,
+          "maximum" : 65535
+        },
+        "protocol" : {
+          "type" : "string",
+          "description" : "determines the protocol (http or https)",
+          "pattern" : "^http(s)?$"
+        },
+        "userName" : {
+          "type" : "string",
+          "description" : "Username to use for basic authentication"
+        },
+        "password" : {
+          "type" : "string",
+          "description" : "Password to use for basic authentication"
+        }
+      },
+      "description" : "Cloudbreak allows you to save your existing proxy configuration information as an external source so that you can provide the proxy information to multiple clusters that you create with Cloudbreak"
+    },
+    "GeneratedAccountTagResponse" : {
+      "type" : "object",
+      "required" : [ "key", "value" ],
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "description" : "key of the tag configurations",
+          "minLength" : 4,
+          "maxLength" : 127
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "value of the tag configurations",
+          "minLength" : 4,
+          "maxLength" : 255
+        }
+      }
+    },
+    "GeneratedAccountTagResponses" : {
+      "type" : "object",
+      "properties" : {
+        "responses" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/GeneratedAccountTagResponse"
+          }
+        }
+      }
+    },
+    "AccountTagResponse" : {
+      "type" : "object",
+      "required" : [ "key", "value" ],
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "description" : "key of the tag configurations",
+          "minLength" : 4,
+          "maxLength" : 127
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "value of the tag configurations",
+          "minLength" : 4,
+          "maxLength" : 255
+        },
+        "accountId" : {
+          "type" : "string"
+        },
+        "resourceCrn" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "DEFAULT", "USER_MANAGED" ]
+        }
+      }
+    },
+    "AccountTagResponses" : {
+      "type" : "object",
+      "properties" : {
+        "responses" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AccountTagResponse"
+          }
+        }
+      }
+    },
+    "AccountTagRequest" : {
+      "type" : "object",
+      "required" : [ "key", "value" ],
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "description" : "key of the tag configurations",
+          "minLength" : 4,
+          "maxLength" : 127
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "value of the tag configurations",
+          "minLength" : 4,
+          "maxLength" : 255
+        }
+      }
+    },
+    "AccountTagRequests" : {
+      "type" : "object",
+      "required" : [ "tags" ],
+      "properties" : {
+        "tags" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/AccountTagRequest"
+          }
+        }
+      }
+    },
+    "TestAnonymizationRuleResponse" : {
+      "type" : "object",
+      "properties" : {
+        "output" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TestAnonymizationRuleRequest" : {
+      "type" : "object",
+      "required" : [ "input", "rules" ],
+      "properties" : {
+        "input" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "rules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AnonymizationRule"
+          }
+        }
+      }
+    },
+    "AccountTelemetryResponse" : {
+      "type" : "object",
+      "properties" : {
+        "rules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AnonymizationRule"
+          }
+        },
+        "features" : {
+          "$ref" : "#/definitions/FeaturesResponse"
+        }
+      }
+    },
+    "AccountTelemetryRequest" : {
+      "type" : "object",
+      "properties" : {
+        "rules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AnonymizationRule"
+          }
+        },
+        "features" : {
+          "$ref" : "#/definitions/FeaturesRequest"
+        }
+      }
+    },
+    "VersionCheckResult" : {
+      "type" : "object",
+      "properties" : {
+        "versionCheckOk" : {
+          "type" : "boolean"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FlowLogResponse" : {
+      "type" : "object",
+      "properties" : {
+        "resourceId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "flowId" : {
+          "type" : "string"
+        },
+        "flowChainId" : {
+          "type" : "string"
+        },
+        "nextEvent" : {
+          "type" : "string"
+        },
+        "currentState" : {
+          "type" : "string"
+        },
+        "finalized" : {
+          "type" : "boolean"
+        },
+        "nodeId" : {
+          "type" : "string"
+        },
+        "stateStatus" : {
+          "type" : "string",
+          "enum" : [ "PENDING", "SUCCESSFUL", "FAILED" ]
+        },
+        "flowTriggerUserCrn" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FlowCheckResponse" : {
+      "type" : "object",
+      "properties" : {
+        "flowId" : {
+          "type" : "string"
+        },
+        "flowChainId" : {
+          "type" : "string"
+        },
+        "hasActiveFlow" : {
+          "type" : "boolean"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,3860 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "2.24.0-b135",
+    "title" : "FreeIPA API"
+  },
+  "basePath" : "/api",
+  "tags" : [ {
+    "name" : "authorization"
+  }, {
+    "name" : "flow"
+  }, {
+    "name" : "v1freeipatest"
+  }, {
+    "name" : "v1dns"
+  }, {
+    "name" : "v1freeipa"
+  }, {
+    "name" : "v1operation"
+  }, {
+    "name" : "v1freeipauser"
+  }, {
+    "name" : "v1kerberos"
+  }, {
+    "name" : "v1kerberosmgmt"
+  }, {
+    "name" : "v1ldaps"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/authorization/info" : {
+      "get" : {
+        "tags" : [ "authorization" ],
+        "summary" : "list of required permissions for APIs",
+        "description" : "",
+        "operationId" : "info",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ApiAuthorizationInfo"
+              },
+              "uniqueItems" : true
+            }
+          }
+        }
+      }
+    },
+    "/flow/check/flowId/{flowId}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Check if there is a running flow for flow id",
+        "description" : "Flow log operations",
+        "operationId" : "hasFlowRunningByFlowId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flowId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowCheckResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/{flowId}/last" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get last flow log by flow id",
+        "description" : "Flow log operations",
+        "operationId" : "getLastFlowById",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flowId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowLogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/{flowId}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get flow logs by flow id",
+        "description" : "Flow log operations",
+        "operationId" : "getFlowLogsByFlowId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flowId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FlowLogResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/name/{resourceName}/last" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get last flow log for resource by resource name",
+        "description" : "Flow log operations",
+        "operationId" : "getLastFlowByResourceName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowLogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/crn/{resourceCrn}/last" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get last flow log for resource by resource CRN",
+        "description" : "Flow log operations",
+        "operationId" : "getLastFlowByResourceCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowLogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/crn/{resourceCrn}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get flow logs for resource by resource CRN",
+        "description" : "Flow log operations",
+        "operationId" : "getFlowLogsByResourceCrn",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceCrn",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FlowLogResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flow/logs/resource/name/{resourceName}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Get flow logs for resource by resource name",
+        "description" : "Flow log operations",
+        "operationId" : "getFlowLogsByResourceName",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "resourceName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FlowLogResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flow/check/chainId/{chainId}" : {
+      "get" : {
+        "tags" : [ "flow" ],
+        "summary" : "Check if there is a running flow for chain id",
+        "description" : "Flow log operations",
+        "operationId" : "hasFlowRunningByChainId",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "chainId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlowCheckResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/test/{id}/{name}" : {
+      "get" : {
+        "tags" : [ "v1freeipatest" ],
+        "summary" : "Retrieves user information",
+        "description" : "",
+        "operationId" : "userShowV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "name",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "/v1/dns/zone" : {
+      "get" : {
+        "tags" : [ "v1dns" ],
+        "summary" : "List DNS zones available in FreeIPA",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "listDnsZonesV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              },
+              "uniqueItems" : true
+            }
+          }
+        }
+      }
+    },
+    "/v1/dns/zone/cidr" : {
+      "post" : {
+        "tags" : [ "v1dns" ],
+        "summary" : "Creates reverse DNS Zone entry for subnets in CIDR format",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "addDnsZoneForSubnetsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AddDnsZoneForSubnetsV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AddDnsZoneForSubnetsV1Request"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1dns" ],
+        "summary" : "Deletes reverse DNS Zone entry by subnet CIDR",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "deleteDnsZoneBySubnetV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "subnet",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "pattern" : "(^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\/([0-9]|[1-2][0-9]|3[0-2]))$)"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/dns/zone/id" : {
+      "post" : {
+        "tags" : [ "v1dns" ],
+        "summary" : "Creates reverse DNS Zone entry for subnet IDs",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "addDnsZoneForSubnetIdsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AddDnsZoneForSubnetIdsV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AddDnsZoneForSubnetsV1Request"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1dns" ],
+        "summary" : "Deletes reverse DNS Zone entry by subnet ID",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "deleteDnsZoneBySubnetIdV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "networkId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "subnetId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/dns/record" : {
+      "delete" : {
+        "tags" : [ "v1dns" ],
+        "summary" : "Deletes all related A and PTR DNS record",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "deleteDnsRecordByFqdnV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fqdn",
+          "in" : "query",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/freeipa/attach_child_environment" : {
+      "post" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Register a child environment",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "attachChildEnvironmentV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AttachChildEnvironmentV1Request"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/freeipa" : {
+      "get" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Get FreeIPA stack by envid",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "getFreeIpaByEnvironmentV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DescribeFreeIpaV1Response"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Create FreeIpa stack",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "createFreeIpaV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateFreeIpaV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DescribeFreeIpaV1Response"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Delete FreeIPA stack by envid",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "deleteFreeIpaByEnvironmentV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/freeipa/ca.crt" : {
+      "get" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Get FreeIPA root certificate by envid",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "getFreeIpaRootCertificateByEnvironmentV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "text/plain" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/detach_child_environment" : {
+      "post" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Deregister a child environment",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "detachChildEnvironmentV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/DetachChildEnvironmentV1Request"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/freeipa/reboot" : {
+      "post" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Reboot one or more instances",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "rebootV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/RebootInstancesV1Request"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/freeipa/repair" : {
+      "post" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Repair one or more instances",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "repairV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/RepairInstancesV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/OperationV1Status"
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/health" : {
+      "get" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Provides a detailed health of the FreeIPA stack",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "healthV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/HealthDetailsFreeIpaV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/cluster-proxy/register" : {
+      "post" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Registers FreeIPA stack with given environment CRN with cluster proxy",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "clusterProxyRegisterV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/cluster-proxy/deregister" : {
+      "post" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Deregisters FreeIPA stack with given environment CRN with cluster proxy",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "clusterProxyDeregisterV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/freeipa/list" : {
+      "get" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "List all FreeIPA stacks by account",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "listFreeIpaClustersByAccountV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ListFreeIpaV1Response"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/start" : {
+      "put" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Start all FreeIPA stacks that attached to the given environment CRN",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "startV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/freeipa/stop" : {
+      "put" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Stop all FreeIPA stacks that attached to the given environment CRN",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "stopV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/freeipa/cleanup" : {
+      "post" : {
+        "tags" : [ "v1freeipa" ],
+        "summary" : "Cleans out users, hosts and related DNS entries",
+        "description" : "FreeIPA is an integrated Identity and Authentication solution that can be used for any of CM, CDP services.",
+        "operationId" : "cleanupV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CleanupV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/OperationV1Status"
+            }
+          }
+        }
+      }
+    },
+    "/v1/operation" : {
+      "get" : {
+        "tags" : [ "v1operation" ],
+        "summary" : "Gets the status of an operation",
+        "description" : "Operation management endpoint",
+        "operationId" : "getOperationStatusV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "operationId",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/OperationV1Status"
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/user/sync" : {
+      "post" : {
+        "tags" : [ "v1freeipauser" ],
+        "summary" : "Synchronizes a User to the FreeIPA servers",
+        "description" : "User synchronization and management operations",
+        "operationId" : "synchronizeUserV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SynchronizeUserV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SyncOperationV1Status"
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/user/syncAll" : {
+      "post" : {
+        "tags" : [ "v1freeipauser" ],
+        "summary" : "Synchronizes Groups and Users to the FreeIPA servers",
+        "description" : "User synchronization and management operations",
+        "operationId" : "synchronizeAllUsersV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SynchronizeAllUsersV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SyncOperationV1Status"
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/user/password" : {
+      "post" : {
+        "tags" : [ "v1freeipauser" ],
+        "summary" : "Sets the user's password in the FreeIPA servers",
+        "description" : "User synchronization and management operations",
+        "operationId" : "setPasswordV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SetPasswordV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SyncOperationV1Status"
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/user/status" : {
+      "get" : {
+        "tags" : [ "v1freeipauser" ],
+        "summary" : "Gets the status of a sync operation",
+        "description" : "User synchronization and management operations",
+        "operationId" : "getSyncOperationStatusV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "operationId",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SyncOperationV1Status"
+            }
+          }
+        }
+      }
+    },
+    "/v1/freeipa/user/syncState" : {
+      "get" : {
+        "tags" : [ "v1freeipauser" ],
+        "summary" : "Gets the synchronization status of an environment",
+        "description" : "User synchronization and management operations",
+        "operationId" : "getEnvironmentUserSyncStateV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/EnvironmentUserSyncV1State"
+            }
+          }
+        }
+      }
+    },
+    "/v1/kerberos" : {
+      "get" : {
+        "tags" : [ "v1kerberos" ],
+        "summary" : "describe kerberos config for the given environment",
+        "description" : "Kerberos config operations",
+        "operationId" : "getKerberosConfigForEnvironment",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DescribeKerberosConfigV1Response"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "v1kerberos" ],
+        "summary" : "create kerberos config for the given environment",
+        "description" : "Kerberos config operations",
+        "operationId" : "createKerberosConfigForEnvironment",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateKerberosConfigV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DescribeKerberosConfigV1Response"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1kerberos" ],
+        "summary" : "delete kerberos config of the given environment",
+        "description" : "Kerberos config operations",
+        "operationId" : "deleteKerberosConfigForEnvironment",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/kerberos/cluster" : {
+      "get" : {
+        "tags" : [ "v1kerberos" ],
+        "summary" : "get (or create if not exists) LDAP config with separate user for cluster",
+        "description" : "Kerberos config operations",
+        "operationId" : "getKerberosConfigForClusterV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "clusterName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DescribeKerberosConfigV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/kerberos/request" : {
+      "get" : {
+        "tags" : [ "v1kerberos" ],
+        "summary" : "get create request of a kerberos config",
+        "description" : "Kerberos config operations",
+        "operationId" : "getCreateKerberosRequestForEnvironment",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CreateKerberosConfigV1Request"
+            }
+          }
+        }
+      }
+    },
+    "/v1/kerberosmgmt/servicekeytab" : {
+      "get" : {
+        "tags" : [ "v1kerberosmgmt" ],
+        "summary" : "Get the keytab for the provided service on a specific host",
+        "description" : "Retrieves the existing keytab for the service principal derived from the host and service provided. Gets the existing keytab without modification and not effecting the prior keytab. The keytab in the response is base64 encoded.",
+        "operationId" : "getServiceKeytabV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ServiceKeytabV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ServiceKeytabV1Response"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "v1kerberosmgmt" ],
+        "summary" : "Create the host and the service principal and then get the keytab for the provided service on a specific host",
+        "description" : "Creates the host if it doesn't exist and also creates the service principal for the given service before generating keytab for the principal. Resets the secret for the Kerberos principal redering all other keytabs for that principal invalid. Calling the API multiple times for the same principal renders the keytab already generated for that principal invalid. The keytab in the response is base64 encoded.",
+        "operationId" : "generateServiceKeytabV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ServiceKeytabV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ServiceKeytabV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/kerberosmgmt/hostkeytab" : {
+      "get" : {
+        "tags" : [ "v1kerberosmgmt" ],
+        "summary" : "Get the keytab for the provided host",
+        "description" : "Retrieves the existing keytab for the host provided. Gets the existing keytab without modification and not effecting the prior keytab. The keytab in the response is base64 encoded.",
+        "operationId" : "getHostKeytabV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/HostKeytabV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/HostKeytabV1Response"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "v1kerberosmgmt" ],
+        "summary" : "Create the host and then get the keytab for the provided host",
+        "description" : "Creates the host if it doesn't exist and also generates keytab for the host. Resets the secret for the Kerberos principal redering all other keytabs for that principal invalid. Calling the API multiple times for the same principal renders the keytab already generated for that principal invalid. The keytab in the response is base64 encoded.",
+        "operationId" : "generateHostKeytabV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/HostKeytabV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/HostKeytabV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/kerberosmgmt/serviceprincipal" : {
+      "delete" : {
+        "tags" : [ "v1kerberosmgmt" ],
+        "summary" : "Delete the service principal",
+        "description" : "Deletes the principal from the FreeIPA. It also deletes vault secrets associated with the principal. If a role is specified, it will also be deleted. However, if the role is still in use, it will not be deleted in a normal scenerio.",
+        "operationId" : "deleteServicePrinciapalV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ServicePrincipalV1Request"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/kerberosmgmt/host" : {
+      "delete" : {
+        "tags" : [ "v1kerberosmgmt" ],
+        "summary" : "Delete the host",
+        "description" : "Deletes the host and all the principals associated with the host in the FreeIPA. It also deletes vault secrets associated with the host. If a role is specified, it will also be deleted. However, if the role is still in use, it will not be deleted in a normal scenerio.",
+        "operationId" : "deleteHostV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/HostV1Request"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/kerberosmgmt/cleanupClusterSecrets" : {
+      "delete" : {
+        "tags" : [ "v1kerberosmgmt" ],
+        "summary" : "Cleanup the secrets associated with the cluster",
+        "description" : "Deletes all the secrets that are associated for the given cluster.",
+        "operationId" : "cleanupClusterSecretsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/VaultCleanupV1Request"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/kerberosmgmt/cleanupEnvironmentSecrets" : {
+      "delete" : {
+        "tags" : [ "v1kerberosmgmt" ],
+        "summary" : "Cleanup all the secrets associated with the environment",
+        "description" : "Deletes all the secrets that are associated for the given cluster.",
+        "operationId" : "cleanupEnvironmentSecretsV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/kerberosmgmt/userkeytab" : {
+      "get" : {
+        "tags" : [ "v1kerberosmgmt" ],
+        "summary" : "Get the keytab for the provided user",
+        "description" : "Retrieves the existing keytab for the user provided. Gets the existing keytab without modification and not effecting the prior keytab. The keytab in the response is base64 encoded.",
+        "operationId" : "getUserKeytabV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "userCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "/v1/ldaps" : {
+      "get" : {
+        "tags" : [ "v1ldaps" ],
+        "summary" : "get LDAP config by environment crn",
+        "description" : "LDAP server integration enables the user to provide a central place to store usernames and passwords for the users of his/her clusters.",
+        "operationId" : "getLdapConfigV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DescribeLdapConfigV1Response"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "v1ldaps" ],
+        "summary" : "create LDAP config",
+        "description" : "LDAP server integration enables the user to provide a central place to store usernames and passwords for the users of his/her clusters.",
+        "operationId" : "createLdapConfigV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateLdapConfigV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DescribeLdapConfigV1Response"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "v1ldaps" ],
+        "summary" : "delete LDAP config by environment crn",
+        "description" : "LDAP server integration enables the user to provide a central place to store usernames and passwords for the users of his/her clusters.",
+        "operationId" : "deleteLdapConfigV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/v1/ldaps/cluster" : {
+      "get" : {
+        "tags" : [ "v1ldaps" ],
+        "summary" : "get (or create if not exists) LDAP config with separate user for cluster",
+        "description" : "LDAP server integration enables the user to provide a central place to store usernames and passwords for the users of his/her clusters.",
+        "operationId" : "getLdapConfigForClusterV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "clusterName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DescribeLdapConfigV1Response"
+            }
+          }
+        }
+      }
+    },
+    "/v1/ldaps/request" : {
+      "get" : {
+        "tags" : [ "v1ldaps" ],
+        "summary" : "get request",
+        "description" : "LDAP server integration enables the user to provide a central place to store usernames and passwords for the users of his/her clusters.",
+        "operationId" : "getLdapRequestByNameV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "environmentCrn",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CreateLdapConfigV1Request"
+            }
+          }
+        }
+      }
+    },
+    "/v1/ldaps/test" : {
+      "post" : {
+        "tags" : [ "v1ldaps" ],
+        "summary" : "test that the connection could be established of an existing or new LDAP config",
+        "description" : "",
+        "operationId" : "testLdapConfigV1",
+        "schemes" : [ "http", "https" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/TestLdapConfigV1Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/TestLdapConfigV1Response"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ApiAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "path" : {
+          "type" : "string"
+        },
+        "httpMethod" : {
+          "type" : "string"
+        },
+        "newAuthorization" : {
+          "$ref" : "#/definitions/NewAuthorizationInfo"
+        },
+        "legacyAuthorization" : {
+          "$ref" : "#/definitions/LegacyAuthorizationInfo"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FieldAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "fieldName" : {
+          "type" : "string"
+        },
+        "permission" : {
+          "type" : "string"
+        }
+      }
+    },
+    "LegacyAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "permissionNeeded" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "NewAuthorizationInfo" : {
+      "type" : "object",
+      "properties" : {
+        "permissionsNeededForApi" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "permissionsNeededForRequestObject" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/FieldAuthorizationInfo"
+          }
+        }
+      }
+    },
+    "FlowCheckResponse" : {
+      "type" : "object",
+      "properties" : {
+        "flowId" : {
+          "type" : "string"
+        },
+        "flowChainId" : {
+          "type" : "string"
+        },
+        "hasActiveFlow" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "FlowLogResponse" : {
+      "type" : "object",
+      "properties" : {
+        "resourceId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "created" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "flowId" : {
+          "type" : "string"
+        },
+        "flowChainId" : {
+          "type" : "string"
+        },
+        "nextEvent" : {
+          "type" : "string"
+        },
+        "currentState" : {
+          "type" : "string"
+        },
+        "finalized" : {
+          "type" : "boolean"
+        },
+        "nodeId" : {
+          "type" : "string"
+        },
+        "stateStatus" : {
+          "type" : "string",
+          "enum" : [ "PENDING", "SUCCESSFUL", "FAILED" ]
+        },
+        "flowTriggerUserCrn" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AddDnsZoneForSubnetsV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "success" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "failed" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "AddDnsZoneForSubnetIdsV1Request" : {
+      "type" : "object",
+      "required" : [ "addDnsZoneNetwork", "environmentCrn" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "addDnsZoneNetwork" : {
+          "$ref" : "#/definitions/AddDnsZoneNetworkV1"
+        }
+      }
+    },
+    "AddDnsZoneNetworkV1" : {
+      "type" : "object",
+      "properties" : {
+        "networkId" : {
+          "type" : "string"
+        },
+        "subnetIds" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "AttachChildEnvironmentV1Request" : {
+      "type" : "object",
+      "required" : [ "childEnvironmentCrn", "parentEnvironmentCrn" ],
+      "properties" : {
+        "parentEnvironmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the parent environment"
+        },
+        "childEnvironmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the child environment"
+        }
+      }
+    },
+    "AccountMappingBase" : {
+      "type" : "object",
+      "properties" : {
+        "groupMappings" : {
+          "type" : "object",
+          "description" : "group mappings",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "userMappings" : {
+          "type" : "object",
+          "description" : "user mappings",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "AdlsCloudStorageV1Parameters" : {
+      "type" : "object",
+      "required" : [ "accountName", "clientId", "credential" ],
+      "properties" : {
+        "accountName" : {
+          "type" : "string"
+        },
+        "clientId" : {
+          "type" : "string"
+        },
+        "credential" : {
+          "type" : "string"
+        },
+        "tenantId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AdlsGen2CloudStorageV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "accountKey" : {
+          "type" : "string"
+        },
+        "accountName" : {
+          "type" : "string"
+        },
+        "managedIdentity" : {
+          "type" : "string"
+        },
+        "secure" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "AnonymizationRule" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        },
+        "replacement" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AwsNetworkV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "vpcId" : {
+          "type" : "string"
+        },
+        "subnetId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AwsStorageParameters" : {
+      "type" : "object",
+      "properties" : {
+        "s3Guard" : {
+          "$ref" : "#/definitions/S3Guard"
+        }
+      }
+    },
+    "AzureNetworkV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "noPublicIp" : {
+          "type" : "boolean"
+        },
+        "resourceGroupName" : {
+          "type" : "string"
+        },
+        "networkId" : {
+          "type" : "string"
+        },
+        "subnetId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "CloudStorageResponse" : {
+      "type" : "object",
+      "properties" : {
+        "aws" : {
+          "$ref" : "#/definitions/AwsStorageParameters"
+        },
+        "locations" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/StorageLocationBase"
+          }
+        },
+        "identities" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/StorageIdentityBase"
+          }
+        },
+        "accountMapping" : {
+          "description" : "cloud storage account mapping",
+          "$ref" : "#/definitions/AccountMappingBase"
+        }
+      }
+    },
+    "CloudwatchParams" : {
+      "type" : "object",
+      "required" : [ "instanceProfile" ],
+      "properties" : {
+        "instanceProfile" : {
+          "type" : "string"
+        },
+        "region" : {
+          "type" : "string",
+          "description" : "telemetry - CloudWatch related AWS region (should be used only outside of AWS platform)"
+        },
+        "streamKey" : {
+          "type" : "string",
+          "description" : "telemetry - CloudWatch releated parameters",
+          "enum" : [ "HOSTNAME", "COMPONENT" ]
+        }
+      }
+    },
+    "DescribeFreeIpaV1Response" : {
+      "type" : "object",
+      "required" : [ "authentication", "crn", "environmentCrn", "freeIpa", "instanceGroups", "name", "placement" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the freeipa stack"
+        },
+        "crn" : {
+          "type" : "string"
+        },
+        "placement" : {
+          "description" : "placement configuration parameters for a cluster (e.g. 'region', 'availabilityZone')",
+          "$ref" : "#/definitions/PlacementV1Response"
+        },
+        "instanceGroups" : {
+          "type" : "array",
+          "description" : "collection of instance groupst",
+          "items" : {
+            "$ref" : "#/definitions/InstanceGroupV1Response"
+          }
+        },
+        "authentication" : {
+          "description" : "freeipa stack related authentication",
+          "$ref" : "#/definitions/StackAuthenticationV1Response"
+        },
+        "network" : {
+          "description" : "freeipa stack related network",
+          "$ref" : "#/definitions/NetworkV1Response"
+        },
+        "image" : {
+          "description" : "settings for custom images",
+          "$ref" : "#/definitions/ImageSettingsV1Response"
+        },
+        "freeIpa" : {
+          "description" : "settings for freeipa server",
+          "$ref" : "#/definitions/FreeIpaServerV1Response"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "REQUESTED", "CREATE_IN_PROGRESS", "AVAILABLE", "STACK_AVAILABLE", "UPDATE_IN_PROGRESS", "UPDATE_REQUESTED", "UPDATE_FAILED", "CREATE_FAILED", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETE_COMPLETED", "STOPPED", "STOP_REQUESTED", "START_REQUESTED", "STOP_IN_PROGRESS", "START_IN_PROGRESS", "START_FAILED", "STOP_FAILED", "WAIT_FOR_SYNC", "MAINTENANCE_MODE_ENABLED", "UNREACHABLE", "UNHEALTHY", "DELETED_ON_PROVIDER_SIDE", "UNKNOWN" ]
+        },
+        "statusString" : {
+          "type" : "string"
+        },
+        "statusReason" : {
+          "type" : "string"
+        },
+        "appVersion" : {
+          "type" : "string",
+          "description" : "version of the application provisioned FreeIPA"
+        },
+        "cloudPlatform" : {
+          "type" : "string",
+          "description" : "Cloud Platform for FreeIPA"
+        },
+        "telemetry" : {
+          "description" : "telemetry setting for freeipa server",
+          "$ref" : "#/definitions/TelemetryResponse"
+        },
+        "cloudStorage" : {
+          "description" : "cloud storage details for freeipa server",
+          "$ref" : "#/definitions/CloudStorageResponse"
+        },
+        "userSyncStatus" : {
+          "description" : "user sync status details for the environment",
+          "$ref" : "#/definitions/UserSyncStatusV1Response"
+        }
+      }
+    },
+    "FeatureSetting" : {
+      "type" : "object",
+      "required" : [ "enabled" ],
+      "properties" : {
+        "enabled" : {
+          "type" : "boolean",
+          "description" : "enabled"
+        }
+      }
+    },
+    "FeaturesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "clusterLogsCollection" : {
+          "description" : "enable cluster logs collection",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "monitoring" : {
+          "description" : "enable monitoring for cluster services",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "metering" : {
+          "description" : "Telemetry metering feature setting",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "useSharedAltusCredential" : {
+          "description" : "enable shared Altus credential usage",
+          "$ref" : "#/definitions/FeatureSetting"
+        }
+      }
+    },
+    "FreeIpaServerV1Response" : {
+      "type" : "object",
+      "required" : [ "domain", "hostname" ],
+      "properties" : {
+        "domain" : {
+          "type" : "string",
+          "description" : "Domain name associated to the FreeIPA",
+          "pattern" : "(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]"
+        },
+        "hostname" : {
+          "type" : "string",
+          "description" : "Base hostname for FreeIPA servers",
+          "pattern" : "^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
+        },
+        "adminGroupName" : {
+          "type" : "string",
+          "description" : "Name of the admin group to be used for all the services."
+        },
+        "serverIp" : {
+          "type" : "array",
+          "description" : "FreeIPA servers IP address",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "freeIpaHost" : {
+          "type" : "string",
+          "description" : "A DNS load balanced FQDN to the FreeIPA servers"
+        },
+        "freeIpaPort" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The port for the load balanced FQDN to the FreeIPA servers"
+        }
+      }
+    },
+    "GcpNetworkV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "networkId" : {
+          "type" : "string"
+        },
+        "subnetId" : {
+          "type" : "string"
+        },
+        "sharedProjectId" : {
+          "type" : "string"
+        },
+        "noPublicIp" : {
+          "type" : "boolean"
+        },
+        "noFirewallRules" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "GcsCloudStorageV1Parameters" : {
+      "type" : "object",
+      "required" : [ "serviceAccountEmail" ],
+      "properties" : {
+        "serviceAccountEmail" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ImageSettingsV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "catalog" : {
+          "type" : "string",
+          "description" : "custom image catalog URL"
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "virtual machine image id from ImageCatalog, machines of the cluster will be started from this image"
+        },
+        "os" : {
+          "type" : "string",
+          "description" : "os type of the image, this property is only considered when no specific image id is provided"
+        }
+      }
+    },
+    "InstanceGroupV1Response" : {
+      "type" : "object",
+      "required" : [ "instanceTemplate", "name", "nodeCount" ],
+      "properties" : {
+        "nodeCount" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "number of nodes",
+          "minimum" : 0,
+          "maximum" : 100000
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the instance group"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "type of the instance group, default value is CORE",
+          "enum" : [ "MASTER", "SLAVE" ]
+        },
+        "instanceTemplate" : {
+          "description" : "instancegroup related template",
+          "$ref" : "#/definitions/InstanceTemplateV1Response"
+        },
+        "securityGroup" : {
+          "description" : "instancegroup related securitygroup",
+          "$ref" : "#/definitions/SecurityGroupV1Response"
+        },
+        "metaData" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/InstanceMetaDataV1Response"
+          }
+        }
+      }
+    },
+    "InstanceMetaDataV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "privateIp" : {
+          "type" : "string",
+          "description" : "private ip of the insctance"
+        },
+        "publicIp" : {
+          "type" : "string",
+          "description" : "public ip of the instance"
+        },
+        "sshPort" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "instanceId" : {
+          "type" : "string",
+          "description" : "id of the instance"
+        },
+        "discoveryFQDN" : {
+          "type" : "string",
+          "description" : "the fully qualified domain name of the node in the service discovery cluster"
+        },
+        "instanceGroup" : {
+          "type" : "string",
+          "description" : "name of the instance group"
+        },
+        "instanceStatus" : {
+          "type" : "string",
+          "description" : "status of the instance",
+          "enum" : [ "REQUESTED", "CREATED", "UNREGISTERED", "REGISTERED", "DECOMMISSIONED", "TERMINATED", "DELETED_ON_PROVIDER_SIDE", "DELETED_BY_PROVIDER", "FAILED", "STOPPED", "REBOOTING", "UNREACHABLE", "DELETE_REQUESTED" ]
+        },
+        "instanceType" : {
+          "type" : "string",
+          "description" : "type of the instance",
+          "enum" : [ "GATEWAY", "GATEWAY_PRIMARY", "CORE" ]
+        },
+        "state" : {
+          "type" : "string",
+          "description" : "state of the host"
+        },
+        "lifeCycle" : {
+          "type" : "string",
+          "enum" : [ "NORMAL", "SPOT" ]
+        }
+      }
+    },
+    "InstanceTemplateV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "instanceType" : {
+          "type" : "string",
+          "description" : "type of the instance"
+        },
+        "attachedVolumes" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/VolumeV1Response"
+          }
+        }
+      }
+    },
+    "LoggingResponse" : {
+      "type" : "object",
+      "required" : [ "storageLocation" ],
+      "properties" : {
+        "storageLocation" : {
+          "type" : "string",
+          "description" : "telemetry - logging storage location / container"
+        },
+        "s3" : {
+          "description" : "telemetry - logging s3 attributes",
+          "$ref" : "#/definitions/S3CloudStorageV1Parameters"
+        },
+        "adlsGen2" : {
+          "description" : "telemetry - logging adls gen2 attributes",
+          "$ref" : "#/definitions/AdlsGen2CloudStorageV1Parameters"
+        },
+        "cloudwatch" : {
+          "description" : "telemetry - logging cloudwatch attributes",
+          "$ref" : "#/definitions/CloudwatchParams"
+        }
+      }
+    },
+    "NetworkV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "outboundInternetTraffic" : {
+          "type" : "string",
+          "description" : "A flag to enable or disable the outbound internet traffic from the instances.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "networkCidrs" : {
+          "type" : "array",
+          "description" : "the network cidrs which have to be reacheable from the instances",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "aws" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/AwsNetworkV1Parameters"
+        },
+        "azure" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/AzureNetworkV1Parameters"
+        },
+        "gcp" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/GcpNetworkV1Parameters"
+        },
+        "openstack" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/OpenStackNetworkV1Parameters"
+        }
+      }
+    },
+    "OpenStackNetworkV1Parameters" : {
+      "type" : "object",
+      "properties" : {
+        "networkId" : {
+          "type" : "string"
+        },
+        "routerId" : {
+          "type" : "string"
+        },
+        "subnetId" : {
+          "type" : "string"
+        },
+        "publicNetId" : {
+          "type" : "string"
+        },
+        "networkingOption" : {
+          "type" : "string"
+        }
+      }
+    },
+    "PlacementV1Response" : {
+      "type" : "object",
+      "required" : [ "region" ],
+      "properties" : {
+        "availabilityZone" : {
+          "type" : "string",
+          "description" : "availability zone of the freeipa stack"
+        },
+        "region" : {
+          "type" : "string",
+          "description" : "region of the freeipa stack"
+        }
+      }
+    },
+    "S3CloudStorageV1Parameters" : {
+      "type" : "object",
+      "required" : [ "instanceProfile" ],
+      "properties" : {
+        "instanceProfile" : {
+          "type" : "string"
+        }
+      }
+    },
+    "S3Guard" : {
+      "type" : "object",
+      "properties" : {
+        "dynamoTableName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SecurityGroupV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "securityGroupIds" : {
+          "type" : "array",
+          "description" : "Exisiting security group ids",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "securityRules" : {
+          "type" : "array",
+          "description" : "list of security rules that relates to the security group",
+          "items" : {
+            "$ref" : "#/definitions/SecurityRuleV1Response"
+          }
+        }
+      }
+    },
+    "SecurityRuleV1Response" : {
+      "type" : "object",
+      "required" : [ "ports", "protocol", "subnet" ],
+      "properties" : {
+        "subnet" : {
+          "type" : "string",
+          "description" : "definition of allowed subnet in CIDR format"
+        },
+        "ports" : {
+          "type" : "array",
+          "description" : "list of accessible ports",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "protocol" : {
+          "type" : "string",
+          "description" : "protocol of the rule"
+        },
+        "modifiable" : {
+          "type" : "boolean",
+          "description" : "flag for making the rule modifiable"
+        }
+      }
+    },
+    "StackAuthenticationV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "publicKey" : {
+          "type" : "string",
+          "description" : "public key for accessing instances",
+          "minLength" : 0,
+          "maxLength" : 2048
+        },
+        "publicKeyId" : {
+          "type" : "string",
+          "description" : "public key id for accessing instances",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "loginUserName" : {
+          "type" : "string",
+          "description" : "authentication name for machines",
+          "minLength" : 0,
+          "maxLength" : 32
+        }
+      }
+    },
+    "StorageIdentityBase" : {
+      "type" : "object",
+      "properties" : {
+        "adls" : {
+          "$ref" : "#/definitions/AdlsCloudStorageV1Parameters"
+        },
+        "wasb" : {
+          "$ref" : "#/definitions/WasbCloudStorageV1Parameters"
+        },
+        "gcs" : {
+          "$ref" : "#/definitions/GcsCloudStorageV1Parameters"
+        },
+        "s3" : {
+          "$ref" : "#/definitions/S3CloudStorageV1Parameters"
+        },
+        "adlsGen2" : {
+          "$ref" : "#/definitions/AdlsGen2CloudStorageV1Parameters"
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "ID_BROKER", "LOG" ]
+        }
+      }
+    },
+    "StorageLocationBase" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "enum" : [ "ZEPPELIN_NOTEBOOK", "YARN_LOG", "HIVE_METASTORE_WAREHOUSE", "HIVE_METASTORE_EXTERNAL_WAREHOUSE", "HIVE_REPLICA_WAREHOUSE", "HBASE_ROOT", "RANGER_AUDIT", "PROFILER_SERVICE_FS_URI", "DEFAULT_FS" ]
+        },
+        "value" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TelemetryResponse" : {
+      "type" : "object",
+      "properties" : {
+        "fluentAttributes" : {
+          "type" : "object",
+          "description" : "Telemetry fluent settings (overrides).",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        },
+        "logging" : {
+          "description" : "Cloud Logging (telemetry) settings.",
+          "$ref" : "#/definitions/LoggingResponse"
+        },
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/WorkloadAnalyticsResponse"
+        },
+        "features" : {
+          "description" : "Telemetry features settings",
+          "$ref" : "#/definitions/FeaturesResponse"
+        },
+        "rules" : {
+          "type" : "array",
+          "description" : "Telemetry anonymization rules (persistent on cluster level) that are applied on shipped logs.",
+          "items" : {
+            "$ref" : "#/definitions/AnonymizationRule"
+          }
+        }
+      }
+    },
+    "UserSyncStatusV1Response" : {
+      "type" : "object",
+      "required" : [ "eventGenerationIds" ],
+      "properties" : {
+        "lastStartedUserSyncId" : {
+          "type" : "string",
+          "description" : "User synchronization operation id"
+        },
+        "lastSuccessfulUserSyncId" : {
+          "type" : "string",
+          "description" : "User synchronization operation id"
+        },
+        "eventGenerationIds" : {
+          "type" : "object",
+          "description" : "User synchronization operation id",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "VolumeV1Response" : {
+      "type" : "object",
+      "required" : [ "size" ],
+      "properties" : {
+        "count" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "number of volumes"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "type of the volumes"
+        },
+        "size" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "size of volume"
+        }
+      }
+    },
+    "WasbCloudStorageV1Parameters" : {
+      "type" : "object",
+      "required" : [ "accountKey", "accountName" ],
+      "properties" : {
+        "accountKey" : {
+          "type" : "string"
+        },
+        "accountName" : {
+          "type" : "string"
+        },
+        "secure" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "WorkloadAnalyticsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "attributes" : {
+          "type" : "object",
+          "description" : "Workload analytics (telemetry) attributes.",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "DetachChildEnvironmentV1Request" : {
+      "type" : "object",
+      "required" : [ "childEnvironmentCrn", "parentEnvironmentCrn" ],
+      "properties" : {
+        "parentEnvironmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the parent environment"
+        },
+        "childEnvironmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the child environment"
+        }
+      }
+    },
+    "RebootInstancesV1Request" : {
+      "type" : "object",
+      "required" : [ "environmentCrn" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "forceReboot" : {
+          "type" : "boolean",
+          "description" : "Reboot instance regardless of status"
+        },
+        "instanceIds" : {
+          "type" : "array",
+          "description" : "ID of the instance",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "FailureDetailsV1" : {
+      "type" : "object",
+      "properties" : {
+        "environment" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "additionalDetails" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "OperationV1Status" : {
+      "type" : "object",
+      "required" : [ "operationId", "operationType" ],
+      "properties" : {
+        "operationId" : {
+          "type" : "string",
+          "description" : "User synchronization operation id"
+        },
+        "operationType" : {
+          "type" : "string",
+          "description" : "Operation type",
+          "enum" : [ "USER_SYNC", "SET_PASSWORD", "CLEANUP", "REPAIR", "DOWNSCALE" ]
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "User synchronization operation status",
+          "enum" : [ "REQUESTED", "RUNNING", "COMPLETED", "FAILED", "REJECTED", "TIMEDOUT" ]
+        },
+        "success" : {
+          "type" : "array",
+          "description" : "details about environments where operation succeeded",
+          "items" : {
+            "$ref" : "#/definitions/SuccessDetailsV1"
+          }
+        },
+        "failure" : {
+          "type" : "array",
+          "description" : "details about environments where operation failed",
+          "items" : {
+            "$ref" : "#/definitions/FailureDetailsV1"
+          }
+        },
+        "error" : {
+          "type" : "string",
+          "description" : "error information about operation failure"
+        },
+        "startTime" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "User synchronization operation start time"
+        },
+        "endTime" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "User synchronization operation end time"
+        }
+      }
+    },
+    "SuccessDetailsV1" : {
+      "type" : "object",
+      "properties" : {
+        "environment" : {
+          "type" : "string"
+        },
+        "additionalDetails" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "RepairInstancesV1Request" : {
+      "type" : "object",
+      "required" : [ "environmentCrn" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "forceRepair" : {
+          "type" : "boolean",
+          "description" : "Repair instance regardless of status"
+        },
+        "instanceIds" : {
+          "type" : "array",
+          "description" : "ID of the instance",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "HealthDetailsFreeIpaV1Response" : {
+      "type" : "object",
+      "required" : [ "crn", "environmentCrn", "name", "nodeHealthDetails" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the freeipa stack"
+        },
+        "crn" : {
+          "type" : "string"
+        },
+        "nodeHealthDetails" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/NodeHealthDetails"
+          }
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "REQUESTED", "CREATE_IN_PROGRESS", "AVAILABLE", "STACK_AVAILABLE", "UPDATE_IN_PROGRESS", "UPDATE_REQUESTED", "UPDATE_FAILED", "CREATE_FAILED", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETE_COMPLETED", "STOPPED", "STOP_REQUESTED", "START_REQUESTED", "STOP_IN_PROGRESS", "START_IN_PROGRESS", "START_FAILED", "STOP_FAILED", "WAIT_FOR_SYNC", "MAINTENANCE_MODE_ENABLED", "UNREACHABLE", "UNHEALTHY", "DELETED_ON_PROVIDER_SIDE", "UNKNOWN" ]
+        }
+      }
+    },
+    "NodeHealthDetails" : {
+      "type" : "object",
+      "required" : [ "instanceId", "issues", "name", "status" ],
+      "properties" : {
+        "issues" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "REQUESTED", "CREATED", "UNREGISTERED", "REGISTERED", "DECOMMISSIONED", "TERMINATED", "DELETED_ON_PROVIDER_SIDE", "DELETED_BY_PROVIDER", "FAILED", "STOPPED", "REBOOTING", "UNREACHABLE", "DELETE_REQUESTED" ]
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "instanceId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ListFreeIpaV1Response" : {
+      "type" : "object",
+      "required" : [ "crn", "environmentCrn", "name" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the freeipa stack"
+        },
+        "crn" : {
+          "type" : "string"
+        },
+        "domain" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "REQUESTED", "CREATE_IN_PROGRESS", "AVAILABLE", "STACK_AVAILABLE", "UPDATE_IN_PROGRESS", "UPDATE_REQUESTED", "UPDATE_FAILED", "CREATE_FAILED", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETE_COMPLETED", "STOPPED", "STOP_REQUESTED", "START_REQUESTED", "STOP_IN_PROGRESS", "START_IN_PROGRESS", "START_FAILED", "STOP_FAILED", "WAIT_FOR_SYNC", "MAINTENANCE_MODE_ENABLED", "UNREACHABLE", "UNHEALTHY", "DELETED_ON_PROVIDER_SIDE", "UNKNOWN" ]
+        },
+        "statusString" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AwsInstanceTemplateParameters" : {
+      "type" : "object",
+      "properties" : {
+        "spot" : {
+          "description" : "Aws spot instance related parameters.",
+          "$ref" : "#/definitions/AwsInstanceTemplateSpotParameters"
+        }
+      }
+    },
+    "AwsInstanceTemplateSpotParameters" : {
+      "type" : "object",
+      "properties" : {
+        "percentage" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Percentage of spot instances launched in FreeIpa instance group",
+          "minimum" : 0,
+          "maximum" : 100
+        }
+      }
+    },
+    "CreateFreeIpaV1Request" : {
+      "type" : "object",
+      "required" : [ "authentication", "environmentCrn", "freeIpa", "instanceGroups", "name", "placement" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the freeipa stack"
+        },
+        "placement" : {
+          "description" : "placement configuration parameters for a cluster (e.g. 'region', 'availabilityZone')",
+          "$ref" : "#/definitions/PlacementV1Request"
+        },
+        "instanceGroups" : {
+          "type" : "array",
+          "description" : "collection of instance groupst",
+          "items" : {
+            "$ref" : "#/definitions/InstanceGroupV1Request"
+          }
+        },
+        "authentication" : {
+          "description" : "freeipa stack related authentication",
+          "$ref" : "#/definitions/StackAuthenticationV1Request"
+        },
+        "network" : {
+          "description" : "freeipa stack related network",
+          "$ref" : "#/definitions/NetworkV1Request"
+        },
+        "image" : {
+          "description" : "settings for custom images",
+          "$ref" : "#/definitions/ImageSettingsV1Request"
+        },
+        "freeIpa" : {
+          "description" : "settings for freeipa server",
+          "$ref" : "#/definitions/FreeIpaServerV1Request"
+        },
+        "gatewayPort" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "port of the gateway secured proxy",
+          "minimum" : 1025,
+          "maximum" : 65535
+        },
+        "telemetry" : {
+          "description" : "telemetry setting for freeipa server",
+          "$ref" : "#/definitions/TelemetryRequest"
+        },
+        "tags" : {
+          "type" : "object",
+          "description" : "Tags for freeipa server.",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "useCcm" : {
+          "type" : "boolean",
+          "description" : "whether to use CCM for communicating with the freeipa instance"
+        },
+        "tunnel" : {
+          "type" : "string",
+          "description" : "Configuration that the connection going directly or with cluster proxy or with ccm and cluster proxy.",
+          "enum" : [ "DIRECT", "CCM", "CLUSTER_PROXY" ]
+        }
+      }
+    },
+    "FeaturesRequest" : {
+      "type" : "object",
+      "properties" : {
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "clusterLogsCollection" : {
+          "description" : "enable cluster logs collection",
+          "$ref" : "#/definitions/FeatureSetting"
+        },
+        "monitoring" : {
+          "description" : "enable monitoring for cluster services",
+          "$ref" : "#/definitions/FeatureSetting"
+        }
+      }
+    },
+    "FreeIpaServerV1Request" : {
+      "type" : "object",
+      "required" : [ "adminPassword", "domain", "hostname" ],
+      "properties" : {
+        "domain" : {
+          "type" : "string",
+          "description" : "Domain name associated to the FreeIPA",
+          "pattern" : "(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]"
+        },
+        "hostname" : {
+          "type" : "string",
+          "description" : "Base hostname for FreeIPA servers",
+          "pattern" : "^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
+        },
+        "adminGroupName" : {
+          "type" : "string",
+          "description" : "Name of the admin group to be used for all the services."
+        },
+        "adminPassword" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ImageSettingsV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "catalog" : {
+          "type" : "string",
+          "description" : "custom image catalog URL"
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "virtual machine image id from ImageCatalog, machines of the cluster will be started from this image"
+        },
+        "os" : {
+          "type" : "string",
+          "description" : "os type of the image, this property is only considered when no specific image id is provided"
+        }
+      }
+    },
+    "InstanceGroupV1Request" : {
+      "type" : "object",
+      "required" : [ "name", "nodeCount" ],
+      "properties" : {
+        "nodeCount" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "number of nodes",
+          "minimum" : 0,
+          "maximum" : 100000
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the instance group"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "type of the instance group, default value is CORE",
+          "enum" : [ "MASTER", "SLAVE" ]
+        },
+        "instanceTemplate" : {
+          "description" : "instancegroup related template",
+          "$ref" : "#/definitions/InstanceTemplateV1Request"
+        },
+        "securityGroup" : {
+          "description" : "instancegroup related securitygroup",
+          "$ref" : "#/definitions/SecurityGroupV1Request"
+        }
+      }
+    },
+    "InstanceTemplateV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "instanceType" : {
+          "type" : "string",
+          "description" : "type of the instance"
+        },
+        "attachedVolumes" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/VolumeV1Request"
+          }
+        },
+        "aws" : {
+          "description" : "Aws specific FreeIpa parameters",
+          "$ref" : "#/definitions/AwsInstanceTemplateParameters"
+        }
+      }
+    },
+    "LoggingRequest" : {
+      "type" : "object",
+      "required" : [ "storageLocation" ],
+      "properties" : {
+        "storageLocation" : {
+          "type" : "string",
+          "description" : "telemetry - logging storage location / container"
+        },
+        "s3" : {
+          "description" : "telemetry - logging s3 attributes",
+          "$ref" : "#/definitions/S3CloudStorageV1Parameters"
+        },
+        "adlsGen2" : {
+          "description" : "telemetry - logging adls gen2 attributes",
+          "$ref" : "#/definitions/AdlsGen2CloudStorageV1Parameters"
+        },
+        "cloudwatch" : {
+          "description" : "telemetry - logging cloudwatch attributes",
+          "$ref" : "#/definitions/CloudwatchParams"
+        }
+      }
+    },
+    "NetworkV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "outboundInternetTraffic" : {
+          "type" : "string",
+          "description" : "A flag to enable or disable the outbound internet traffic from the instances.",
+          "enum" : [ "ENABLED", "DISABLED" ]
+        },
+        "networkCidrs" : {
+          "type" : "array",
+          "description" : "the network cidrs which have to be reacheable from the instances",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "aws" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/AwsNetworkV1Parameters"
+        },
+        "azure" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/AzureNetworkV1Parameters"
+        },
+        "gcp" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/GcpNetworkV1Parameters"
+        },
+        "openstack" : {
+          "description" : "provider specific parameters of the specified network",
+          "$ref" : "#/definitions/OpenStackNetworkV1Parameters"
+        }
+      }
+    },
+    "PlacementV1Request" : {
+      "type" : "object",
+      "required" : [ "region" ],
+      "properties" : {
+        "availabilityZone" : {
+          "type" : "string",
+          "description" : "availability zone of the freeipa stack"
+        },
+        "region" : {
+          "type" : "string",
+          "description" : "region of the freeipa stack"
+        }
+      }
+    },
+    "SecurityGroupV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "securityGroupIds" : {
+          "type" : "array",
+          "description" : "Exisiting security group ids",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "securityRules" : {
+          "type" : "array",
+          "description" : "list of security rules that relates to the security group",
+          "items" : {
+            "$ref" : "#/definitions/SecurityRuleV1Request"
+          }
+        }
+      }
+    },
+    "SecurityRuleV1Request" : {
+      "type" : "object",
+      "required" : [ "ports", "protocol", "subnet" ],
+      "properties" : {
+        "subnet" : {
+          "type" : "string",
+          "description" : "definition of allowed subnet in CIDR format"
+        },
+        "ports" : {
+          "type" : "array",
+          "description" : "list of accessible ports",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "protocol" : {
+          "type" : "string",
+          "description" : "protocol of the rule"
+        },
+        "modifiable" : {
+          "type" : "boolean",
+          "description" : "flag for making the rule modifiable"
+        }
+      }
+    },
+    "StackAuthenticationV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "publicKey" : {
+          "type" : "string",
+          "description" : "public key for accessing instances",
+          "minLength" : 0,
+          "maxLength" : 2048
+        },
+        "publicKeyId" : {
+          "type" : "string",
+          "description" : "public key id for accessing instances",
+          "minLength" : 0,
+          "maxLength" : 255
+        },
+        "loginUserName" : {
+          "type" : "string",
+          "description" : "authentication name for machines",
+          "minLength" : 0,
+          "maxLength" : 32
+        }
+      }
+    },
+    "TelemetryRequest" : {
+      "type" : "object",
+      "properties" : {
+        "fluentAttributes" : {
+          "type" : "object",
+          "description" : "Telemetry fluent settings (overrides).",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        },
+        "logging" : {
+          "description" : "Cloud Logging (telemetry) settings.",
+          "$ref" : "#/definitions/LoggingRequest"
+        },
+        "workloadAnalytics" : {
+          "description" : "Workload analytics (telemetry) settings.",
+          "$ref" : "#/definitions/WorkloadAnalyticsRequest"
+        },
+        "features" : {
+          "description" : "Telemetry features settings",
+          "$ref" : "#/definitions/FeaturesRequest"
+        }
+      }
+    },
+    "VolumeV1Request" : {
+      "type" : "object",
+      "required" : [ "size" ],
+      "properties" : {
+        "count" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "number of volumes"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "type of the volumes"
+        },
+        "size" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "size of volume"
+        }
+      }
+    },
+    "WorkloadAnalyticsRequest" : {
+      "type" : "object",
+      "properties" : {
+        "attributes" : {
+          "type" : "object",
+          "description" : "Workload analytics (telemetry) attributes.",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "CleanupV1Request" : {
+      "type" : "object",
+      "required" : [ "environmentCrn" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "clusterName" : {
+          "type" : "string"
+        },
+        "users" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "hosts" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "roles" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "ips" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "cleanupStepsToSkip" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string",
+            "enum" : [ "REVOKE_CERTS", "REMOVE_HOSTS", "REMOVE_DNS_ENTRIES", "REMOVE_VAULT_ENTRIES", "REMOVE_USERS", "REMOVE_ROLES" ]
+          }
+        }
+      }
+    },
+    "SyncOperationV1Status" : {
+      "type" : "object",
+      "required" : [ "operationId", "syncOperationType" ],
+      "properties" : {
+        "operationId" : {
+          "type" : "string",
+          "description" : "User synchronization operation id"
+        },
+        "syncOperationType" : {
+          "type" : "string",
+          "description" : "Operation type",
+          "enum" : [ "USER_SYNC", "SET_PASSWORD" ]
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "User synchronization operation status",
+          "enum" : [ "REQUESTED", "RUNNING", "COMPLETED", "FAILED", "REJECTED", "TIMEDOUT" ]
+        },
+        "success" : {
+          "type" : "array",
+          "description" : "details about environments where operation succeeded",
+          "items" : {
+            "$ref" : "#/definitions/SuccessDetailsV1"
+          }
+        },
+        "failure" : {
+          "type" : "array",
+          "description" : "details about environments where operation failed",
+          "items" : {
+            "$ref" : "#/definitions/FailureDetailsV1"
+          }
+        },
+        "error" : {
+          "type" : "string",
+          "description" : "error information about operation failure"
+        },
+        "startTime" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "User synchronization operation start time"
+        },
+        "endTime" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "User synchronization operation end time"
+        }
+      }
+    },
+    "SynchronizeUserV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "environments" : {
+          "type" : "array",
+          "description" : "Optional environment crns to sync",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "SynchronizeAllUsersV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "environments" : {
+          "type" : "array",
+          "description" : "Optional environment crns to sync",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "machineUsers" : {
+          "type" : "array",
+          "description" : "Optional machine user crns to sync",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "users" : {
+          "type" : "array",
+          "description" : "Optional user crns to sync",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "accountId" : {
+          "type" : "string",
+          "description" : "The id of the account to run sync on"
+        }
+      }
+    },
+    "SetPasswordV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "environments" : {
+          "type" : "array",
+          "description" : "Optional environment crns to sync",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "password" : {
+          "type" : "string",
+          "description" : "the user's password"
+        }
+      }
+    },
+    "EnvironmentUserSyncV1State" : {
+      "type" : "object",
+      "required" : [ "state" ],
+      "properties" : {
+        "state" : {
+          "type" : "string",
+          "description" : "state of user synchronization",
+          "enum" : [ "UP_TO_DATE", "STALE", "SYNC_IN_PROGRESS", "SYNC_FAILED" ]
+        },
+        "lastUserSyncOperationId" : {
+          "type" : "string",
+          "description" : "User synchronization operation id"
+        }
+      }
+    },
+    "DescribeKerberosConfigV1Response" : {
+      "type" : "object",
+      "required" : [ "environmentCrn", "type" ],
+      "properties" : {
+        "crn" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "url" : {
+          "type" : "string",
+          "description" : "kerberos KDC server URL"
+        },
+        "adminUrl" : {
+          "type" : "string",
+          "description" : "kerberos admin server URL"
+        },
+        "realm" : {
+          "type" : "string"
+        },
+        "ldapUrl" : {
+          "type" : "string"
+        },
+        "containerDn" : {
+          "type" : "string"
+        },
+        "tcpAllowed" : {
+          "type" : "boolean"
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE_DIRECTORY", "MIT", "FREEIPA" ]
+        },
+        "verifyKdcTrust" : {
+          "type" : "boolean",
+          "description" : "Allows to select either a trusting SSL connection or a validating (non-trusting) SSL connection to KDC"
+        },
+        "domain" : {
+          "type" : "string",
+          "description" : "cluster instances will set this as the domain part of their hostname"
+        },
+        "nameServers" : {
+          "type" : "string",
+          "description" : "comma separated list of nameservers' IP address which will be used by cluster instances",
+          "pattern" : "(^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(,((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))*$)"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "password" : {
+          "description" : "kerberos admin password",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "principal" : {
+          "description" : "kerberos principal",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "descriptor" : {
+          "description" : "Ambari kerberos descriptor",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "krb5Conf" : {
+          "description" : "Ambari kerberos krb5.conf template",
+          "$ref" : "#/definitions/SecretResponse"
+        }
+      }
+    },
+    "SecretResponse" : {
+      "type" : "object",
+      "properties" : {
+        "enginePath" : {
+          "type" : "string",
+          "description" : "Engine path of the secret."
+        },
+        "secretPath" : {
+          "type" : "string",
+          "description" : "Path of the secret."
+        }
+      }
+    },
+    "ActiveDirectoryKerberosV1Descriptor" : {
+      "type" : "object",
+      "required" : [ "adminUrl", "containerDn", "ldapUrl", "password", "principal", "realm", "tcpAllowed", "url" ],
+      "properties" : {
+        "password" : {
+          "type" : "string",
+          "description" : "kerberos admin password",
+          "minLength" : 5,
+          "maxLength" : 50
+        },
+        "tcpAllowed" : {
+          "type" : "boolean",
+          "description" : "kerberos configuration name"
+        },
+        "verifyKdcTrust" : {
+          "type" : "boolean",
+          "description" : "Allows to select either a trusting SSL connection or a validating (non-trusting) SSL connection to KDC"
+        },
+        "domain" : {
+          "type" : "string",
+          "description" : "cluster instances will set this as the domain part of their hostname"
+        },
+        "nameServers" : {
+          "type" : "string",
+          "description" : "comma separated list of nameservers' IP address which will be used by cluster instances",
+          "pattern" : "(^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(,((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))*$)"
+        },
+        "principal" : {
+          "type" : "string",
+          "description" : "kerberos principal"
+        },
+        "url" : {
+          "type" : "string",
+          "description" : "kerberos KDC server URL"
+        },
+        "adminUrl" : {
+          "type" : "string",
+          "description" : "kerberos admin server URL"
+        },
+        "realm" : {
+          "type" : "string",
+          "description" : "kerberos realm"
+        },
+        "ldapUrl" : {
+          "type" : "string",
+          "description" : "URL of the connected ldap"
+        },
+        "containerDn" : {
+          "type" : "string",
+          "description" : "kerberos containerDn"
+        }
+      }
+    },
+    "CreateKerberosConfigV1Request" : {
+      "type" : "object",
+      "required" : [ "environmentCrn", "name" ],
+      "properties" : {
+        "activeDirectory" : {
+          "$ref" : "#/definitions/ActiveDirectoryKerberosV1Descriptor"
+        },
+        "freeIpa" : {
+          "$ref" : "#/definitions/FreeIPAKerberosV1Descriptor"
+        },
+        "mit" : {
+          "$ref" : "#/definitions/MITKerberosV1Descriptor"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "the name of the kerberos configuration"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        }
+      }
+    },
+    "FreeIPAKerberosV1Descriptor" : {
+      "type" : "object",
+      "required" : [ "adminUrl", "password", "principal", "realm", "tcpAllowed", "url" ],
+      "properties" : {
+        "password" : {
+          "type" : "string",
+          "description" : "kerberos admin password",
+          "minLength" : 5,
+          "maxLength" : 50
+        },
+        "tcpAllowed" : {
+          "type" : "boolean",
+          "description" : "kerberos configuration name"
+        },
+        "verifyKdcTrust" : {
+          "type" : "boolean",
+          "description" : "Allows to select either a trusting SSL connection or a validating (non-trusting) SSL connection to KDC"
+        },
+        "domain" : {
+          "type" : "string",
+          "description" : "cluster instances will set this as the domain part of their hostname"
+        },
+        "nameServers" : {
+          "type" : "string",
+          "description" : "comma separated list of nameservers' IP address which will be used by cluster instances",
+          "pattern" : "(^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(,((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))*$)"
+        },
+        "principal" : {
+          "type" : "string",
+          "description" : "kerberos principal"
+        },
+        "url" : {
+          "type" : "string",
+          "description" : "kerberos KDC server URL"
+        },
+        "adminUrl" : {
+          "type" : "string",
+          "description" : "kerberos admin server URL"
+        },
+        "realm" : {
+          "type" : "string",
+          "description" : "kerberos realm"
+        }
+      }
+    },
+    "MITKerberosV1Descriptor" : {
+      "type" : "object",
+      "required" : [ "adminUrl", "password", "principal", "realm", "tcpAllowed", "url" ],
+      "properties" : {
+        "password" : {
+          "type" : "string",
+          "description" : "kerberos admin password",
+          "minLength" : 5,
+          "maxLength" : 50
+        },
+        "tcpAllowed" : {
+          "type" : "boolean",
+          "description" : "kerberos configuration name"
+        },
+        "verifyKdcTrust" : {
+          "type" : "boolean",
+          "description" : "Allows to select either a trusting SSL connection or a validating (non-trusting) SSL connection to KDC"
+        },
+        "domain" : {
+          "type" : "string",
+          "description" : "cluster instances will set this as the domain part of their hostname"
+        },
+        "nameServers" : {
+          "type" : "string",
+          "description" : "comma separated list of nameservers' IP address which will be used by cluster instances",
+          "pattern" : "(^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(,((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))*$)"
+        },
+        "principal" : {
+          "type" : "string",
+          "description" : "kerberos principal"
+        },
+        "url" : {
+          "type" : "string",
+          "description" : "kerberos KDC server URL"
+        },
+        "adminUrl" : {
+          "type" : "string",
+          "description" : "kerberos admin server URL"
+        },
+        "realm" : {
+          "type" : "string",
+          "description" : "kerberos realm"
+        }
+      }
+    },
+    "ServiceKeytabV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "servicePrincipal" : {
+          "description" : "Kerberos Principal Name",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "keytab" : {
+          "description" : "Keytab that was requested",
+          "$ref" : "#/definitions/SecretResponse"
+        }
+      }
+    },
+    "RoleV1Request" : {
+      "type" : "object",
+      "required" : [ "roleName" ],
+      "properties" : {
+        "roleName" : {
+          "type" : "string",
+          "description" : "Name of the role to be created if not exists"
+        },
+        "privileges" : {
+          "type" : "array",
+          "description" : "Privileges for the role",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "ServiceKeytabV1Request" : {
+      "type" : "object",
+      "required" : [ "environmentCrn", "serverHostName", "serviceName" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "serviceName" : {
+          "type" : "string",
+          "description" : "Service requesting keytab"
+        },
+        "serverHostName" : {
+          "type" : "string",
+          "description" : "Hostname where the service is running"
+        },
+        "serverHostNameAlias" : {
+          "type" : "string",
+          "description" : "Alias name for the service"
+        },
+        "clusterCrn" : {
+          "type" : "string",
+          "description" : "CRN of the cluster"
+        },
+        "doNotRecreateKeytab" : {
+          "type" : "boolean",
+          "description" : "If true existing keytab won't be overriden for service in normal scenario. Preserving the keytab is best effort, it may invalidate prior keytabs."
+        },
+        "roleRequest" : {
+          "description" : "Role request for adding roles and privileges to service",
+          "$ref" : "#/definitions/RoleV1Request"
+        }
+      }
+    },
+    "HostKeytabV1Response" : {
+      "type" : "object",
+      "properties" : {
+        "hostPrincipal" : {
+          "description" : "Kerberos Principal Name",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "keytab" : {
+          "description" : "Keytab that was requested",
+          "$ref" : "#/definitions/SecretResponse"
+        }
+      }
+    },
+    "HostKeytabV1Request" : {
+      "type" : "object",
+      "required" : [ "environmentCrn", "serverHostName" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "serverHostName" : {
+          "type" : "string"
+        },
+        "clusterCrn" : {
+          "type" : "string",
+          "description" : "CRN of the cluster"
+        },
+        "doNotRecreateKeytab" : {
+          "type" : "boolean",
+          "description" : "If true existing keytab won't be overriden for service in normal scenario. Preserving the keytab is best effort, it may invalidate prior keytabs."
+        },
+        "roleRequest" : {
+          "description" : "Role request for adding roles and privileges to service",
+          "$ref" : "#/definitions/RoleV1Request"
+        }
+      }
+    },
+    "ServicePrincipalV1Request" : {
+      "type" : "object",
+      "required" : [ "environmentCrn", "serverHostName", "serviceName" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "serviceName" : {
+          "type" : "string",
+          "description" : "Service requesting keytab"
+        },
+        "serverHostName" : {
+          "type" : "string",
+          "description" : "Hostname where the service is running"
+        },
+        "clusterCrn" : {
+          "type" : "string",
+          "description" : "CRN of the cluster"
+        },
+        "roleName" : {
+          "type" : "string",
+          "description" : "Name of the role to be created if not exists"
+        }
+      }
+    },
+    "HostV1Request" : {
+      "type" : "object",
+      "required" : [ "environmentCrn", "serverHostName" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "serverHostName" : {
+          "type" : "string",
+          "description" : "Hostname where the service is running"
+        },
+        "clusterCrn" : {
+          "type" : "string",
+          "description" : "CRN of the cluster"
+        },
+        "roleName" : {
+          "type" : "string",
+          "description" : "Name of the role to be created if not exists"
+        }
+      }
+    },
+    "VaultCleanupV1Request" : {
+      "type" : "object",
+      "required" : [ "environmentCrn" ],
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "clusterCrn" : {
+          "type" : "string",
+          "description" : "CRN of the cluster"
+        }
+      }
+    },
+    "DescribeLdapConfigV1Response" : {
+      "type" : "object",
+      "required" : [ "environmentCrn", "host", "name", "port", "userDnPattern", "userSearchBase" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "(^[a-z][-a-z0-9]*[a-z0-9]$)"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "host" : {
+          "type" : "string",
+          "description" : "public host or IP address of LDAP server"
+        },
+        "port" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "port of LDAP server (typically: 389 or 636 for LDAPS)",
+          "minimum" : 1,
+          "maximum" : 65535
+        },
+        "protocol" : {
+          "type" : "string",
+          "description" : "determines the protocol (LDAP or LDAP over SSL)"
+        },
+        "userSearchBase" : {
+          "type" : "string",
+          "description" : "template for user search for authentication (e.g. dc=hadoop,dc=apache,dc=org)"
+        },
+        "userDnPattern" : {
+          "type" : "string",
+          "description" : "template for pattern based user search for authentication (e.g. cn={0},dc=hadoop,dc=apache,dc=org)"
+        },
+        "groupSearchBase" : {
+          "type" : "string",
+          "description" : "template for group search for authorization (e.g. dc=hadoop,dc=apache,dc=org)"
+        },
+        "userNameAttribute" : {
+          "type" : "string",
+          "description" : "attribute name for simplified search filter (e.g. sAMAccountName in case of AD, UID or cn for LDAP)."
+        },
+        "domain" : {
+          "type" : "string",
+          "description" : "domain in LDAP server (e.g. ad.seq.com)."
+        },
+        "directoryType" : {
+          "type" : "string",
+          "description" : "directory type of server LDAP or ACTIVE_DIRECTORY and the default is ACTIVE_DIRECTORY ",
+          "enum" : [ "LDAP", "ACTIVE_DIRECTORY" ]
+        },
+        "userObjectClass" : {
+          "type" : "string",
+          "description" : "User Object Class (defaults to person)"
+        },
+        "groupObjectClass" : {
+          "type" : "string",
+          "description" : "Group Object Class (defaults to groupOfNames)"
+        },
+        "groupNameAttribute" : {
+          "type" : "string",
+          "description" : "Group Id Attribute (defaults to cn)"
+        },
+        "groupMemberAttribute" : {
+          "type" : "string",
+          "description" : "Group Member Attribute (defaults to member)"
+        },
+        "adminGroup" : {
+          "type" : "string",
+          "description" : "LDAP group for administrators"
+        },
+        "certificate" : {
+          "type" : "string",
+          "description" : "Self-signed certificate of LDAPS server"
+        },
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "crn" : {
+          "type" : "string",
+          "description" : "CRN of the resource"
+        },
+        "bindDn" : {
+          "description" : "bind distinguished name for connection test and group search (e.g. cn=admin,dc=example,dc=org)",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "bindPassword" : {
+          "description" : "password for the provided bind DN",
+          "$ref" : "#/definitions/SecretResponse"
+        },
+        "userGroup" : {
+          "type" : "string",
+          "description" : "LDAP group for regular users"
+        }
+      }
+    },
+    "CreateLdapConfigV1Request" : {
+      "type" : "object",
+      "required" : [ "bindDn", "bindPassword", "environmentCrn", "host", "name", "port", "userDnPattern", "userSearchBase" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "name of the resource",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "(^[a-z][-a-z0-9]*[a-z0-9]$)"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "description of the resource",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "host" : {
+          "type" : "string",
+          "description" : "public host or IP address of LDAP server"
+        },
+        "port" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "port of LDAP server (typically: 389 or 636 for LDAPS)",
+          "minimum" : 1,
+          "maximum" : 65535
+        },
+        "protocol" : {
+          "type" : "string",
+          "description" : "determines the protocol (LDAP or LDAP over SSL)"
+        },
+        "userSearchBase" : {
+          "type" : "string",
+          "description" : "template for user search for authentication (e.g. dc=hadoop,dc=apache,dc=org)"
+        },
+        "userDnPattern" : {
+          "type" : "string",
+          "description" : "template for pattern based user search for authentication (e.g. cn={0},dc=hadoop,dc=apache,dc=org)"
+        },
+        "groupSearchBase" : {
+          "type" : "string",
+          "description" : "template for group search for authorization (e.g. dc=hadoop,dc=apache,dc=org)"
+        },
+        "userNameAttribute" : {
+          "type" : "string",
+          "description" : "attribute name for simplified search filter (e.g. sAMAccountName in case of AD, UID or cn for LDAP)."
+        },
+        "domain" : {
+          "type" : "string",
+          "description" : "domain in LDAP server (e.g. ad.seq.com)."
+        },
+        "directoryType" : {
+          "type" : "string",
+          "description" : "directory type of server LDAP or ACTIVE_DIRECTORY and the default is ACTIVE_DIRECTORY ",
+          "enum" : [ "LDAP", "ACTIVE_DIRECTORY" ]
+        },
+        "userObjectClass" : {
+          "type" : "string",
+          "description" : "User Object Class (defaults to person)"
+        },
+        "groupObjectClass" : {
+          "type" : "string",
+          "description" : "Group Object Class (defaults to groupOfNames)"
+        },
+        "groupNameAttribute" : {
+          "type" : "string",
+          "description" : "Group Id Attribute (defaults to cn)"
+        },
+        "groupMemberAttribute" : {
+          "type" : "string",
+          "description" : "Group Member Attribute (defaults to member)"
+        },
+        "adminGroup" : {
+          "type" : "string",
+          "description" : "LDAP group for administrators"
+        },
+        "certificate" : {
+          "type" : "string",
+          "description" : "Self-signed certificate of LDAPS server"
+        },
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "bindDn" : {
+          "type" : "string",
+          "description" : "bind distinguished name for connection test and group search (e.g. cn=admin,dc=example,dc=org)"
+        },
+        "bindPassword" : {
+          "type" : "string",
+          "description" : "password for the provided bind DN"
+        }
+      }
+    },
+    "TestLdapConfigV1Response" : {
+      "type" : "object",
+      "required" : [ "result" ],
+      "properties" : {
+        "result" : {
+          "type" : "string",
+          "description" : "result of Ldap connection test"
+        }
+      }
+    },
+    "MinimalLdapConfigV1Request" : {
+      "type" : "object",
+      "required" : [ "bindDn", "bindPassword", "host", "port" ],
+      "properties" : {
+        "host" : {
+          "type" : "string",
+          "description" : "public host or IP address of LDAP server"
+        },
+        "port" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "port of LDAP server (typically: 389 or 636 for LDAPS)",
+          "minimum" : 1,
+          "maximum" : 65535
+        },
+        "protocol" : {
+          "type" : "string",
+          "description" : "determines the protocol (LDAP or LDAP over SSL)"
+        },
+        "bindDn" : {
+          "type" : "string",
+          "description" : "bind distinguished name for connection test and group search (e.g. cn=admin,dc=example,dc=org)"
+        },
+        "bindPassword" : {
+          "type" : "string",
+          "description" : "password for the provided bind DN"
+        }
+      }
+    },
+    "TestLdapConfigV1Request" : {
+      "type" : "object",
+      "properties" : {
+        "environmentCrn" : {
+          "type" : "string",
+          "description" : "CRN of the environment"
+        },
+        "ldap" : {
+          "description" : "Request that contains the minimal set of fields to test LDAP connectivity",
+          "$ref" : "#/definitions/MinimalLdapConfigV1Request"
+        }
+      }
+    }
+  }
+}
