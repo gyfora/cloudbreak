@@ -1,9 +1,7 @@
 package com.sequenceiq.freeipa.service.diagnostics;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -12,16 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.sequenceiq.cloudbreak.logger.MDCBuilder;
-import com.sequenceiq.cloudbreak.orchestrator.exception.CloudbreakOrchestratorFailedException;
 import com.sequenceiq.cloudbreak.orchestrator.host.HostOrchestrator;
-import com.sequenceiq.cloudbreak.orchestrator.model.GatewayConfig;
 import com.sequenceiq.flow.core.FlowConstants;
 import com.sequenceiq.freeipa.api.v1.diagnostics.model.DiagnosticsCollectionRequest;
-import com.sequenceiq.freeipa.entity.InstanceMetaData;
 import com.sequenceiq.freeipa.entity.Stack;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionEvent;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionStateSelectors;
-import com.sequenceiq.freeipa.orchestrator.StackBasedExitCriteriaModel;
 import com.sequenceiq.freeipa.repository.InstanceMetaDataRepository;
 import com.sequenceiq.freeipa.repository.StackRepository;
 import com.sequenceiq.freeipa.service.GatewayConfigService;
@@ -68,33 +62,6 @@ public class DiagnosticsService {
                 .withParameters(createDiagnosticCollectionParams(request))
                 .build();
         flowManager.notify(diagnosticsCollectionEvent, getFlowHeaders(userCrn));
-    }
-
-    public void init(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
-        applyState("filecollector.init", stackId, parameters);
-    }
-
-    public void collect(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
-        applyState("filecollector.collect", stackId, parameters);
-    }
-
-    public void upload(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
-        applyState("filecollector.upload", stackId, parameters);
-    }
-
-    public void cleanup(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
-        applyState("filecollector.cleanup", stackId, parameters);
-    }
-
-    private void applyState(String state, Long stackId,
-            Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
-        hostOrchestrator.applyDiagnosticsState(getGatewayConfigs(stackId), state, parameters, new StackBasedExitCriteriaModel(stackId));
-    }
-
-    private List<GatewayConfig> getGatewayConfigs(Long stackId) {
-        Stack stack = stackService.getStackById(stackId);
-        Set<InstanceMetaData> instanceMetaDataSet = instanceMetaDataRepository.findAllInStack(stack.getId());
-        return gatewayConfigService.getGatewayConfigs(stack, instanceMetaDataSet);
     }
 
     private Event.Headers getFlowHeaders(String userCrn) {

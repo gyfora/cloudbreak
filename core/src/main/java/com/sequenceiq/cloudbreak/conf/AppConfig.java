@@ -6,7 +6,6 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -48,7 +47,6 @@ import com.sequenceiq.cloudbreak.common.mappable.CloudPlatform;
 import com.sequenceiq.cloudbreak.concurrent.MDCCleanerTaskDecorator;
 import com.sequenceiq.cloudbreak.converter.v4.environment.network.EnvironmentNetworkConverter;
 import com.sequenceiq.cloudbreak.core.bootstrap.service.ClusterDeletionBasedExitCriteria;
-import com.sequenceiq.cloudbreak.orchestrator.host.HostOrchestrator;
 import com.sequenceiq.cloudbreak.orchestrator.state.ExitCriteria;
 import com.sequenceiq.cloudbreak.service.StackUnderOperationService;
 import com.sequenceiq.cloudbreak.template.filesystem.FileSystemConfigurator;
@@ -91,23 +89,8 @@ public class AppConfig implements ResourceLoaderAware {
     @Value("${cert.ignorePreValidation}")
     private boolean ignorePreValidation;
 
-    @Value("${caas.protocol:http}")
-    private String caasProtocol;
-
-    @Value("${caas.url:}")
-    private String caasUrl;
-
-    @Value("${caas.cert.validation:false}")
-    private boolean caasCertificateValidation;
-
-    @Value("${caas.cert.ignorePreValidation:false}")
-    private boolean caasIgnorePreValidation;
-
     @Inject
     private StackUnderOperationService stackUnderOperationService;
-
-    @Inject
-    private List<HostOrchestrator> hostOrchestrators;
 
     @Inject
     private List<FileSystemConfigurator<?>> fileSystemConfigurators;
@@ -178,16 +161,6 @@ public class AppConfig implements ResourceLoaderAware {
         registration.addUrlPatterns("/*");
         registration.setName("turnOnStackUnderOperationService");
         return registration;
-    }
-
-    @Bean
-    public Map<String, HostOrchestrator> hostOrchestrators() {
-        Map<String, HostOrchestrator> map = new HashMap<>();
-        for (HostOrchestrator hostOrchestrator : hostOrchestrators) {
-            hostOrchestrator.init(clusterDeletionBasedExitCriteria());
-            map.put(hostOrchestrator.name(), hostOrchestrator);
-        }
-        return map;
     }
 
     @Bean

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.sequenceiq.flow.reactor.api.event.EventSender;
 import com.sequenceiq.flow.reactor.api.handler.EventSenderAwareHandler;
+import com.sequenceiq.freeipa.flow.freeipa.diagnostics.DiagnosticslFlowService;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionEvent;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionFailureEvent;
 import com.sequenceiq.freeipa.service.diagnostics.DiagnosticsService;
@@ -29,7 +30,7 @@ public class DiagnosticsCollectionHandler extends EventSenderAwareHandler<Diagno
     private EventBus eventBus;
 
     @Inject
-    private DiagnosticsService diagnosticsService;
+    private DiagnosticslFlowService diagnosticsService;
 
     protected DiagnosticsCollectionHandler(EventSender eventSender) {
         super(eventSender);

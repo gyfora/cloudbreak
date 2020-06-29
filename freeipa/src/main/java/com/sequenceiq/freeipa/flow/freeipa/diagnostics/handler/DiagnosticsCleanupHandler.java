@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 
 import com.sequenceiq.flow.reactor.api.event.EventSender;
 import com.sequenceiq.flow.reactor.api.handler.EventSenderAwareHandler;
+import com.sequenceiq.freeipa.flow.freeipa.diagnostics.DiagnosticslFlowService;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionEvent;
 import com.sequenceiq.freeipa.flow.freeipa.diagnostics.event.DiagnosticsCollectionFailureEvent;
-import com.sequenceiq.freeipa.service.diagnostics.DiagnosticsService;
 
 import reactor.bus.Event;
 import reactor.bus.EventBus;
@@ -29,7 +29,7 @@ public class DiagnosticsCleanupHandler extends EventSenderAwareHandler<Diagnosti
     private EventBus eventBus;
 
     @Inject
-    private DiagnosticsService diagnosticsService;
+    private DiagnosticslFlowService diagnosticslFlowService;
 
     protected DiagnosticsCleanupHandler(EventSender eventSender) {
         super(eventSender);
@@ -42,7 +42,7 @@ public class DiagnosticsCleanupHandler extends EventSenderAwareHandler<Diagnosti
         String resourceCrn = data.getResourceCrn();
         Map<String, Object> parameters = data.getParameters();
         try {
-            diagnosticsService.cleanup(resourceId, parameters);
+            diagnosticslFlowService.cleanup(resourceId, parameters);
             DiagnosticsCollectionEvent diagnosticsCollectionEvent = DiagnosticsCollectionEvent.builder()
                     .withResourceCrn(resourceCrn)
                     .withResourceId(resourceId)
