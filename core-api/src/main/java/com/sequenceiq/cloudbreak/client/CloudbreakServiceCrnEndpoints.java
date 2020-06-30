@@ -18,7 +18,6 @@ import com.sequenceiq.cloudbreak.api.endpoint.v4.stacks.StackV4Endpoint;
 import com.sequenceiq.cloudbreak.api.endpoint.v4.userprofile.UserProfileV4Endpoint;
 import com.sequenceiq.cloudbreak.api.endpoint.v4.util.UtilV4Endpoint;
 import com.sequenceiq.cloudbreak.api.endpoint.v4.util.WorkspaceAwareUtilV4Endpoint;
-import com.sequenceiq.cloudbreak.api.endpoint.v4.workspace.WorkspaceV4Endpoint;
 import com.sequenceiq.distrox.api.v1.distrox.endpoint.DistroXInternalV1Endpoint;
 import com.sequenceiq.distrox.api.v1.distrox.endpoint.DistroXV1Endpoint;
 import com.sequenceiq.flow.api.FlowEndpoint;
@@ -51,10 +50,6 @@ public class CloudbreakServiceCrnEndpoints extends AbstractUserCrnServiceEndpoin
 
     public CloudbreakInfoV4Endpoint cloudbreakInfoV4Endpoint() {
         return getEndpoint(CloudbreakInfoV4Endpoint.class);
-    }
-
-    public WorkspaceV4Endpoint workspaceV4Endpoint() {
-        return getEndpoint(WorkspaceV4Endpoint.class);
     }
 
     public DatabaseV4Endpoint databaseV4Endpoint() {
