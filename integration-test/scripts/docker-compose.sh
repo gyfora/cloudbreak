@@ -134,9 +134,24 @@ fi
 
 date
 echo -e "\n\033[1;96m--- Swagger check\033[0m\n"
+MAJOR_VERSION=$(echo $CB_VERSION | cut -f 1 -d '.')
+MINOR_VERSION=$(echo $CB_VERSION | cut -f 2 -d '.')
+PATCH_VERSION=$(echo $CB_VERSION | cut -f 3 -d '.')
+PREVIOUS_MINOR_VERSION=$MAJOR_VERSION.$(expr $MINOR_VERSION - 1).$PATCH_VERSION
+Services="cloudbreak,freeipa,environment,datalake,redbeams,autoscale"
+Field_Separator=$IFS
+IFS=,
+for service in $Services; do
+  echo Downloading ${service} ${CB_VERSION} swagger definition, if possible
+  curl -kf https://${service}-swagger.s3.us-east-2.amazonaws.com/swagger-${CB_VERSION}.json -o ./apidefinitions/${service}-swagger-${CB_VERSION}.json
+  echo Downloading ${service} ${PREVIOUS_MINOR_VERSION} swagger definition, if possible
+  curl -kf https://${service}-swagger.s3.us-east-2.amazonaws.com/swagger-${CB_VERSION}.json -o ./apidefinitions/${service}-swagger-${PREVIOUS_MINOR_VERSION}.json
+done
+IFS=$Field_Separator
 $INTEGCB_LOCATION/.deps/bin/docker-compose up swagger-diff | tee swagger-diff.out
 grep "swagger diff finished succesfully" swagger-diff.out
 swaggerdiffresult=$?
+
 $INTEGCB_LOCATION/.deps/bin/docker-compose up swagger-validation | tee swagger-validation-result.out
 
 exit $swaggerdiffresult
