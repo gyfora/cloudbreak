@@ -148,13 +148,13 @@ IFS=,
 set +e
 for service in $Services; do
   echo Downloading ${service} ${PREVIOUS_BUILD} swagger definition, if possible
-  STATUSCODE=$(curl -kfSs --write-out "%{http_code}" https://${service}-swagger.s3.${zone[@]}.amazonaws.com/swagger-${PREVIOUS_BUILD}.json -o ./apidefinitions/${service}-swagger-${PREVIOUS_BUILD}.json)
+  STATUSCODE=$(curl -kfSs --write-out "%{http_code}" https://${service}-swagger.s3.${zone[$service]}.amazonaws.com/swagger-${PREVIOUS_BUILD}.json -o ./apidefinitions/${service}-swagger-${PREVIOUS_BUILD}.json)
     if [ $STATUSCODE -ne 200 ]; then
     echo download failed $STATUSCODE
     rm ./apidefinitions/${service}-swagger-${PREVIOUS_BUILD}.json
   fi
   echo Downloading ${service} ${PREVIOUS_MINOR_BUILD} swagger definition, if possible
-  STATUSCODE=$(curl -kfSs --write-out "%{http_code}" https://${service}-swagger.s3.${zone[@]}.amazonaws.com/swagger-${PREVIOUS_MINOR_BUILD}.json -o ./apidefinitions/${service}-swagger-${PREVIOUS_MINOR_BUILD}.json)
+  STATUSCODE=$(curl -kfSs --write-out "%{http_code}" https://${service}-swagger.s3.${zone[$service]}.amazonaws.com/swagger-${PREVIOUS_MINOR_BUILD}.json -o ./apidefinitions/${service}-swagger-${PREVIOUS_MINOR_BUILD}.json)
   if [ $STATUSCODE -ne 200 ]; then
     echo download failed $STATUSCODE
     rm ./apidefinitions/${service}-swagger-${PREVIOUS_MINOR_BUILD}.json
