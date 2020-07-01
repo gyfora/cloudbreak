@@ -32,7 +32,6 @@ import com.sequenceiq.cloudbreak.controller.v4.ImageCatalogV4Controller;
 import com.sequenceiq.cloudbreak.controller.v4.RecipesV4Controller;
 import com.sequenceiq.cloudbreak.controller.v4.StackV4Controller;
 import com.sequenceiq.cloudbreak.controller.v4.UserProfileV4Controller;
-import com.sequenceiq.cloudbreak.controller.v4.UserV4Controller;
 import com.sequenceiq.cloudbreak.controller.v4.UtilV4Controller;
 import com.sequenceiq.cloudbreak.controller.v4.WorkspaceAwareUtilV4Controller;
 import com.sequenceiq.cloudbreak.controller.v4.WorkspaceV4Controller;
@@ -63,7 +62,6 @@ public class EndpointConfig extends ResourceConfig {
             WorkspaceV4Controller.class,
             RecipesV4Controller.class,
             UserProfileV4Controller.class,
-            UserV4Controller.class,
             FileSystemV4Controller.class,
             UtilV4Controller.class,
             FileSystemV4Controller.class,
