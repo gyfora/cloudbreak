@@ -134,7 +134,7 @@ fi
 
 date
 echo -e "\n\033[1;96m--- Swagger check\033[0m\n"
-VERSION=$(echo $CB_VERSION) | cut -f 1 -d '-')
+VERSION=$(echo $CB_VERSION | cut -f 1 -d '-')
 MAJOR_VERSION=$(echo $VERSION | cut -f 1 -d '.')
 MINOR_VERSION=$(echo $VERSION | cut -f 2 -d '.')
 PATCH_VERSION=$(echo $VERSION | cut -f 3 -d '.')
