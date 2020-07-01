@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import com.sequenceiq.cloudbreak.orchestrator.host.TelemetryOrchestrator;
 import com.sequenceiq.cloudbreak.orchestrator.model.Node;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -51,48 +52,41 @@ public class DiagnosticsFlowService {
         Stack stack = stackService.getStackById(stackId);
         Set<InstanceMetaData> instanceMetaDataSet = stack.getNotDeletedInstanceMetaDataSet();
         List<GatewayConfig> gatewayConfigs = gatewayConfigService.getNotTerminatedGatewayConfigs(stack);
-        Set<Node> allNodes = instanceMetaDataSet.stream()
-                .map(im -> new Node(im.getPrivateIp(), im.getPublicIp(), im.getInstanceId(),
-                        im.getInstanceGroup().getTemplate().getInstanceType(), im.getDiscoveryFQDN(), im.getInstanceGroup().getGroupName()))
-                .collect(Collectors.toSet());
+        Set<Node> allNodes = getNodes(instanceMetaDataSet);
 
-        telemetryOrchestrator.initDiagnosticCollection(gatewayConfigs, allNodes, new StackBasedExitCriteriaModel(stackId));
+        telemetryOrchestrator.initDiagnosticCollection(gatewayConfigs, allNodes, parameters, new StackBasedExitCriteriaModel(stackId));
     }
 
     public void collect(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
         Stack stack = stackService.getStackById(stackId);
         Set<InstanceMetaData> instanceMetaDataSet = stack.getNotDeletedInstanceMetaDataSet();
         List<GatewayConfig> gatewayConfigs = gatewayConfigService.getNotTerminatedGatewayConfigs(stack);
-        Set<Node> allNodes = instanceMetaDataSet.stream()
-                .map(im -> new Node(im.getPrivateIp(), im.getPublicIp(), im.getInstanceId(),
-                        im.getInstanceGroup().getTemplate().getInstanceType(), im.getDiscoveryFQDN(), im.getInstanceGroup().getGroupName()))
-                .collect(Collectors.toSet());
+        Set<Node> allNodes = getNodes(instanceMetaDataSet);
 
-        telemetryOrchestrator.executeDiagnosticCollection(gatewayConfigs, allNodes, new StackBasedExitCriteriaModel(stackId));
+        telemetryOrchestrator.executeDiagnosticCollection(gatewayConfigs, allNodes, parameters, new StackBasedExitCriteriaModel(stackId));
     }
 
     public void upload(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
         Stack stack = stackService.getStackById(stackId);
         Set<InstanceMetaData> instanceMetaDataSet = stack.getNotDeletedInstanceMetaDataSet();
         List<GatewayConfig> gatewayConfigs = gatewayConfigService.getNotTerminatedGatewayConfigs(stack);
-        Set<Node> allNodes = instanceMetaDataSet.stream()
-                .map(im -> new Node(im.getPrivateIp(), im.getPublicIp(), im.getInstanceId(),
-                        im.getInstanceGroup().getTemplate().getInstanceType(), im.getDiscoveryFQDN(), im.getInstanceGroup().getGroupName()))
-                .collect(Collectors.toSet());
-
-        telemetryOrchestrator.uploadCollectedDiagnostics(gatewayConfigs, allNodes, new StackBasedExitCriteriaModel(stackId));
+        Set<Node> allNodes = getNodes(instanceMetaDataSet);
+        telemetryOrchestrator.uploadCollectedDiagnostics(gatewayConfigs, allNodes, parameters, new StackBasedExitCriteriaModel(stackId));
     }
 
     public void cleanup(Long stackId, Map<String, Object> parameters) throws CloudbreakOrchestratorFailedException {
         Stack stack = stackService.getStackById(stackId);
         Set<InstanceMetaData> instanceMetaDataSet = stack.getNotDeletedInstanceMetaDataSet();
         List<GatewayConfig> gatewayConfigs = gatewayConfigService.getNotTerminatedGatewayConfigs(stack);
-        Set<Node> allNodes = instanceMetaDataSet.stream()
+        Set<Node> allNodes = getNodes(instanceMetaDataSet);
+        telemetryOrchestrator.cleanupCollectedDiagnostics(gatewayConfigs, allNodes, parameters, new StackBasedExitCriteriaModel(stackId));
+    }
+
+    private Set<Node> getNodes(Set<InstanceMetaData> instanceMetaDataSet) {
+        return instanceMetaDataSet.stream()
                 .map(im -> new Node(im.getPrivateIp(), im.getPublicIp(), im.getInstanceId(),
                         im.getInstanceGroup().getTemplate().getInstanceType(), im.getDiscoveryFQDN(), im.getInstanceGroup().getGroupName()))
                 .collect(Collectors.toSet());
-
-        telemetryOrchestrator.cleanupCollectedDiagnostics(gatewayConfigs, allNodes, new StackBasedExitCriteriaModel(stackId));
     }
 
     private void applyState(String state, Long stackId,

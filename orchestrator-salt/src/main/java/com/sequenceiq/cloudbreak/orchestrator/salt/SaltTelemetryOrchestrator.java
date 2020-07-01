@@ -8,6 +8,7 @@ import com.sequenceiq.cloudbreak.orchestrator.model.GatewayConfig;
 import com.sequenceiq.cloudbreak.orchestrator.model.Node;
 import com.sequenceiq.cloudbreak.orchestrator.salt.client.SaltConnector;
 import com.sequenceiq.cloudbreak.orchestrator.salt.poller.SaltJobIdTracker;
+import com.sequenceiq.cloudbreak.orchestrator.salt.poller.checker.ParameterizedStateRunner;
 import com.sequenceiq.cloudbreak.orchestrator.salt.poller.checker.StateAllRunner;
 import com.sequenceiq.cloudbreak.orchestrator.salt.poller.checker.StateRunner;
 import com.sequenceiq.cloudbreak.orchestrator.salt.runner.SaltRunner;
@@ -19,7 +20,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -71,38 +74,39 @@ public class SaltTelemetryOrchestrator implements TelemetryOrchestrator {
     @Override
     public void stopTelemetryAgent(List<GatewayConfig> allGateways, Set<Node> nodes, ExitCriteriaModel exitModel)
             throws CloudbreakOrchestratorFailedException {
-        runSaltState(allGateways, nodes, exitModel, FLUENT_AGENT_STOP, "Error occurred during telemetry agent stop.");
+        runSaltState(allGateways, nodes, Collections.emptyMap(), exitModel, FLUENT_AGENT_STOP, "Error occurred during telemetry agent stop.");
     }
 
     @Override
-    public void initDiagnosticCollection(List<GatewayConfig> allGateways, Set<Node> nodes, ExitCriteriaModel exitModel)
+    public void initDiagnosticCollection(List<GatewayConfig> allGateways, Set<Node> nodes, Map<String, Object> parameters, ExitCriteriaModel exitModel)
             throws CloudbreakOrchestratorFailedException {
-        runSaltState(allGateways, nodes, exitModel, FILECOLLECTOR_INIT, "Error occurred during diagnostics filecollector init.");
+        runSaltState(allGateways, nodes, parameters, exitModel, FILECOLLECTOR_INIT, "Error occurred during diagnostics filecollector init.");
     }
 
     @Override
-    public void executeDiagnosticCollection(List<GatewayConfig> allGateways, Set<Node> nodes, ExitCriteriaModel exitModel)
+    public void executeDiagnosticCollection(List<GatewayConfig> allGateways, Set<Node> nodes, Map<String, Object> parameters, ExitCriteriaModel exitModel)
             throws CloudbreakOrchestratorFailedException {
-        runSaltState(allGateways, nodes, exitModel, FILECOLLECTOR_COLLECT, "Error occurred during diagnostics filecollector collect.");
+        runSaltState(allGateways, nodes, parameters, exitModel, FILECOLLECTOR_COLLECT, "Error occurred during diagnostics filecollector collect.");
     }
 
     @Override
-    public void uploadCollectedDiagnostics(List<GatewayConfig> allGateways, Set<Node> nodes, ExitCriteriaModel exitModel)
+    public void uploadCollectedDiagnostics(List<GatewayConfig> allGateways, Set<Node> nodes, Map<String, Object> parameters, ExitCriteriaModel exitModel)
             throws CloudbreakOrchestratorFailedException {
-        runSaltState(allGateways, nodes, exitModel, FILECOLLECTOR_UPLOAD, "Error occurred during diagnostics filecollector upload.");
+        runSaltState(allGateways, nodes, parameters, exitModel, FILECOLLECTOR_UPLOAD, "Error occurred during diagnostics filecollector upload.");
     }
 
     @Override
-    public void cleanupCollectedDiagnostics(List<GatewayConfig> allGateways, Set<Node> nodes, ExitCriteriaModel exitModel)
+    public void cleanupCollectedDiagnostics(List<GatewayConfig> allGateways, Set<Node> nodes, Map<String, Object> parameters, ExitCriteriaModel exitModel)
             throws CloudbreakOrchestratorFailedException {
-        runSaltState(allGateways, nodes, exitModel, FILECOLLECTOR_CLEANUP, "Error occurred during diagnostics filecollector cleanup.");
+        runSaltState(allGateways, nodes, parameters, exitModel, FILECOLLECTOR_CLEANUP, "Error occurred during diagnostics filecollector cleanup.");
     }
 
-    private void runSaltState(List<GatewayConfig> allGateways, Set<Node> nodes, ExitCriteriaModel exitModel, String saltState, String errorMessage) throws CloudbreakOrchestratorFailedException {
+    private void runSaltState(List<GatewayConfig> allGateways, Set<Node> nodes, Map<String, Object> parameters, ExitCriteriaModel exitModel,
+                              String saltState, String errorMessage) throws CloudbreakOrchestratorFailedException {
         GatewayConfig primaryGateway = saltService.getPrimaryGatewayConfig(allGateways);
         Set<String> targetHostnames = nodes.stream().map(Node::getHostname).collect(Collectors.toSet());
         try (SaltConnector sc = saltService.createSaltConnector(primaryGateway)) {
-            StateRunner stateRunner = new StateRunner(targetHostnames, nodes, saltState);
+            ParameterizedStateRunner stateRunner = new ParameterizedStateRunner(targetHostnames, nodes, saltState, parameters);
             OrchestratorBootstrap saltJobIdTracker = new SaltJobIdTracker(sc, stateRunner);
             Callable<Boolean> saltJobRunBootstrapRunner = saltRunner.runner(saltJobIdTracker, exitCriteria, exitModel, maxTelemetryStopRetry, false);
             saltJobRunBootstrapRunner.call();
