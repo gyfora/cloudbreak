@@ -140,20 +140,21 @@ MINOR_VERSION=$(echo $VERSION | cut -f 2 -d '.')
 PATCH_VERSION=$(echo $VERSION | cut -f 3 -d '.')
 PREVIOUS_MINOR_VERSION=$MAJOR_VERSION.$(expr $MINOR_VERSION - 1).$PATCH_VERSION
 PREVIOUS_MINOR_BUILD=$(curl "http://release.infra.cloudera.com/hwre-api/listbuilds?stack=CB&release=${PREVIOUS_MINOR_VERSION}" | jq -r '.latest_build_version')
-PREVIOUS_BUILD=$(http://release.infra.cloudera.com/hwre-api/listbuilds?stack=CB&release=$VERSION" | jq '.full_list_versions[1])
+PREVIOUS_BUILD=$(http://release.infra.cloudera.com/hwre-api/listbuilds?stack=CB&release=$VERSION" | jq '.full_list_versions[1]')
 Services="cloudbreak,freeipa,environment,datalake,redbeams,autoscale"
+declare -A zone=( ["cloudbreak"]="eu-central-1" ["environment"]="us-east-2" ["datalake"]="us-east-2" ["redbeams"]="us-east-2" ["autoscale"]="us-east-2" ["freeipa"]="us-east-2")
 Field_Separator=$IFS
 IFS=,
 set +e
 for service in $Services; do
   echo Downloading ${service} ${PREVIOUS_BUILD} swagger definition, if possible
-  STATUSCODE=$(curl -kfSs --write-out "%{http_code}" https://${service}-swagger.s3.us-east-2.amazonaws.com/swagger-${PREVIOUS_BUILD}.json -o ./apidefinitions/${service}-swagger-${PREVIOUS_BUILD}.json)
+  STATUSCODE=$(curl -kfSs --write-out "%{http_code}" https://${service}-swagger.s3.${zone[@]}.amazonaws.com/swagger-${PREVIOUS_BUILD}.json -o ./apidefinitions/${service}-swagger-${PREVIOUS_BUILD}.json)
     if [ $STATUSCODE -ne 200 ]; then
     echo download failed $STATUSCODE
     rm ./apidefinitions/${service}-swagger-${PREVIOUS_BUILD}.json
   fi
   echo Downloading ${service} ${PREVIOUS_MINOR_BUILD} swagger definition, if possible
-  STATUSCODE=$(curl -kfSs --write-out "%{http_code}" https://${service}-swagger.s3.us-east-2.amazonaws.com/swagger-${PREVIOUS_MINOR_BUILD}.json -o ./apidefinitions/${service}-swagger-${PREVIOUS_MINOR_BUILD}.json)
+  STATUSCODE=$(curl -kfSs --write-out "%{http_code}" https://${service}-swagger.s3.${zone[@]}.amazonaws.com/swagger-${PREVIOUS_MINOR_BUILD}.json -o ./apidefinitions/${service}-swagger-${PREVIOUS_MINOR_BUILD}.json)
   if [ $STATUSCODE -ne 200 ]; then
     echo download failed $STATUSCODE
     rm ./apidefinitions/${service}-swagger-${PREVIOUS_MINOR_BUILD}.json
