@@ -2,6 +2,7 @@ package com.sequenceiq.cloudbreak.api.endpoint.v4.stacks;
 
 import static com.sequenceiq.cloudbreak.doc.OperationDescriptions.StackOpDescription.LIST_BY_WORKSPACE;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -28,6 +29,6 @@ public interface DatalakeV4Endpoint {
     @Path("")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = LIST_BY_WORKSPACE, produces = MediaType.APPLICATION_JSON, notes = Notes.STACK_NOTES, nickname = "listDatalakes")
-    StackViewV4Responses list(@QueryParam("environment") String environmentName, @QueryParam("environmentCrn") String environmentCrn);
+    StackViewV4Responses list(@NotNull @QueryParam("environmentCrn") String environmentCrn);
 
 }

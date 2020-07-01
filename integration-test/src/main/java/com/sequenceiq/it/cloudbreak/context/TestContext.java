@@ -1,5 +1,6 @@
 package com.sequenceiq.it.cloudbreak.context;
 
+import static com.sequenceiq.cloudbreak.auth.ThreadBasedUserCrnProvider.INTERNAL_ACTOR_CRN;
 import static com.sequenceiq.it.cloudbreak.context.RunningParameter.emptyRunningParameter;
 
 import java.time.Duration;
@@ -79,6 +80,8 @@ public abstract class TestContext implements ApplicationContextAware {
     private static final String DESCRIPTION = "DESCRIPTION";
 
     private static final String TEST_METHOD_NAME = "TEST_METHOD_NAME";
+
+    private static final String INTERNAL_ACTOR_ACCESS_KEY = Base64.getEncoder().encodeToString(INTERNAL_ACTOR_CRN.getBytes());
 
     private ApplicationContext applicationContext;
 
@@ -350,6 +353,7 @@ public abstract class TestContext implements ApplicationContextAware {
                     FreeIpaClient.class, freeIpaClient, EnvironmentClient.class, environmentClient, SdxClient.class, sdxClient,
                     RedbeamsClient.class, redbeamsClient);
             clients.put(acting.getAccessKey(), clientMap);
+            clients.put(INTERNAL_ACTOR_ACCESS_KEY, clientMap);
             cloudbreakClient.setWorkspaceId(0L);
             redbeamsClient.setEnvironmentCrn(Crn.builder()
                     .setService(Crn.Service.ENVIRONMENTS)
@@ -627,7 +631,7 @@ public abstract class TestContext implements ApplicationContextAware {
         checkShutdown();
         String key = getKeyForAwait(entity, entity.getClass(), runningParameter);
         SdxTestDto awaitEntity = get(key);
-        SdxClient sdxClient = getMicroserviceClient(SdxClient.class, getWho(runningParameter).getAccessKey());
+        SdxClient sdxClient = getMicroserviceClient(SdxClient.class, INTERNAL_ACTOR_ACCESS_KEY);
         waitUtilSingleStatus.waitBasedOnLastKnownFlow(awaitEntity, sdxClient);
         return entity;
     }
@@ -636,7 +640,7 @@ public abstract class TestContext implements ApplicationContextAware {
         checkShutdown();
         String key = getKeyForAwait(entity, entity.getClass(), runningParameter);
         SdxInternalTestDto awaitEntity = get(key);
-        SdxClient sdxClient = getMicroserviceClient(SdxClient.class, getWho(runningParameter).getAccessKey());
+        SdxClient sdxClient = getMicroserviceClient(SdxClient.class, INTERNAL_ACTOR_ACCESS_KEY);
         waitUtilSingleStatus.waitBasedOnLastKnownFlow(awaitEntity, sdxClient);
         return entity;
     }
@@ -645,7 +649,7 @@ public abstract class TestContext implements ApplicationContextAware {
         checkShutdown();
         String key = getKeyForAwait(entity, entity.getClass(), runningParameter);
         CloudbreakTestDto awaitEntity = get(key);
-        CloudbreakClient cloudbreakClient = getCloudbreakClient();
+        CloudbreakClient cloudbreakClient = getCloudbreakClient(INTERNAL_ACTOR_ACCESS_KEY);
         waitUtilSingleStatus.waitBasedOnLastKnownFlow(awaitEntity, cloudbreakClient);
         return entity;
     }

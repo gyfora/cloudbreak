@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 
-import com.sequenceiq.authorization.annotation.DisableCheckPermissions;
+import com.sequenceiq.authorization.annotation.InternalOnly;
 import com.sequenceiq.cloudbreak.api.endpoint.v4.filesystems.FileSystemV4Endpoint;
 import com.sequenceiq.cloudbreak.api.endpoint.v4.filesystems.responses.FileSystemParameterV4Response;
 import com.sequenceiq.cloudbreak.api.endpoint.v4.filesystems.responses.FileSystemParameterV4Responses;
@@ -18,7 +18,7 @@ import com.sequenceiq.common.api.cloudstorage.query.ConfigQueryEntry;
 
 @Controller
 @WorkspaceEntityType(FileSystem.class)
-@DisableCheckPermissions
+@InternalOnly
 public class FileSystemV4Controller implements FileSystemV4Endpoint {
 
     @Inject

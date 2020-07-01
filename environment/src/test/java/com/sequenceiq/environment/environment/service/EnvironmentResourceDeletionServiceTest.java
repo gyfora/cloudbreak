@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -92,9 +91,9 @@ class EnvironmentResourceDeletionServiceTest {
 
     @Test
     void getDatalakeClusterNames() {
-        when(datalakeEndpoint.list(isNull(), anyString())).thenReturn(new StackViewV4Responses());
+        when(datalakeEndpoint.list(anyString())).thenReturn(new StackViewV4Responses());
         environmentResourceDeletionServiceUnderTest.getDatalakeClusterNames(environment);
-        verify(datalakeEndpoint).list(isNull(), eq(ENVIRONMENT_CRN));
+        verify(datalakeEndpoint).list(eq(ENVIRONMENT_CRN));
     }
 
     @Test
