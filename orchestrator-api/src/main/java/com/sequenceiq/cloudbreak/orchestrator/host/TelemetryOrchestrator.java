@@ -15,4 +15,14 @@ public interface TelemetryOrchestrator {
 
     void installAndStartMonitoring(List<GatewayConfig> allGateway, Set<Node> nodes, ExitCriteriaModel exitModel)
             throws CloudbreakOrchestratorFailedException;
+
+    void initDiagnosticCollection(List<GatewayConfig> allGateways, Set<Node> nodes, ExitCriteriaModel exitModel) throws CloudbreakOrchestratorFailedException;
+
+    void executeDiagnosticCollection(List<GatewayConfig> allGateways, Set<Node> nodes, ExitCriteriaModel exitModel)
+            throws CloudbreakOrchestratorFailedException;
+
+    void uploadCollectedDiagnostics(List<GatewayConfig> allGateways, Set<Node> nodes, ExitCriteriaModel exitModel)
+            throws CloudbreakOrchestratorFailedException;
+
+    void cleanupCollectedDiagnostics(List<GatewayConfig> gatewayConfigs, Set<Node> allNodes, ExitCriteriaModel exitModel) throws CloudbreakOrchestratorFailedException;
 }
